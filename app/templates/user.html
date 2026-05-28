@@ -1,0 +1,215 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Asistencia Facial</title>
+<style>
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif; background: #0f172a; color: #e2e8f0; min-height: 100vh; display:flex;align-items:center;justify-content:center; }
+  .container { max-width: 520px; width: 100%; padding: 20px; }
+  .card { background: #1e293b; border-radius: 16px; padding: 24px; margin-bottom: 16px; box-shadow: 0 8px 24px rgba(0,0,0,0.4); }
+  .card-title { font-size: 0.85rem; color: #64748b; text-transform: uppercase; letter-spacing: 0.5px; margin-bottom: 16px; display:flex;align-items:center;gap:8px; }
+  .app-title { font-size: 1.5rem; text-align: center; margin-bottom: 20px; color: #f8fafc; display:flex;align-items:center;justify-content:center;gap:10px; }
+  .app-title svg { opacity: 0.7; }
+  .cam-wrap { position: relative; display: flex; justify-content: center; border-radius: 12px; overflow: hidden; background: #000; }
+  video { width: 100%; max-width: 400px; display: block; }
+  canvas.overlay { position: absolute; top: 0; left: 0; width: 100%; height: 100%; pointer-events: none; }
+  .btn { display: block; width: 100%; padding: 14px 24px; border: none; border-radius: 12px; cursor: pointer; font-size: 1.05rem; font-weight: 600; transition: all 0.2s; text-align: center; display:flex;align-items:center;justify-content:center;gap:8px; }
+  .btn-primary { background: #3b82f6; color: white; }
+  .btn-primary:hover { background: #2563eb; }
+  .btn-primary:disabled { opacity: 0.5; cursor: not-allowed; }
+  .btn-link { display: inline-flex;align-items:center;gap:4px; background:transparent; color:#475569; border:none; cursor:pointer; font-size:0.8rem; text-decoration:none; transition:color 0.2s; }
+  .btn-link:hover { color:#64748b; }
+  table { width: 100%; border-collapse: collapse; font-size: 0.85rem; }
+  th, td { padding: 8px 10px; text-align: left; border-bottom: 1px solid #334155; }
+  th { color: #64748b; font-weight: 500; font-size: 0.7rem; text-transform: uppercase; letter-spacing: 0.5px; }
+  .admin-link { text-align: center; margin-top: 16px; }
+
+  .flash { position: fixed; top: 0; left: 0; right: 0; bottom: 0; pointer-events: none; z-index: 999; transition: background 0.15s; }
+  .flash.success { background: rgba(34,197,94,0.25); }
+  .flash.error { background: rgba(239,68,68,0.25); }
+  .result-box { padding: 16px; border-radius: 12px; text-align: center; animation: fadeIn 0.3s; }
+  .result-box.success { background: #166534; }
+  .result-box.error { background: #7f1d1d; }
+  .result-box h3 { font-size: 1.2rem; margin-bottom: 4px; }
+  .result-box .sub { font-size: 0.85rem; color: #94a3b8; }
+  @keyframes fadeIn { from { opacity:0; transform:translateY(8px); } to { opacity:1; transform:translateY(0); } }
+  .face-guide { position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%); width: 140px; height: 180px; border: 2px dashed rgba(59,130,246,0.3); border-radius: 50%; pointer-events: none; }
+  .icon-sm { width: 16px; height: 16px; vertical-align: middle; }
+  .icon-md { width: 20px; height: 20px; vertical-align: middle; }
+  .icon-lg { width: 24px; height: 24px; }
+</style>
+</head>
+<body>
+<div class="flash" id="flash"></div>
+<div class="container">
+  <div class="app-title">
+    <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="#94a3b8" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M23 19a2 2 0 0 1-2 2H3a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h4l2-3h6l2 3h4a2 2 0 0 1 2 2z"/><circle cx="12" cy="13" r="4"/></svg>
+    Asistencia
+  </div>
+  <div class="card">
+    <div class="card-title">
+      <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#64748b" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M23 19a2 2 0 0 1-2 2H3a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h4l2-3h6l2 3h4a2 2 0 0 1 2 2z"/><circle cx="12" cy="13" r="4"/></svg>
+      Camara
+    </div>
+    <div class="cam-wrap">
+      <video id="cam" autoplay playsinline></video>
+      <canvas class="overlay" id="canvasOverlay"></canvas>
+      <div class="face-guide"></div>
+    </div>
+    <div style="margin-top:16px">
+      <button class="btn btn-primary" id="btnMark" onclick="markAttendance()">
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>
+        Marcar Asistencia
+      </button>
+    </div>
+    <div id="result" style="margin-top:12px;min-height:60px;"></div>
+  </div>
+  <div class="card" id="historyCard">
+    <div class="card-title">
+      <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#64748b" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
+      Mis asistencias hoy
+    </div>
+    <div id="myHistory"><p style="color:#64748b;font-size:0.85rem;">Marca tu asistencia para ver tu historial</p></div>
+  </div>
+  <div class="admin-link">
+    <button class="btn-link" onclick="location.href='/admin'">
+      <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="11" width="18" height="11" rx="2" ry="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg>
+      Panel de Administracion
+    </button>
+  </div>
+</div>
+
+<script>
+let stream = null;
+let lastUserId = null;
+
+async function startCam() {
+  try {
+    stream = await navigator.mediaDevices.getUserMedia({ video: { width: 640, height: 480, facingMode: "user" } });
+    document.getElementById('cam').srcObject = stream;
+    startFaceDetect();
+  } catch(e) {
+    document.getElementById('result').innerHTML = `<div class="result-box error"><h3>Error de camara</h3><p>${e.message}</p></div>`;
+  }
+}
+
+function captureBlob() {
+  return new Promise(r => {
+    const v = document.getElementById('cam');
+    const c = document.createElement('canvas');
+    c.width = v.videoWidth; c.height = v.videoHeight;
+    c.getContext('2d').drawImage(v, 0, 0);
+    c.toBlob(b => r(b), 'image/jpeg', 0.9);
+  });
+}
+
+function flashScreen(success) {
+  const el = document.getElementById('flash');
+  el.className = 'flash ' + (success ? 'success' : 'error');
+  setTimeout(() => el.className = 'flash', 400);
+}
+
+function playBeep(success) {
+  try {
+    const ctx = new (window.AudioContext||window.webkitAudioContext)();
+    const o = ctx.createOscillator(), g = ctx.createGain();
+    o.connect(g); g.connect(ctx.destination); g.gain.value = 0.2;
+    if (success) { o.frequency.value = 880; o.start(); g.gain.exponentialRampToValueAtTime(0.001, ctx.currentTime+0.12); o.stop(ctx.currentTime+0.12); }
+    else { o.frequency.value = 440; o.start(); g.gain.exponentialRampToValueAtTime(0.001, ctx.currentTime+0.25); o.stop(ctx.currentTime+0.25); }
+    if (navigator.vibrate) navigator.vibrate(success ? 80 : 150);
+  } catch(e) {}
+}
+
+async function markAttendance() {
+  const btn = document.getElementById('btnMark');
+  btn.disabled = true; btn.textContent = 'Procesando...';
+  const div = document.getElementById('result');
+  let blob;
+  try {
+    blob = await captureBlob();
+    if (!blob || blob.size < 1000) throw new Error('Camara sin imagen');
+  } catch(e) {
+    div.innerHTML = `<div class="result-box error"><h3>Error de camara</h3><p class="sub">${e.message}</p></div>`;
+    btn.disabled = false;
+    btn.innerHTML = `<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg> Marcar Asistencia`;
+    return;
+  }
+  const fd = new FormData(); fd.append('image', blob, 'c.jpg');
+  try {
+    const controller = new AbortController();
+    const timeout = setTimeout(() => controller.abort(), 15000);
+    const res = await fetch('/api/attendance/mark', { method: 'POST', body: fd, signal: controller.signal });
+    clearTimeout(timeout);
+    const data = await res.json();
+    if (data.success) {
+      lastUserId = data.user_id;
+      const typeLabel = data.type === 'entry' ? 'Entrada' : 'Salida';
+      const photoHtml = data.photo_url ? `<img src="${data.photo_url}" style="width:48px;height:48px;border-radius:8px;object-fit:cover;margin-top:8px;">` : '';
+      div.innerHTML = `<div class="result-box success"><h3>${data.user_name}</h3><p class="sub">${typeLabel} · ${(data.confidence*100).toFixed(1)}% de confianza · ${new Date().toLocaleTimeString()}</p>${photoHtml}</div>`;
+      playBeep(true); flashScreen(true);
+      loadMyHistory();
+    } else {
+      div.innerHTML = `<div class="result-box error"><h3>No reconocido</h3><p class="sub">${data.detail||data.message}</p></div>`;
+      playBeep(false); flashScreen(false);
+    }
+  } catch(e) { div.innerHTML = `<div class="result-box error"><h3>Error</h3><p class="sub">No se pudo conectar</p></div>`; }
+  btn.disabled = false;
+  btn.innerHTML = `<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg> Marcar Asistencia`;
+}
+
+async function loadMyHistory() {
+  if (!lastUserId) return;
+  try {
+    const res = await fetch(`/api/attendance/history?user_id=${lastUserId}&limit=20`);
+    const records = await res.json();
+    const div = document.getElementById('myHistory');
+    if (!records.length) { div.innerHTML = '<p style="color:#64748b;font-size:0.85rem;">Sin registros hoy</p>'; return; }
+    div.innerHTML = `<table><tr><th>Hora</th><th>Tipo</th><th>Confianza</th></tr>${records.map(r => {
+      const typeLabel = r.type === 'entry' ? 'Entrada' : r.type === 'exit' ? 'Salida' : '-';
+      return `<tr><td>${new Date(r.timestamp).toLocaleTimeString()}</td><td>${typeLabel}</td><td>${r.confidence ? (r.confidence*100).toFixed(1)+'%' : 'N/A'}</td></tr>`;
+    }).join('')}</table>`;
+  } catch(e) {}
+}
+
+async function detectFaceLoop() {
+  const canvas = document.getElementById('canvasOverlay');
+  const video = document.getElementById('cam');
+  if (!canvas || !video || video.readyState < 2) return;
+  try {
+    const blob = await captureBlob();
+    const fd = new FormData(); fd.append('image', blob, 'f.jpg');
+    const res = await fetch('/api/face/detect', { method: 'POST', body: fd });
+    if (!res.ok) { drawNoFace(canvas); return; }
+    const data = await res.json();
+    if (data.success && data.bbox) drawBox(canvas, video, data.bbox);
+    else drawNoFace(canvas);
+  } catch(e) { drawNoFace(canvas); }
+}
+
+function drawBox(canvas, video, bbox) {
+  const ctx = canvas.getContext('2d');
+  canvas.width = canvas.clientWidth; canvas.height = canvas.clientHeight;
+  ctx.clearRect(0, 0, canvas.width, canvas.height);
+  const [x1,y1,x2,y2] = bbox;
+  const sx = canvas.width / (video.videoWidth||640);
+  const sy = canvas.height / (video.videoHeight||480);
+  ctx.strokeStyle = '#22c55e'; ctx.lineWidth = 3;
+  ctx.strokeRect(x1*sx, y1*sy, (x2-x1)*sx, (y2-y1)*sy);
+  ctx.fillStyle = 'rgba(34,197,94,0.1)';
+  ctx.fillRect(x1*sx, y1*sy, (x2-x1)*sx, (y2-y1)*sy);
+}
+
+function drawNoFace(canvas) {
+  const ctx = canvas.getContext('2d');
+  canvas.width = canvas.clientWidth; canvas.height = canvas.clientHeight;
+  ctx.clearRect(0, 0, canvas.width, canvas.height);
+}
+
+function startFaceDetect() { setInterval(detectFaceLoop, 2000); }
+
+startCam();
+</script>
+</body>
+</html>

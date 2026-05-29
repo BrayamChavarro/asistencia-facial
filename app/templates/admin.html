@@ -1,667 +1,847 @@
 <!DOCTYPE html>
-<html lang="es">
+<html class="dark" lang="es">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Admin - Asistencia Facial</title>
-<style>
-  * { box-sizing: border-box; margin: 0; padding: 0; }
-  body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif; background: #0f172a; color: #e2e8f0; min-height: 100vh; }
-  .container { max-width: 1200px; margin: 0 auto; padding: 24px; }
-  .app-title { font-size: 1.5rem; margin-bottom: 24px; color: #f8fafc; display:flex;align-items:center;gap:12px; }
-  .card { background: #1e293b; border-radius: 12px; padding: 24px; margin-bottom: 24px; box-shadow: 0 4px 6px -1px rgba(0,0,0,0.3); }
-  .card-title { font-size: 1rem; color: #94a3b8; margin-bottom: 16px; display:flex;align-items:center;gap:8px; }
-  .row { display: flex; gap: 20px; flex-wrap: wrap; }
-  .col { flex: 1; min-width: 280px; }
-  video { width: 100%; max-width: 480px; border-radius: 8px; display: block; }
-  .btn { display: inline-flex;align-items:center;gap:6px; padding: 10px 20px; border: none; border-radius: 8px; cursor: pointer; font-size: 0.95rem; font-weight: 500; transition: all 0.2s; margin: 4px; }
-  .btn-primary { background: #3b82f6; color: white; }
-  .btn-primary:hover { background: #2563eb; }
-  .btn-success { background: #22c55e; color: white; }
-  .btn-success:hover { background: #16a34a; }
-  .btn-danger { background: #ef4444; color: white; }
-  .btn-danger:hover { background: #dc2626; }
-  .btn-secondary { background: #475569; color: white; }
-  .btn-secondary:hover { background: #334155; }
-  .btn-warning { background: #f59e0b; color: #1e293b; }
-  .btn-warning:hover { background: #d97706; }
-  .btn:disabled { opacity: 0.5; cursor: not-allowed; }
-  input:not([type]), input[type="text"], input[type="email"], input[type="password"] { width: 100%; padding: 10px 14px; border: 1px solid #334155; border-radius: 8px; background: #0f172a; color: #e2e8f0; font-size: 0.95rem; margin-bottom: 12px; }
-  input:focus { outline: none; border-color: #3b82f6; }
-  #message { padding: 12px 16px; border-radius: 8px; margin-top: 16px; display: none; }
-  #message.success { background: #166534; color: #bbf7d0; display: block; }
-  .photo-grid { display:grid; grid-template-columns:repeat(auto-fill,minmax(160px,1fr)); gap:12px; margin-top:8px; }
-  .photo-card { background:#0f172a; border-radius:8px; overflow:hidden; border:1px solid #334155; }
-  .photo-card img { width:100%; height:120px; object-fit:cover; display:block; }
-  .photo-card .label { padding:4px 8px; font-size:0.75rem; color:#94a3b8; display:flex;justify-content:space-between; }
-  .photo-card .label .type-tag { padding:1px 6px; border-radius:10px; font-size:0.65rem; font-weight:600; }
-  .type-entry { background:#16653422; color:#86efac; }
-  .type-exit { background:#7f1d1d22; color:#fecaca; }
-  .modal-xl .modal-content { max-width:640px; }
-  .user-info-bar { display:flex; gap:16px; flex-wrap:wrap; margin-bottom:16px; padding:12px; background:#0f172a; border-radius:8px; }
-  .user-info-item { flex:1; min-width:120px; }
-  .user-info-item .lbl { font-size:0.7rem; color:#64748b; text-transform:uppercase; }
-  .user-info-item .val { font-size:1rem; color:#f8fafc; font-weight:500; }
-  #message.error { background: #7f1d1d; color: #fecaca; display: block; }
-  #message.info { background: #1e3a5f; color: #bfdbfe; display: block; }
-  table { width: 100%; border-collapse: collapse; font-size: 0.9rem; }
-  th, td { padding: 10px 12px; text-align: left; border-bottom: 1px solid #334155; }
-  th { color: #94a3b8; font-weight: 500; }
-  .webcam-wrap { position: relative; display:inline-block; }
-  .webcam-overlay { position: absolute; top: 0; left: 0; right: 0; bottom: 0; display: flex; align-items: center; justify-content: center; pointer-events: none; }
-  .face-guide { width: 200px; height: 260px; border: 2px dashed rgba(59,130,246,0.5); border-radius: 50%; }
-  .tabs { display: flex; gap: 4px; margin-bottom: 24px; flex-wrap: wrap; }
-  .tab { padding: 8px 20px; border-radius: 8px 8px 0 0; cursor: pointer; background: #1e293b; color: #94a3b8; border: none; font-size: 0.95rem; transition:background 0.2s; display:flex;align-items:center;gap:6px; }
-  .tab:hover { background: #334155; color:#e2e8f0; }
-  .tab.active { background: #3b82f6; color: white; }
-  .tab-content { display: none; }
-  .tab-content.active { display: block; }
-  .flash-overlay { position: fixed; top: 0; left: 0; right: 0; bottom: 0; pointer-events: none; z-index: 999; transition: background 0.1s; }
-  .flash-overlay.success { background: rgba(34,197,94,0.3); }
-  .flash-overlay.error { background: rgba(239,68,68,0.3); }
-
-  @keyframes fadeIn { from { opacity:0; transform:scale(0.95); } to { opacity:1; transform:scale(1); } }
-  .modal { display:none; position:fixed; z-index:1000; left:0; top:0; width:100%; height:100%; background:rgba(0,0,0,0.6); align-items:center; justify-content:center; }
-  .modal.active { display:flex; }
-  .modal-content { background:#1e293b; padding:24px; border-radius:12px; width:90%; max-width:360px; animation:fadeIn 0.2s; }
-  .modal-content h2 { margin-bottom:16px; }
-  .badge-locked { background:#7f1d1d; color:#fecaca; padding:2px 8px; border-radius:12px; font-size:0.75rem; margin-left:8px; }
-  .badge-unlocked { background:#166534; color:#bbf7d0; padding:2px 8px; border-radius:12px; font-size:0.75rem; margin-left:8px; }
-  .btn-icon { background:none; border:none; cursor:pointer; padding:4px 8px; font-size:1rem; border-radius:4px; transition:background 0.2s;display:inline-flex;align-items:center;gap:4px; }
-  .btn-icon:hover { background:#334155; }
-  .btn-icon.danger { color:#ef4444; }
-  .btn-icon.danger:hover { background:#7f1d1d22; }
-  canvas.overlay { position:absolute; top:0; left:0; width:100%; height:100%; pointer-events:none; }
-
-  .stat-grid { display:grid; grid-template-columns:repeat(auto-fit,minmax(180px,1fr)); gap:16px; margin-bottom:24px; }
-  .stat-card { background:linear-gradient(135deg,#1e293b,#0f172a); border:1px solid #334155; border-radius:12px; padding:20px; text-align:center; transition:transform 0.2s,border-color 0.2s; }
-  .stat-card:hover { transform:translateY(-2px); border-color:#3b82f6; }
-  .stat-value { font-size:2.2rem; font-weight:700; color:#f8fafc; }
-  .stat-label { font-size:0.85rem; color:#64748b; margin-top:4px; }
-
-  .entry-chip { display:inline-flex;align-items:center;gap:4px;padding:4px 10px;border-radius:20px;font-size:0.8rem;font-weight:500; }
-  .chip-in { background:#16653422; color:#86efac; border:1px solid #166534; }
-  .chip-out { background:#7f1d1d22; color:#fecaca; border:1px solid #7f1d1d; }
-
-  .week-bar { display:flex;gap:8px;align-items:flex-end;height:100px;padding:12px 0; }
-  .bar-item { flex:1;display:flex;flex-direction:column;align-items:center;gap:4px; }
-  .bar { width:100%;border-radius:6px 6px 0 0;min-height:4px;transition:height 0.5s;background:linear-gradient(180deg,#3b82f6,#1d4ed8); }
-  .bar-label { font-size:0.7rem;color:#64748b; }
-
-  .icon-sm { width:16px;height:16px; }
-  .icon-md { width:18px;height:18px; }
-  .icon-lg { width:22px;height:22px; }
-
-  @media(max-width:640px) {
-    .stat-grid { grid-template-columns:repeat(2,1fr); }
-    .stat-value { font-size:1.6rem; }
-  }
-</style>
+    <meta charset="utf-8"/>
+    <meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+    <title>SecureGate AI - Control Center</title>
+    <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap" rel="stylesheet"/>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;900&display=swap" rel="stylesheet"/>
+    <script src='https://cdn.jsdelivr.net/npm/fullcalendar@6.1.10/index.global.min.js'></script>
+    <script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    "colors": {
+                        "surface-bright": "#363941", "outline-variant": "#424754", "on-secondary-container": "#00311f", "tertiary-container": "#ca8100",
+                        "on-primary-container": "#00285d", "primary-fixed-dim": "#adc6ff", "primary-container": "#4d8eff", "on-error": "#690005",
+                        "on-secondary-fixed": "#002113", "secondary": "#4edea3", "on-tertiary-container": "#3e2400", "on-error-container": "#ffdad6",
+                        "surface-container-low": "#191b23", "secondary-fixed-dim": "#4edea3", "surface-variant": "#32353c", "primary-fixed": "#d8e2ff",
+                        "inverse-surface": "#e1e2ec", "on-tertiary-fixed": "#2a1700", "secondary-container": "#00a572", "on-tertiary-fixed-variant": "#653e00",
+                        "primary": "#adc6ff", "surface-dim": "#10131a", "surface-container-highest": "#32353c", "on-secondary": "#003824",
+                        "background": "#10131a", "surface-tint": "#adc6ff", "inverse-on-surface": "#2e3038", "outline": "#8c909f", "on-tertiary": "#472a00",
+                        "error-container": "#93000a", "on-surface-variant": "#c2c6d6", "surface-container-high": "#272a31", "on-surface": "#e1e2ec",
+                        "secondary-fixed": "#6ffbbe", "tertiary-fixed-dim": "#ffb95f", "on-primary-fixed": "#001a42", "on-secondary-fixed-variant": "#005236",
+                        "on-background": "#e1e2ec", "tertiary": "#ffb95f", "surface-container-lowest": "#0b0e15", "on-primary-fixed-variant": "#004395",
+                        "tertiary-fixed": "#ffddb8", "error": "#ffb4ab", "inverse-primary": "#005ac2", "surface": "#10131a", "surface-container": "#1d2027",
+                        "on-primary": "#002e6a"
+                    },
+                    "spacing": { "sm": "12px", "gutter": "24px", "md": "16px", "xl": "32px", "xs": "4px", "lg": "24px" },
+                    "fontFamily": { "body-md": ["Inter"], "headline-sm": ["Inter"], "display-lg": ["Inter"], "label-md": ["Inter"], "headline-lg": ["Inter"] },
+                    "fontSize": {
+                        "body-lg": ["18px", { "lineHeight": "28px", "fontWeight": "400" }],
+                        "label-md": ["12px", { "lineHeight": "16px", "letterSpacing": "0.05em", "fontWeight": "600" }],
+                        "display-lg": ["48px", { "lineHeight": "56px", "letterSpacing": "-0.02em", "fontWeight": "700" }],
+                        "headline-sm": ["20px", { "lineHeight": "28px", "fontWeight": "600" }],
+                        "body-sm": ["14px", { "lineHeight": "20px", "fontWeight": "400" }],
+                        "body-md": ["16px", { "lineHeight": "24px", "fontWeight": "400" }],
+                        "headline-lg": ["32px", { "lineHeight": "40px", "letterSpacing": "-0.01em", "fontWeight": "600" }],
+                        "headline-md": ["24px", { "lineHeight": "32px", "fontWeight": "600" }]
+                    }
+                }
+            }
+        }
+    </script>
+    <style>
+        body { background-color: theme('colors.background'); color: theme('colors.on-background'); }
+        .glass-panel { background: linear-gradient(145deg, rgba(54, 57, 65, 0.4) 0%, rgba(39, 42, 49, 0.2) 100%); border: 1px solid theme('colors.outline-variant'); backdrop-filter: blur(10px); -webkit-backdrop-filter: blur(10px); }
+        .text-glow { text-shadow: 0 0 8px theme('colors.secondary'); }
+        .tab-content { display: none; }
+        .tab-content.active { display: block; }
+        .nav-item.active { background-color: rgba(78, 222, 163, 0.1); border-right-width: 4px; border-color: theme('colors.secondary'); color: theme('colors.secondary'); }
+        .nav-item { border-right-width: 4px; border-color: transparent; }
+        video { transform: scaleX(-1); }
+        canvas.overlay { transform: scaleX(-1); }
+        .week-bar { display:flex; gap:12px; height:120px; align-items:flex-end; padding:16px 0; }
+        .bar-item { flex:1; display:flex; flex-direction:column; align-items:center; gap:8px; }
+        .bar { width:100%; max-width:40px; background:theme('colors.primary'); border-radius:4px 4px 0 0; transition:height 0.3s; }
+        .bar-label { font-size:0.75rem; color:theme('colors.on-surface-variant'); }
+        
+        /* FullCalendar Overrides */
+        .fc { --fc-page-bg-color: transparent; --fc-neutral-bg-color: rgba(39,42,49,0.5); --fc-neutral-text-color: theme('colors.on-surface'); --fc-border-color: theme('colors.outline-variant'); --fc-button-bg-color: theme('colors.primary'); --fc-button-border-color: theme('colors.primary'); --fc-button-hover-bg-color: theme('colors.primary-container'); --fc-button-hover-border-color: theme('colors.primary-container'); --fc-button-active-bg-color: theme('colors.inverse-primary'); --fc-event-bg-color: theme('colors.primary'); --fc-today-bg-color: rgba(59, 130, 246, 0.1); }
+        .fc-theme-standard th { border: none; padding-bottom: 8px; color: theme('colors.on-surface-variant'); font-weight: 600; text-transform: uppercase; font-size: 0.8rem; }
+    </style>
 </head>
-<body>
-<div class="flash-overlay" id="flashOverlay"></div>
-<div class="container">
-  <div class="app-title">
-    <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#94a3b8" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M23 19a2 2 0 0 1-2 2H3a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h4l2-3h6l2 3h4a2 2 0 0 1 2 2z"/><circle cx="12" cy="13" r="4"/></svg>
-    Admin - Asistencia Facial
-    <span style="flex:1;text-align:right;display:flex;align-items:center;justify-content:flex-end;gap:8px;">
-      <span id="authBadge" class="badge-locked"><svg width="10" height="10" viewBox="0 0 24 24" fill="currentColor" style="vertical-align:middle;margin-right:2px;"><rect x="3" y="11" width="18" height="11" rx="2" ry="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg> Bloqueado</span>
-      <button class="btn btn-warning" id="btnUnlock" onclick="showPinModal()" style="font-size:0.8rem;padding:4px 12px;margin:0;">Desbloquear</button>
-      <button class="btn btn-secondary" onclick="location.href='/' " style="font-size:0.8rem;padding:4px 12px;margin:0;">
-        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M19 12H5M12 19l-7-7 7-7"/></svg>
-        Usuario
-      </button>
-    </span>
-  </div>
+<body class="flex h-screen overflow-hidden font-body-md text-body-md antialiased">
 
-  <div class="tabs">
-    <button class="tab" onclick="switchTab('dashboard')">
-      <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="7" height="7"/><rect x="14" y="3" width="7" height="7"/><rect x="14" y="14" width="7" height="7"/><rect x="3" y="14" width="7" height="7"/></svg>
-      Dashboard
-    </button>
-    <button class="tab" onclick="switchTab('attendance')">
-      <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M23 19a2 2 0 0 1-2 2H3a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h4l2-3h6l2 3h4a2 2 0 0 1 2 2z"/><circle cx="12" cy="13" r="4"/></svg>
-      Asistencia
-    </button>
-    <button class="tab" onclick="switchTab('register')">
-      <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/><line x1="19" y1="8" x2="19" y2="14"/><line x1="16" y1="11" x2="22" y2="11"/></svg>
-      Registrar
-    </button>
-    <button class="tab" onclick="switchTab('history')">
-      <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
-      Historial
-    </button>
-  </div>
-
-  <div id="tab-dashboard" class="tab-content">
-    <div class="stat-grid" id="statGrid">
-      <div class="stat-card"><div class="stat-value" id="statUsers">-</div><div class="stat-label">Usuarios Registrados</div></div>
-      <div class="stat-card"><div class="stat-value" id="statToday">-</div><div class="stat-label">Total Hoy</div></div>
-      <div class="stat-card"><div class="stat-value" id="statEntries">-</div><div class="stat-label">Entradas</div></div>
-      <div class="stat-card"><div class="stat-value" id="statExits">-</div><div class="stat-label">Salidas</div></div>
-      <div class="stat-card"><div class="stat-value" id="statActive">-</div><div class="stat-label">Presentes Hoy</div></div>
-      <div class="stat-card"><div class="stat-value" id="statAvg">-</div><div class="stat-label">Promedio x Usuario</div></div>
+<!-- SideNavBar -->
+<nav class="hidden md:flex flex-col bg-surface-container-low text-on-surface-variant font-label-md text-label-md w-64 h-screen border-r border-outline-variant py-lg shrink-0">
+    <div class="px-lg mb-xl">
+        <div class="flex items-center gap-sm">
+            <div class="w-8 h-8 rounded bg-primary flex items-center justify-center text-on-primary font-bold">S</div>
+            <div>
+                <h1 class="font-headline-sm text-headline-sm font-black text-primary">SecureGate AI</h1>
+                <p class="text-[10px] text-on-surface-variant uppercase tracking-wider">Control Center</p>
+            </div>
+        </div>
     </div>
-    <div class="row">
-      <div class="col">
-        <div class="card">
-          <div class="card-title">
-            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#94a3b8" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="18" height="18" rx="2" ry="2"/><line x1="3" y1="9" x2="21" y2="9"/><line x1="9" y1="21" x2="9" y2="9"/></svg>
-            Entradas y Salidas - Hoy
-          </div>
-          <div id="todayEntries"><p style="color:#64748b">Cargando...</p></div>
-        </div>
-      </div>
-      <div class="col">
-        <div class="card">
-          <div class="card-title">
-            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#94a3b8" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="18" y1="20" x2="18" y2="10"/><line x1="12" y1="20" x2="12" y2="4"/><line x1="6" y1="20" x2="6" y2="14"/></svg>
-            Actividad Semanal
-          </div>
-          <div id="weeklyChart"><p style="color:#64748b">Cargando...</p></div>
-        </div>
-      </div>
+    <div class="flex-1 overflow-y-auto space-y-2">
+        <button onclick="switchTab('dashboard')" class="nav-item active w-full flex items-center gap-md py-md px-lg hover:bg-surface-variant/50 transition-all duration-200">
+            <span class="material-symbols-outlined">dashboard</span><span>Dashboard</span>
+        </button>
+        <button onclick="switchTab('attendance')" class="nav-item w-full flex items-center gap-md py-md px-lg hover:bg-surface-variant/50 transition-all duration-200">
+            <span class="material-symbols-outlined">videocam</span><span>Kiosko en Vivo</span>
+        </button>
+        <button onclick="switchTab('register')" class="nav-item w-full flex items-center gap-md py-md px-lg hover:bg-surface-variant/50 transition-all duration-200">
+            <span class="material-symbols-outlined">group</span><span>Directorio de Usuarios</span>
+        </button>
+        <button onclick="switchTab('history')" class="nav-item w-full flex items-center gap-md py-md px-lg hover:bg-surface-variant/50 transition-all duration-200">
+            <span class="material-symbols-outlined">history</span><span>Registro de Asistencia</span>
+        </button>
+        <button onclick="switchTab('calendar')" class="nav-item w-full flex items-center gap-md py-md px-lg hover:bg-surface-variant/50 transition-all duration-200">
+            <span class="material-symbols-outlined">calendar_month</span><span>Calendario</span>
+        </button>
+        <button onclick="showPinModal()" class="w-full flex items-center gap-md text-on-surface-variant py-md px-lg hover:bg-surface-variant/50 transition-all duration-200">
+            <span class="material-symbols-outlined">shield</span><span><span id="authBadgeText">Seguridad (PIN)</span></span>
+        </button>
     </div>
-  </div>
-
-  <div id="tab-attendance" class="tab-content">
-    <div class="row">
-      <div class="col">
-        <div class="card">
-          <div class="card-title">
-            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#94a3b8" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M23 19a2 2 0 0 1-2 2H3a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h4l2-3h6l2 3h4a2 2 0 0 1 2 2z"/><circle cx="12" cy="13" r="4"/></svg>
-            Camara
-          </div>
-          <div class="webcam-wrap">
-            <video id="attendanceCam" autoplay playsinline></video>
-            <canvas class="overlay" id="canvasOverlay"></canvas>
-            <div class="webcam-overlay"><div class="face-guide"></div></div>
-          </div>
-          <button class="btn btn-success" id="btnAttendance" onclick="markAttendance()" style="margin-top:12px;width:100%;justify-content:center;">
-            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>
-            Marcar Asistencia
-          </button>
-        </div>
-      </div>
-      <div class="col">
-        <div class="card">
-          <div class="card-title">Resultado</div>
-          <div id="attendanceResult"><p style="color:#64748b">Presiona Marcar Asistencia</p></div>
-        </div>
-        <div class="card">
-          <div class="card-title">
-            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#94a3b8" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="18" height="18" rx="2" ry="2"/><line x1="3" y1="9" x2="21" y2="9"/><line x1="9" y1="21" x2="9" y2="9"/></svg>
-            Asistencias de Hoy
-          </div>
-          <div id="todayList"><p style="color:#64748b">Cargando...</p></div>
-        </div>
-      </div>
+    <div class="mt-auto px-lg">
+        <a href="/" class="flex items-center gap-md text-on-surface-variant py-md hover:bg-surface-variant/50 transition-all duration-200">
+            <span class="material-symbols-outlined">logout</span><span>Modo Usuario</span>
+        </a>
     </div>
-  </div>
+</nav>
 
-  <div id="tab-register" class="tab-content">
-    <div class="row">
-      <div class="col">
-        <div class="card">
-          <div class="card-title">
-            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#94a3b8" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/><line x1="19" y1="8" x2="19" y2="14"/><line x1="16" y1="11" x2="22" y2="11"/></svg>
-            Datos del usuario
-          </div>
-          <input type="text" id="regName" placeholder="Nombre completo">
-          <input type="email" id="regEmail" placeholder="Email (opcional)">
-          <div class="card-title" style="margin-top:16px">
-            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#94a3b8" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M23 19a2 2 0 0 1-2 2H3a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h4l2-3h6l2 3h4a2 2 0 0 1 2 2z"/><circle cx="12" cy="13" r="4"/></svg>
-            Camara
-          </div>
-          <div class="webcam-wrap">
-            <video id="registerCam" autoplay playsinline></video>
-            <canvas class="overlay" id="canvasOverlayReg"></canvas>
-            <div class="webcam-overlay"><div class="face-guide"></div></div>
-          </div>
-          <button class="btn btn-primary" id="btnRegister" onclick="registerUser()" style="margin-top:12px;width:100%;justify-content:center;">
-            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 5v14M5 12h14"/></svg>
-            Registrar Usuario
-          </button>
+<!-- Main Content Area -->
+<div class="flex-1 flex flex-col h-screen overflow-hidden relative">
+    <!-- TopNavBar -->
+    <header class="bg-surface-container w-full border-b border-outline-variant flex justify-between items-center px-gutter py-sm shrink-0">
+        <div class="flex-1 max-w-md hidden md:block">
+            <div class="relative">
+                <span class="material-symbols-outlined absolute left-3 top-1/2 -translate-y-1/2 text-on-surface-variant">search</span>
+                <input class="w-full bg-surface-variant border-none rounded-full py-2 pl-10 pr-4 text-on-surface font-body-sm focus:ring-2 focus:ring-primary focus:outline-none placeholder-on-surface-variant transition-all" placeholder="Buscar registros, usuarios..." type="text"/>
+            </div>
         </div>
-      </div>
-      <div class="col">
-        <div class="card">
-          <div class="card-title">
-            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#94a3b8" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>
-            Usuarios Registrados
-          </div>
-          <div id="usersList"><p style="color:#64748b">Cargando...</p></div>
+        <div class="flex items-center gap-md ml-auto">
+            <button class="p-2 text-on-surface-variant hover:bg-surface-bright/10 rounded-full transition-colors cursor-pointer">
+                <span class="material-symbols-outlined">notifications</span>
+            </button>
+            <div class="w-8 h-8 rounded-full overflow-hidden border border-outline-variant ml-sm cursor-pointer bg-primary/20 flex items-center justify-center">
+                <span class="material-symbols-outlined text-primary text-[18px]">admin_panel_settings</span>
+            </div>
         </div>
-      </div>
-    </div>
-  </div>
+    </header>
 
-  <div id="tab-history" class="tab-content">
-    <div class="card">
-      <div class="card-title">
-        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#94a3b8" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
-        Historial de Asistencias
-      </div>
-      <div id="historyList"><p style="color:#64748b">Cargando...</p></div>
-    </div>
-  </div>
+    <div id="message" class="absolute top-20 right-8 z-50 px-6 py-4 rounded-lg shadow-lg font-body-md transition-opacity duration-300 opacity-0 pointer-events-none"></div>
 
-  <div id="message"></div>
+    <main class="flex-1 overflow-y-auto p-gutter bg-background relative">
+        
+        <!-- DASHBOARD TAB -->
+        <div id="tab-dashboard" class="tab-content active">
+            <div class="flex flex-col md:flex-row md:items-end justify-between mb-xl gap-sm">
+                <div>
+                    <h2 class="font-headline-lg text-headline-lg text-on-surface mb-xs">Control Center</h2>
+                    <p class="font-body-md text-body-md text-on-surface-variant">Resumen de asistencia y seguridad en tiempo real.</p>
+                </div>
+                <div class="text-right">
+                    <p class="font-label-md text-label-md text-primary tracking-wider uppercase">Fecha del Sistema</p>
+                    <p class="font-headline-sm text-headline-sm text-on-surface" id="systemDate">Cargando...</p>
+                </div>
+            </div>
+
+            <!-- KPI Cards Grid -->
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-gutter mb-xl">
+                <div class="glass-panel rounded-xl p-lg flex flex-col justify-between hover:bg-surface-container-high transition-colors">
+                    <div class="flex justify-between items-start mb-md">
+                        <span class="font-label-md text-label-md text-on-surface-variant">TOTAL USUARIOS</span>
+                        <span class="material-symbols-outlined text-outline">group</span>
+                    </div>
+                    <div class="font-display-lg text-display-lg text-on-surface" id="statUsers">-</div>
+                </div>
+                <div class="glass-panel rounded-xl p-lg flex flex-col justify-between hover:bg-surface-container-high transition-colors relative overflow-hidden">
+                    <div class="absolute -right-4 -top-4 w-24 h-24 bg-primary/5 rounded-full blur-2xl"></div>
+                    <div class="flex justify-between items-start mb-md relative z-10">
+                        <span class="font-label-md text-label-md text-primary">PRESENTES HOY</span>
+                        <span class="material-symbols-outlined text-primary">how_to_reg</span>
+                    </div>
+                    <div class="font-display-lg text-display-lg text-primary text-glow relative z-10" id="statActive">-</div>
+                </div>
+                <div class="glass-panel rounded-xl p-lg flex flex-col justify-between hover:bg-surface-container-high transition-colors">
+                    <div class="flex justify-between items-start mb-md">
+                        <span class="font-label-md text-label-md text-secondary">ENTRADAS HOY</span>
+                        <span class="material-symbols-outlined text-secondary">login</span>
+                    </div>
+                    <div class="font-display-lg text-display-lg text-on-surface" id="statEntries">-</div>
+                </div>
+                <div class="glass-panel rounded-xl p-lg flex flex-col justify-between hover:bg-surface-container-high transition-colors">
+                    <div class="flex justify-between items-start mb-md">
+                        <span class="font-label-md text-label-md text-error">SALIDAS HOY</span>
+                        <span class="material-symbols-outlined text-error">logout</span>
+                    </div>
+                    <div class="font-display-lg text-display-lg text-error" id="statExits">-</div>
+                </div>
+            </div>
+
+            <!-- Split Grid -->
+            <div class="grid grid-cols-1 lg:grid-cols-3 gap-gutter">
+                <!-- Left: Real-time -->
+                <div class="lg:col-span-2 glass-panel rounded-xl overflow-hidden flex flex-col h-[500px]">
+                    <div class="p-lg border-b border-outline-variant flex justify-between items-center bg-surface-container/50">
+                        <h3 class="font-headline-sm text-headline-sm text-on-surface flex items-center gap-sm">
+                            <span class="w-2 h-2 rounded-full bg-secondary animate-pulse"></span>
+                            Asistencia en Tiempo Real (Hoy)
+                        </h3>
+                    </div>
+                    <div class="flex-1 overflow-y-auto p-0" id="todayEntries">
+                        <p class="p-lg text-on-surface-variant">Cargando...</p>
+                    </div>
+                </div>
+                <!-- Right: Chart -->
+                <div class="glass-panel rounded-xl p-lg flex flex-col h-[500px]">
+                    <h3 class="font-headline-sm text-headline-sm text-on-surface mb-md">Actividad Semanal</h3>
+                    <div id="weeklyChart" class="flex-1 flex items-end">
+                        <p class="text-on-surface-variant">Cargando...</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- ATTENDANCE TAB (LIVE KIOSK) -->
+        <div id="tab-attendance" class="tab-content">
+            <h2 class="font-headline-lg text-headline-lg text-on-surface mb-xl">Kiosko en Vivo</h2>
+            <div class="grid grid-cols-1 lg:grid-cols-2 gap-gutter">
+                <div class="glass-panel rounded-xl p-lg flex flex-col items-center">
+                    <div class="relative w-full max-w-[480px] aspect-[4/3] bg-surface-container-low rounded-lg overflow-hidden border border-outline-variant mb-md">
+                        <video id="attendanceCam" class="w-full h-full object-cover" autoplay playsinline></video>
+                        <canvas id="canvasOverlayAtt" class="overlay absolute top-0 left-0 w-full h-full pointer-events-none"></canvas>
+                        <div class="absolute inset-0 flex items-center justify-center pointer-events-none">
+                            <div class="w-[200px] h-[260px] border-2 border-dashed border-primary/50 rounded-[100px]"></div>
+                        </div>
+                    </div>
+                    <button class="w-full max-w-[480px] bg-primary text-on-primary py-3 rounded-lg font-headline-sm shadow-lg hover:opacity-90 transition flex items-center justify-center gap-sm" id="btnAttendance" onclick="markAttendance()">
+                        <span class="material-symbols-outlined">how_to_reg</span> Marcar Asistencia
+                    </button>
+                </div>
+                <div class="glass-panel rounded-xl p-lg flex flex-col">
+                    <h3 class="font-headline-sm text-headline-sm text-on-surface mb-md border-b border-outline-variant pb-sm">Último Registro</h3>
+                    <div id="attendanceResult" class="flex-1 flex items-center justify-center text-center">
+                        <p class="text-on-surface-variant">Presiona "Marcar Asistencia"</p>
+                    </div>
+                    <div class="mt-md border-t border-outline-variant pt-md">
+                        <h4 class="font-label-md text-label-md text-on-surface-variant mb-sm">Últimas marcas de hoy</h4>
+                        <div id="todayList" class="max-h-[250px] overflow-y-auto"></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- REGISTER TAB -->
+        <div id="tab-register" class="tab-content">
+            <div class="flex justify-between items-center mb-xl">
+                <h2 class="font-headline-lg text-headline-lg text-on-surface">Directorio de Usuarios</h2>
+            </div>
+            
+            <div class="grid grid-cols-1 lg:grid-cols-3 gap-gutter">
+                <div class="glass-panel rounded-xl p-lg lg:col-span-1">
+                    <h3 class="font-headline-sm text-headline-sm text-on-surface mb-md border-b border-outline-variant pb-sm">Registrar Nuevo</h3>
+                    <div class="relative w-full aspect-square bg-surface-container-low rounded-lg overflow-hidden border border-outline-variant mb-md">
+                        <video id="registerCam" class="w-full h-full object-cover" autoplay playsinline></video>
+                        <canvas id="canvasOverlayReg" class="overlay absolute top-0 left-0 w-full h-full pointer-events-none"></canvas>
+                        <div class="absolute inset-0 flex items-center justify-center pointer-events-none">
+                            <div class="w-[140px] h-[180px] border-2 border-dashed border-primary/50 rounded-full"></div>
+                        </div>
+                    </div>
+                    <button class="w-full bg-surface-variant text-on-surface py-2 rounded-lg font-body-md hover:bg-surface-bright transition mb-md" onclick="capturePhoto()">Capturar Foto</button>
+                    
+                    <div class="flex gap-2 mb-md overflow-x-auto pb-2" id="photoPreview"></div>
+                    
+                    <input type="text" id="regName" placeholder="Nombre completo" class="w-full bg-surface-variant border border-outline-variant rounded-lg px-4 py-2 text-on-surface mb-sm focus:outline-none focus:border-primary">
+                    <input type="email" id="regEmail" placeholder="Correo electrónico" class="w-full bg-surface-variant border border-outline-variant rounded-lg px-4 py-2 text-on-surface mb-md focus:outline-none focus:border-primary">
+                    
+                    <button class="w-full bg-secondary text-on-secondary py-3 rounded-lg font-headline-sm shadow-lg hover:opacity-90 transition disabled:opacity-50" id="btnRegister" onclick="registerUser()">Registrar Usuario</button>
+                    <div id="regResult" class="mt-sm text-center text-sm"></div>
+                </div>
+                
+                <div class="glass-panel rounded-xl p-0 lg:col-span-2 flex flex-col h-[600px] overflow-hidden">
+                    <div class="p-lg border-b border-outline-variant bg-surface-container/50">
+                        <h3 class="font-headline-sm text-headline-sm text-on-surface">Lista de Usuarios</h3>
+                    </div>
+                    <div class="flex-1 overflow-y-auto" id="usersList">
+                        <p class="p-lg text-on-surface-variant">Cargando...</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- HISTORY TAB -->
+        <div id="tab-history" class="tab-content">
+            <h2 class="font-headline-lg text-headline-lg text-on-surface mb-xl">Registro Histórico</h2>
+            <div class="glass-panel rounded-xl overflow-hidden flex flex-col h-[700px]">
+                <div class="flex-1 overflow-y-auto" id="historyList">
+                    <p class="p-lg text-on-surface-variant">Cargando...</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- CALENDAR TAB -->
+        <div id="tab-calendar" class="tab-content">
+            <h2 class="font-headline-lg text-headline-lg text-on-surface mb-xl">Calendario de Asistencias</h2>
+            <div class="glass-panel rounded-xl p-lg min-h-[700px]">
+                <div id="calendar"></div>
+            </div>
+        </div>
+
+    </main>
 </div>
 
-<div class="modal" id="pinModal">
-  <div class="modal-content">
-    <h2>PIN de Administracion</h2>
-    <p style="color:#94a3b8;margin-bottom:16px;">Ingresa el PIN para registrar/eliminar usuarios</p>
-    <input type="password" id="pinInput" placeholder="PIN" onkeydown="if(event.key==='Enter')unlock()" autocomplete="off">
-    <div style="display:flex;gap:8px;">
-      <button class="btn btn-primary" onclick="unlock()" style="flex:1;justify-content:center;">Desbloquear</button>
-      <button class="btn btn-secondary" onclick="closePinModal()" style="justify-content:center;">Cancelar</button>
+<!-- PIN Modal -->
+<div id="pinModal" class="fixed inset-0 bg-black/60 backdrop-blur-sm flex items-center justify-center z-[100] opacity-0 pointer-events-none transition-opacity duration-200">
+    <div class="bg-surface-container-high p-lg rounded-xl shadow-2xl w-full max-w-sm border border-outline-variant">
+        <h2 class="font-headline-sm text-headline-sm text-on-surface mb-sm">PIN de Seguridad</h2>
+        <p class="text-body-sm text-on-surface-variant mb-md">Ingresa el PIN para habilitar acciones administrativas.</p>
+        <input type="password" id="pinInput" placeholder="PIN" class="w-full bg-surface-variant border border-outline-variant rounded-lg px-4 py-3 text-on-surface mb-md focus:outline-none focus:border-primary text-center tracking-widest text-lg" onkeydown="if(event.key==='Enter')unlock()">
+        <div class="flex gap-sm">
+            <button class="flex-1 bg-surface-variant text-on-surface py-2 rounded-lg hover:bg-surface-bright transition" onclick="closePinModal()">Cancelar</button>
+            <button class="flex-1 bg-primary text-on-primary py-2 rounded-lg hover:bg-primary-container transition" onclick="unlock()">Desbloquear</button>
+        </div>
     </div>
-  </div>
 </div>
 
-<div class="modal modal-xl" id="userDetailModal">
-  <div class="modal-content">
-    <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:16px;">
-      <h2 id="detailUserName">Usuario</h2>
-      <button class="btn-icon" onclick="closeUserDetail()" title="Cerrar" style="font-size:1.5rem;">&times;</button>
+<!-- User Detail Modal -->
+<div id="userDetailModal" class="fixed inset-0 bg-black/60 backdrop-blur-sm flex items-center justify-center z-[100] opacity-0 pointer-events-none transition-opacity duration-200">
+    <div class="bg-surface-container p-lg rounded-xl shadow-2xl w-full max-w-3xl border border-outline-variant max-h-[90vh] overflow-y-auto">
+        <div class="flex justify-between items-start mb-lg border-b border-outline-variant pb-md">
+            <div>
+                <h2 class="font-headline-lg text-headline-lg text-on-surface" id="detailUserName">Usuario</h2>
+                <p class="font-body-md text-on-surface-variant" id="detailEmail">-</p>
+            </div>
+            <button class="text-on-surface-variant hover:text-on-surface bg-surface-variant hover:bg-surface-bright w-10 h-10 rounded-full flex items-center justify-center transition" onclick="closeUserDetail()">
+                <span class="material-symbols-outlined">close</span>
+            </button>
+        </div>
+        
+        <div class="grid grid-cols-2 gap-md mb-lg">
+            <div class="bg-surface-container-high p-md rounded-lg border border-outline-variant/50">
+                <p class="font-label-md text-on-surface-variant uppercase">Registrado el</p>
+                <p class="font-headline-sm text-on-surface" id="detailCreated">-</p>
+            </div>
+            <div class="bg-surface-container-high p-md rounded-lg border border-outline-variant/50">
+                <p class="font-label-md text-on-surface-variant uppercase">Total Asistencias</p>
+                <p class="font-headline-sm text-primary" id="detailTotal">0</p>
+            </div>
+        </div>
+
+        <h3 class="font-headline-sm text-on-surface mb-sm">Fotos Recientes (7 días)</h3>
+        <div id="detailPhotos" class="grid grid-cols-2 sm:grid-cols-4 gap-md mb-lg"></div>
+
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-lg">
+            <div>
+                <h3 class="font-headline-sm text-on-surface mb-sm">Hoy</h3>
+                <div id="detailToday" class="bg-surface-container-low rounded-lg border border-outline-variant/50 p-2 overflow-x-auto"></div>
+            </div>
+            <div>
+                <h3 class="font-headline-sm text-on-surface mb-sm">Historial</h3>
+                <div id="detailHistory" class="bg-surface-container-low rounded-lg border border-outline-variant/50 p-2 overflow-x-auto"></div>
+            </div>
+        </div>
     </div>
-    <div class="user-info-bar">
-      <div class="user-info-item"><div class="lbl">Email</div><div class="val" id="detailEmail">-</div></div>
-      <div class="user-info-item"><div class="lbl">Registrado</div><div class="val" id="detailCreated">-</div></div>
-      <div class="user-info-item"><div class="lbl">Total Asistencias</div><div class="val" id="detailTotal">0</div></div>
-    </div>
-    <div style="margin-bottom:12px;">
-      <strong style="color:#94a3b8;font-size:0.85rem;">Fotos de Ingreso y Salida (ultimos 7 dias)</strong>
-    </div>
-    <div id="detailPhotos" style="margin-bottom:16px;">
-      <p style="color:#64748b;font-size:0.85rem;">Cargando...</p>
-    </div>
-    <div style="margin-bottom:8px;">
-      <strong style="color:#94a3b8;font-size:0.85rem;">Asistencias de Hoy</strong>
-    </div>
-    <div id="detailToday" style="margin-bottom:16px;">
-      <p style="color:#64748b;font-size:0.85rem;">Sin asistencias hoy</p>
-    </div>
-    <div style="margin-bottom:8px;">
-      <strong style="color:#94a3b8;font-size:0.85rem;">Historial Reciente</strong>
-    </div>
-    <div id="detailHistory"><p style="color:#64748b;font-size:0.85rem;">Cargando...</p></div>
-  </div>
 </div>
 
 <script>
-let adminPin = sessionStorage.getItem('adminPin') || '';
-let attendanceStream = null;
-let registerStream = null;
+// --- CORE UI UTILS ---
+document.getElementById('systemDate').textContent = new Date().toLocaleDateString('es-CO', {weekday: 'long', year: 'numeric', month: 'long', day: 'numeric', timeZone: 'America/Bogota'});
 
-function showPinModal() { document.getElementById('pinModal').classList.add('active'); document.getElementById('pinInput').focus(); }
-function closePinModal() { document.getElementById('pinModal').classList.remove('active'); document.getElementById('pinInput').value = ''; }
-
-function unlock() {
-  const pin = document.getElementById('pinInput').value.trim();
-  if (!pin) return;
-  adminPin = pin;
-  sessionStorage.setItem('adminPin', pin);
-  closePinModal();
-  updateAuthUI();
-  showMessage('PIN aceptado', 'success');
-}
-
-function updateAuthUI() {
-  const badge = document.getElementById('authBadge');
-  const btn = document.getElementById('btnUnlock');
-  const regBtn = document.getElementById('btnRegister');
-  if (adminPin) {
-    badge.className = 'badge-unlocked';
-    badge.innerHTML = '<svg width="10" height="10" viewBox="0 0 24 24" fill="currentColor" style="vertical-align:middle;margin-right:2px;"><rect x="3" y="11" width="18" height="11" rx="2" ry="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg> Desbloqueado';
-    btn.textContent = 'Bloquear';
-    if (regBtn) regBtn.innerHTML = '<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 5v14M5 12h14"/></svg> Registrar Usuario';
-  } else {
-    badge.className = 'badge-locked';
-    badge.innerHTML = '<svg width="10" height="10" viewBox="0 0 24 24" fill="currentColor" style="vertical-align:middle;margin-right:2px;"><rect x="3" y="11" width="18" height="11" rx="2" ry="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg> Bloqueado';
-    btn.textContent = 'Desbloquear';
-    if (regBtn) regBtn.innerHTML = '<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="11" width="18" height="11" rx="2" ry="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg> Registrar Usuario';
-  }
-}
-
-function playBeep(success) {
-  try {
-    const ctx = new (window.AudioContext||window.webkitAudioContext)();
-    const o = ctx.createOscillator(), g = ctx.createGain();
-    o.connect(g); g.connect(ctx.destination); g.gain.value = 0.3;
-    if (success) { o.frequency.value = 880; o.start(); g.gain.exponentialRampToValueAtTime(0.001, ctx.currentTime+0.15); o.stop(ctx.currentTime+0.15); }
-    else { o.frequency.value = 440; o.start(); g.gain.exponentialRampToValueAtTime(0.001, ctx.currentTime+0.3); o.stop(ctx.currentTime+0.3); }
-    if (navigator.vibrate) navigator.vibrate(success ? 100 : 200);
-  } catch(e) {}
-}
-
-function flashScreen(success) {
-  const el = document.getElementById('flashOverlay');
-  el.className = 'flash-overlay ' + (success ? 'success' : 'error');
-  setTimeout(() => el.className = 'flash-overlay', 300);
-}
-
-async function startCamera(videoId) {
-  try {
-    const stream = await navigator.mediaDevices.getUserMedia({ video: { width: 640, height: 480, facingMode: "user" } });
-    document.getElementById(videoId).srcObject = stream;
-    if (videoId === 'attendanceCam') { attendanceStream = stream; startFaceDetect(videoId, 'canvasOverlay'); }
-    else { registerStream = stream; startFaceDetect(videoId, 'canvasOverlayReg'); }
-  } catch (e) {
-    showMessage("Error al acceder a la camara: " + e.message, "error");
-  }
-}
-
-function captureFrameBlob(videoId) {
-  return new Promise(resolve => {
-    const video = document.getElementById(videoId);
-    const canvas = document.createElement('canvas');
-    canvas.width = video.videoWidth; canvas.height = video.videoHeight;
-    const ctx = canvas.getContext('2d');
-    ctx.drawImage(video, 0, 0);
-    canvas.toBlob(blob => resolve(blob), 'image/jpeg', 0.9);
-  });
-}
-
-function showMessage(msg, type, el) {
-  const m = document.getElementById(el || 'message');
-  m.textContent = msg; m.className = type; m.style.display = 'block';
-  setTimeout(() => m.style.display = 'none', 5000);
-}
-
-async function detectFaceLoop(videoId, canvasId) {
-  const video = document.getElementById(videoId);
-  const canvas = document.getElementById(canvasId);
-  if (!video || !canvas || video.readyState < 2) return;
-  try {
-    const blob = await captureFrameBlob(videoId);
-    const fd = new FormData(); fd.append('image', blob, 'f.jpg');
-    const res = await fetch('/api/face/detect', { method: 'POST', body: fd });
-    if (!res.ok) { drawNoFace(canvas); return; }
-    const data = await res.json();
-    if (data.success && data.bbox) drawFaceBox(canvas, video, data.bbox);
-    else drawNoFace(canvas);
-  } catch(e) { drawNoFace(canvas); }
-}
-
-function drawFaceBox(canvas, video, bbox) {
-  const ctx = canvas.getContext('2d');
-  canvas.width = canvas.clientWidth; canvas.height = canvas.clientHeight;
-  ctx.clearRect(0, 0, canvas.width, canvas.height);
-  const [x1, y1, x2, y2] = bbox;
-  const sx = canvas.width / (video.videoWidth||640);
-  const sy = canvas.height / (video.videoHeight||480);
-  ctx.strokeStyle = '#22c55e'; ctx.lineWidth = 3;
-  ctx.strokeRect(x1*sx, y1*sy, (x2-x1)*sx, (y2-y1)*sy);
-  ctx.fillStyle = 'rgba(34,197,94,0.15)';
-  ctx.fillRect(x1*sx, y1*sy, (x2-x1)*sx, (y2-y1)*sy);
-}
-
-function drawNoFace(canvas) {
-  const ctx = canvas.getContext('2d');
-  canvas.width = canvas.clientWidth; canvas.height = canvas.clientHeight;
-  ctx.clearRect(0, 0, canvas.width, canvas.height);
-}
-
-function startFaceDetect(videoId, canvasId) {
-  setInterval(() => detectFaceLoop(videoId, canvasId), 2000);
+function showMessage(msg, type='info') {
+    const el = document.getElementById('message');
+    el.textContent = msg;
+    el.className = `absolute top-20 right-8 z-[200] px-6 py-4 rounded-lg shadow-xl font-body-md transition-all duration-300 opacity-100 translate-y-0 ${
+        type === 'success' ? 'bg-secondary/20 text-secondary border border-secondary/50' : 
+        type === 'error' ? 'bg-error/20 text-error border border-error/50' : 
+        'bg-primary/20 text-primary border border-primary/50'
+    }`;
+    setTimeout(() => {
+        el.classList.remove('opacity-100', 'translate-y-0');
+        el.classList.add('opacity-0', '-translate-y-4');
+    }, 3000);
 }
 
 function switchTab(name) {
-  document.querySelectorAll('.tab-content').forEach(el => el.classList.remove('active'));
-  document.querySelectorAll('.tab').forEach(el => el.classList.remove('active'));
-  document.querySelector(`.tab[onclick*="'${name}'"]`).classList.add('active');
-  document.getElementById('tab-'+name).classList.add('active');
-  if (name === 'dashboard') loadDashboard();
-  if (name === 'attendance') loadToday();
-  if (name === 'register') { loadUsers(); updateAuthUI(); }
-  if (name === 'history') loadHistory();
+    document.querySelectorAll('.tab-content').forEach(el => el.classList.remove('active'));
+    document.querySelectorAll('.nav-item').forEach(el => {
+        el.classList.remove('active', 'bg-secondary/10', 'text-secondary', 'border-secondary');
+        el.classList.add('text-on-surface-variant');
+    });
+    
+    document.getElementById('tab-'+name).classList.add('active');
+    const activeBtn = document.querySelector(`.nav-item[onclick*="'${name}'"]`);
+    if(activeBtn) {
+        activeBtn.classList.add('active', 'bg-secondary/10', 'text-secondary', 'border-secondary');
+        activeBtn.classList.remove('text-on-surface-variant');
+    }
+
+    if (name === 'dashboard') loadDashboard();
+    if (name === 'attendance') loadToday();
+    if (name === 'register') { loadUsers(); updateAuthUI(); }
+    if (name === 'history') loadHistory();
+    if (name === 'calendar') loadCalendar();
 }
 
+// --- PIN SECURITY ---
+let adminPin = sessionStorage.getItem('adminPin') || '';
+function showPinModal() { 
+    const m = document.getElementById('pinModal');
+    m.classList.remove('opacity-0', 'pointer-events-none');
+    document.getElementById('pinInput').focus(); 
+}
+function closePinModal() { 
+    const m = document.getElementById('pinModal');
+    m.classList.add('opacity-0', 'pointer-events-none');
+    document.getElementById('pinInput').value = ''; 
+}
+function unlock() {
+    const pin = document.getElementById('pinInput').value.trim();
+    if (!pin) return;
+    adminPin = pin;
+    sessionStorage.setItem('adminPin', pin);
+    closePinModal();
+    updateAuthUI();
+    showMessage('PIN ingresado', 'success');
+}
+function updateAuthUI() {
+    const txt = document.getElementById('authBadgeText');
+    if (adminPin) {
+        txt.innerHTML = 'Seguridad <span class="bg-secondary/20 text-secondary px-2 py-0.5 rounded text-[10px] ml-2 border border-secondary/50">Desbloqueado</span>';
+    } else {
+        txt.innerHTML = 'Seguridad <span class="bg-error/20 text-error px-2 py-0.5 rounded text-[10px] ml-2 border border-error/50">Bloqueado</span>';
+    }
+}
+
+// --- CAMERA UTILS ---
+let streams = {};
+async function startCamera(id) {
+    if (streams[id]) return;
+    try {
+        const stream = await navigator.mediaDevices.getUserMedia({ video: { width: 640, height: 480, facingMode: "user" } });
+        document.getElementById(id).srcObject = stream;
+        streams[id] = stream;
+        const canvasId = id === 'attendanceCam' ? 'canvasOverlayAtt' : 'canvasOverlayReg';
+        startFaceDetect(id, canvasId);
+    } catch(e) {
+        showMessage(`Error cámara (${id}): ${e.message}`, 'error');
+    }
+}
+function captureFrameBlob(id) {
+    return new Promise(r => {
+        const v = document.getElementById(id);
+        const c = document.createElement('canvas');
+        c.width = v.videoWidth; c.height = v.videoHeight;
+        c.getContext('2d').drawImage(v, 0, 0);
+        c.toBlob(b => r(b), 'image/jpeg', 0.9);
+    });
+}
+async function detectFaceLoop(videoId, canvasId) {
+    const canvas = document.getElementById(canvasId);
+    const video = document.getElementById(videoId);
+    if (!canvas || !video || video.readyState < 2) return;
+    try {
+        const blob = await captureFrameBlob(videoId);
+        const fd = new FormData(); fd.append('image', blob, 'f.jpg');
+        const res = await fetch('/api/face/detect', { method: 'POST', body: fd });
+        if (!res.ok) { drawNoFace(canvas); return; }
+        const data = await res.json();
+        if (data.success && data.bbox) drawBox(canvas, video, data.bbox);
+        else drawNoFace(canvas);
+    } catch(e) { drawNoFace(canvas); }
+}
+function drawBox(canvas, video, bbox) {
+    const ctx = canvas.getContext('2d');
+    canvas.width = canvas.clientWidth; canvas.height = canvas.clientHeight;
+    ctx.clearRect(0, 0, canvas.width, canvas.height);
+    const [x1,y1,x2,y2] = bbox;
+    const sx = canvas.width / (video.videoWidth||640);
+    const sy = canvas.height / (video.videoHeight||480);
+    const rw = (x2-x1)*sx;
+    const rx = canvas.width - (x1*sx) - rw;
+    ctx.strokeStyle = '#adc6ff'; ctx.lineWidth = 3;
+    ctx.strokeRect(rx, y1*sy, rw, (y2-y1)*sy);
+    ctx.fillStyle = 'rgba(173, 198, 255, 0.15)';
+    ctx.fillRect(rx, y1*sy, rw, (y2-y1)*sy);
+}
+function drawNoFace(canvas) {
+    const ctx = canvas.getContext('2d');
+    canvas.width = canvas.clientWidth; canvas.height = canvas.clientHeight;
+    ctx.clearRect(0, 0, canvas.width, canvas.height);
+}
+function startFaceDetect(videoId, canvasId) {
+    setInterval(() => detectFaceLoop(videoId, canvasId), 2000);
+}
+function playBeep(success) {
+    try {
+        const ctx = new (window.AudioContext||window.webkitAudioContext)();
+        const o = ctx.createOscillator(), g = ctx.createGain();
+        o.connect(g); g.connect(ctx.destination); g.gain.value = 0.2;
+        if (success) { o.frequency.value = 880; o.start(); g.gain.exponentialRampToValueAtTime(0.001, ctx.currentTime+0.12); o.stop(ctx.currentTime+0.12); }
+        else { o.frequency.value = 440; o.start(); g.gain.exponentialRampToValueAtTime(0.001, ctx.currentTime+0.25); o.stop(ctx.currentTime+0.25); }
+    } catch(e) {}
+}
+
+// --- DASHBOARD API ---
 async function loadDashboard() {
-  try {
-    const res = await fetch('/api/dashboard/summary');
-    const d = await res.json();
-    document.getElementById('statUsers').textContent = d.total_users;
-    document.getElementById('statToday').textContent = d.today_attendances;
-    document.getElementById('statEntries').textContent = d.today_entries;
-    document.getElementById('statExits').textContent = d.today_exits;
-    document.getElementById('statActive').textContent = d.today_users.length;
-    document.getElementById('statAvg').textContent = d.today_attendances > 0 && d.today_users.length > 0
-      ? (d.today_attendances / d.today_users.length).toFixed(1) : '0';
+    try {
+        const res = await fetch('/api/dashboard/summary');
+        const d = await res.json();
+        document.getElementById('statUsers').textContent = d.total_users;
+        document.getElementById('statActive').textContent = d.today_users.length;
+        document.getElementById('statEntries').textContent = d.today_entries;
+        document.getElementById('statExits').textContent = d.today_exits;
 
-    const entriesDiv = document.getElementById('todayEntries');
-    if (!d.today_users.length) {
-      entriesDiv.innerHTML = '<p style="color:#64748b">Sin registros hoy</p>';
-    } else {
-      entriesDiv.innerHTML = `<table>
-        <tr><th>Usuario</th><th>Entrada</th><th>Salida</th><th>Marcas</th></tr>
-        ${d.today_users.map(u => {
-          const entry = u.entry ? new Date(u.entry).toLocaleTimeString('es-CO', {hour:'2-digit',minute:'2-digit'}) : '-';
-          const exit = u.exit ? new Date(u.exit).toLocaleTimeString('es-CO', {hour:'2-digit',minute:'2-digit'}) : '-';
-          return `<tr>
-            <td><strong>${u.user_name}</strong></td>
-            <td><span class="entry-chip chip-in"><svg width="10" height="10" viewBox="0 0 24 24" fill="currentColor"><circle cx="12" cy="12" r="6"/></svg> ${entry}</span></td>
-            <td><span class="entry-chip chip-out"><svg width="10" height="10" viewBox="0 0 24 24" fill="currentColor"><circle cx="12" cy="12" r="6"/></svg> ${exit}</span></td>
-            <td>${u.total_marks}</td>
-          </tr>`;
-        }).join('')}</table>`;
-    }
+        const entriesDiv = document.getElementById('todayEntries');
+        if (!d.today_users.length) {
+            entriesDiv.innerHTML = '<div class="p-lg text-center text-on-surface-variant font-body-sm">Sin registros hoy</div>';
+        } else {
+            let html = `<table class="w-full text-left border-collapse">
+                <thead class="sticky top-0 bg-surface-container-high/80 backdrop-blur-md z-10">
+                    <tr>
+                        <th class="py-sm px-lg font-label-md text-on-surface-variant border-b border-outline-variant/50">USUARIO</th>
+                        <th class="py-sm px-lg font-label-md text-on-surface-variant border-b border-outline-variant/50">ENTRADA</th>
+                        <th class="py-sm px-lg font-label-md text-on-surface-variant border-b border-outline-variant/50">SALIDA</th>
+                        <th class="py-sm px-lg font-label-md text-on-surface-variant border-b border-outline-variant/50">MARCAS</th>
+                    </tr>
+                </thead>
+                <tbody class="divide-y divide-outline-variant/30">`;
+            d.today_users.forEach(u => {
+                const entry = u.entry ? new Date(u.entry).toLocaleTimeString('es-CO', {hour:'2-digit',minute:'2-digit',timeZone:'America/Bogota'}) : '-';
+                const exit = u.exit ? new Date(u.exit).toLocaleTimeString('es-CO', {hour:'2-digit',minute:'2-digit',timeZone:'America/Bogota'}) : '-';
+                const eCls = u.entry ? 'text-secondary' : 'text-on-surface-variant';
+                const xCls = u.exit ? 'text-error' : 'text-on-surface-variant';
+                html += `<tr class="hover:bg-surface-variant/30 transition-colors group">
+                    <td class="py-md px-lg font-body-md text-on-surface font-medium">${u.user_name}</td>
+                    <td class="py-md px-lg font-body-sm ${eCls}">${entry}</td>
+                    <td class="py-md px-lg font-body-sm ${xCls}">${exit}</td>
+                    <td class="py-md px-lg font-body-sm text-on-surface-variant">${u.total_marks}</td>
+                </tr>`;
+            });
+            html += `</tbody></table>`;
+            entriesDiv.innerHTML = html;
+        }
 
-    const chartDiv = document.getElementById('weeklyChart');
-    if (!d.weekly || !d.weekly.length) {
-      chartDiv.innerHTML = '<p style="color:#64748b">Sin datos esta semana</p>';
-    } else {
-      const maxMarks = Math.max(...d.weekly.map(w => w.marks), 1);
-      chartDiv.innerHTML = `<div class="week-bar">${d.weekly.map(w => {
-        const h = Math.max(4, (w.marks / maxMarks) * 90);
-        const dayName = new Date(w.day + 'T00:00:00').toLocaleDateString('es-CO', {weekday:'short'});
-        return `<div class="bar-item"><div class="bar" style="height:${h}px" title="${w.marks} marcas, ${w.unique_users} usuarios"></div><div class="bar-label">${dayName}</div><div class="bar-label" style="font-size:0.65rem">${w.marks}</div></div>`;
-      }).join('')}</div>`;
+        const chartDiv = document.getElementById('weeklyChart');
+        if (!d.weekly || !d.weekly.length) {
+            chartDiv.innerHTML = '<p class="text-on-surface-variant w-full text-center">Sin datos esta semana</p>';
+        } else {
+            const maxMarks = Math.max(...d.weekly.map(w => w.marks), 1);
+            let cHtml = `<div class="week-bar w-full">`;
+            d.weekly.forEach(w => {
+                const h = Math.max(10, (w.marks / maxMarks) * 100);
+                const dayName = new Date(w.day + 'T00:00:00').toLocaleDateString('es-CO', {weekday:'short',timeZone:'America/Bogota'});
+                cHtml += `<div class="bar-item"><div class="bar" style="height:${h}%" title="${w.marks} marcas"></div><div class="bar-label">${dayName}</div></div>`;
+            });
+            cHtml += `</div>`;
+            chartDiv.innerHTML = cHtml;
+        }
+    } catch(e) { 
+        console.error(e);
+        showMessage("Error al cargar dashboard", "error"); 
     }
-  } catch(e) {
-    showMessage("Error al cargar dashboard", "error");
-  }
 }
 
+// --- ATTENDANCE API ---
 async function markAttendance() {
-  const btn = document.getElementById('btnAttendance');
-  btn.disabled = true; btn.textContent = 'Procesando...';
-  const div = document.getElementById('attendanceResult');
-  let blob;
-  try {
-    blob = await captureFrameBlob('attendanceCam');
-    if (!blob || blob.size < 1000) throw new Error('Camara sin imagen');
-  } catch(e) {
-    div.innerHTML = `<div style="background:#7f1d1d;padding:16px;border-radius:8px;"><h3 style="color:#fecaca;">Error de camara</h3><p style="color:#fca5a5;font-size:0.85rem;">${e.message}</p></div>`;
-    btn.disabled = false;
-    btn.innerHTML = '<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg> Marcar Asistencia';
-    return;
-  }
-  const fd = new FormData(); fd.append('image', blob, 'c.jpg');
-  try {
-    const controller = new AbortController();
-    const timeout = setTimeout(() => controller.abort(), 15000);
-    const res = await fetch('/api/attendance/mark', { method: 'POST', body: fd, signal: controller.signal });
-    clearTimeout(timeout);
-    const data = await res.json();
-    if (data.success) {
-      const typeLabel = data.type === 'entry' ? 'Entrada' : 'Salida';
-      const photoHtml = data.photo_url ? `<img src="${data.photo_url}" style="width:60px;height:60px;border-radius:8px;object-fit:cover;margin-top:8px;">` : '';
-      div.innerHTML = `<div style="background:#166534;padding:16px;border-radius:8px;"><div style="display:flex;align-items:center;gap:12px;">${photoHtml}<div><h3 style="color:#bbf7d0;">${data.user_name}</h3><p style="color:#86efac;">${typeLabel} · ${(data.confidence*100).toFixed(1)}% de confianza</p></div></div></div>`;
-      playBeep(true); flashScreen(true);
-    } else {
-      div.innerHTML = `<div style="background:#7f1d1d;padding:16px;border-radius:8px;"><h3 style="color:#fecaca;">${data.detail||data.message}</h3></div>`;
-      playBeep(false); flashScreen(false);
+    const btn = document.getElementById('btnAttendance');
+    btn.disabled = true; btn.innerHTML = '<span class="material-symbols-outlined">sync</span> Procesando...';
+    const div = document.getElementById('attendanceResult');
+    let blob;
+    try {
+        blob = await captureFrameBlob('attendanceCam');
+        if (!blob || blob.size < 1000) throw new Error('Cámara sin imagen');
+    } catch(e) {
+        div.innerHTML = `<div class="bg-error/10 p-md rounded-lg border border-error/30 text-error w-full"><h3 class="font-headline-sm">Error</h3><p class="font-body-sm">${e.message}</p></div>`;
+        btn.disabled = false; btn.innerHTML = '<span class="material-symbols-outlined">how_to_reg</span> Marcar Asistencia';
+        return;
     }
-    loadToday();
-  } catch(e) { div.innerHTML = `<div style="background:#7f1d1d;padding:16px"><h3 style="color:#fecaca;">Error de conexion</h3></div>`; }
-  btn.disabled = false;
-  btn.innerHTML = '<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg> Marcar Asistencia';
-}
-
-async function registerUser() {
-  if (!adminPin) { showPinModal(); return; }
-  const name = document.getElementById('regName').value.trim();
-  if (!name) { showMessage("Nombre requerido", "error"); return; }
-  const email = document.getElementById('regEmail').value.trim();
-  const btn = document.getElementById('btnRegister');
-  btn.disabled = true; btn.textContent = 'Registrando...';
-  let blob;
-  try {
-    blob = await captureFrameBlob('registerCam');
-    if (!blob || blob.size < 1000) throw new Error('Camara sin imagen');
-  } catch(e) {
-    showMessage("Error capturando imagen: " + e.message, "error");
-    btn.disabled = false;
-    btn.innerHTML = '<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 5v14M5 12h14"/></svg> Registrar Usuario';
-    return;
-  }
-  const fd = new FormData();
-  fd.append('name', name); if (email) fd.append('email', email);
-  fd.append('image', blob, 'c.jpg');
-  try {
-    const controller = new AbortController();
-    const timeout = setTimeout(() => controller.abort(), 20000);
-    const res = await fetch('/api/users/register', { method: 'POST', body: fd, headers: {'X-Admin-Pin': adminPin}, signal: controller.signal });
-    clearTimeout(timeout);
-    const data = await res.json();
-    if (data.success) {
-      showMessage(data.message, "success"); playBeep(true);
-      document.getElementById('regName').value = ''; document.getElementById('regEmail').value = '';
-      loadUsers();
-    } else {
-      showMessage(data.detail||data.message, "error");
-      if (res.status === 401) { adminPin = ''; sessionStorage.removeItem('adminPin'); updateAuthUI(); }
+    const fd = new FormData(); fd.append('image', blob, 'c.jpg');
+    try {
+        const controller = new AbortController();
+        const timeout = setTimeout(() => controller.abort(), 15000);
+        const res = await fetch('/api/attendance/mark', { method: 'POST', body: fd, signal: controller.signal });
+        clearTimeout(timeout);
+        const data = await res.json();
+        if (data.success) {
+            const typeLabel = data.type === 'entry' ? 'Entrada Registrada' : 'Salida Registrada';
+            const color = data.type === 'entry' ? 'secondary' : 'error';
+            const photoHtml = data.photo_url ? `<img src="${data.photo_url}" class="w-16 h-16 rounded-full border-2 border-${color} object-cover">` : '';
+            div.innerHTML = `<div class="bg-${color}/10 p-lg rounded-xl border border-${color}/30 text-${color} w-full flex items-center justify-center gap-md">
+                ${photoHtml}
+                <div class="text-left">
+                    <h3 class="font-headline-sm">${data.user_name}</h3>
+                    <p class="font-body-sm">${typeLabel} · ${(data.confidence*100).toFixed(1)}% conf.</p>
+                </div>
+            </div>`;
+            playBeep(true);
+        } else {
+            div.innerHTML = `<div class="bg-error/10 p-lg rounded-xl border border-error/30 text-error w-full">
+                <h3 class="font-headline-sm">No reconocido</h3><p class="font-body-sm">${data.detail||data.message}</p>
+            </div>`;
+            playBeep(false);
+        }
+        loadToday();
+    } catch(e) {
+        div.innerHTML = `<div class="bg-error/10 p-lg rounded-xl border border-error/30 text-error w-full"><h3 class="font-headline-sm">Error de Red</h3></div>`;
     }
-  } catch(e) {
-    if (e.name === 'AbortError') showMessage("Error: la solicitud tardó demasiado", "error");
-    else showMessage("Error de conexion: " + e.message, "error");
-  }
-  btn.disabled = false;
-  btn.innerHTML = '<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 5v14M5 12h14"/></svg> Registrar Usuario';
-}
-
-async function deleteUser(userId, userName) {
-  if (!adminPin) { showPinModal(); return; }
-  if (!confirm(`Eliminar a "${userName}"?`)) return;
-  try {
-    const res = await fetch(`/api/users/${userId}`, { method: 'DELETE', headers: {'X-Admin-Pin': adminPin} });
-    const data = await res.json();
-    if (data.success) { showMessage(data.message, "success"); loadUsers(); }
-    else { showMessage(data.detail||data.message, "error"); if (res.status===401) { adminPin=''; sessionStorage.removeItem('adminPin'); updateAuthUI(); } }
-  } catch(e) { showMessage("Error de conexion", "error"); }
-}
-
-async function loadUsers() {
-  try {
-    const res = await fetch('/api/users/');
-    const users = await res.json();
-    const div = document.getElementById('usersList');
-    if (!users.length) { div.innerHTML = '<p style="color:#64748b">Sin usuarios registrados</p>'; return; }
-    div.innerHTML = `<table><tr><th>ID</th><th>Nombre</th><th>Email</th><th></th></tr>${users.map(u =>
-      `<tr><td>${u.id}</td><td><a href="#" onclick="showUserDetail(${u.id});return false" style="color:#60a5fa;text-decoration:none;">${u.name}</a></td><td>${u.email||'-'}</td>
-        <td style="display:flex;gap:4px;">
-          <button class="btn-icon" onclick="showUserDetail(${u.id})" title="Ver detalles">
-            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/><circle cx="12" cy="12" r="3"/></svg>
-          </button>
-          <button class="btn-icon danger" onclick="deleteUser(${u.id},'${u.name.replace(/'/g,"\\'")}')" title="Eliminar">
-            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="3 6 5 6 21 6"/><path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"/><line x1="10" y1="11" x2="10" y2="17"/><line x1="14" y1="11" x2="14" y2="17"/></svg>
-          </button>
-        </td></tr>`
-    ).join('')}</table>`;
-  } catch(e) { document.getElementById('usersList').innerHTML = '<p style="color:#ef4444">Error</p>'; }
+    btn.disabled = false; btn.innerHTML = '<span class="material-symbols-outlined">how_to_reg</span> Marcar Asistencia';
 }
 
 async function loadToday() {
-  try {
-    const res = await fetch('/api/attendance/today');
-    const records = await res.json();
-    const div = document.getElementById('todayList');
-    if (!records.length) { div.innerHTML = '<p style="color:#64748b">Sin asistencias hoy</p>'; return; }
-    div.innerHTML = `<table><tr><th>Usuario</th><th>Hora</th><th>Tipo</th><th>Confianza</th><th></th></tr>${records.map(r => {
-      const typeLabel = r.type === 'entry' ? '<span class="entry-chip chip-in">Entrada</span>' : r.type === 'exit' ? '<span class="entry-chip chip-out">Salida</span>' : '-';
-      const photo = r.photo_url ? `<img src="${r.photo_url}" style="width:40px;height:40px;border-radius:6px;object-fit:cover;cursor:pointer" onclick="window.open('${r.photo_url}')">` : '';
-      return `<tr><td>${r.user_name}</td><td>${new Date(r.timestamp).toLocaleTimeString()}</td><td>${typeLabel}</td><td>${r.confidence ? (r.confidence*100).toFixed(1)+'%' : 'N/A'}</td><td>${photo}</td></tr>`;
-    }).join('')}</table>`;
-  } catch(e) { document.getElementById('todayList').innerHTML = '<p style="color:#ef4444">Error</p>'; }
+    try {
+        const res = await fetch('/api/attendance/today');
+        const records = await res.json();
+        const div = document.getElementById('todayList');
+        if (!records.length) { div.innerHTML = '<p class="text-on-surface-variant text-sm">Sin asistencias hoy</p>'; return; }
+        
+        let html = `<div class="space-y-2">`;
+        records.forEach(r => {
+            const typeLabel = r.type === 'entry' ? 'Entrada' : r.type === 'exit' ? 'Salida' : '-';
+            const bg = r.type === 'entry' ? 'bg-secondary/10 text-secondary' : 'bg-error/10 text-error';
+            html += `<div class="flex items-center justify-between p-2 rounded-lg bg-surface-container-high border border-outline-variant/30">
+                <div class="font-body-sm text-on-surface"><span class="font-medium">${r.user_name}</span> <span class="text-on-surface-variant text-xs ml-2">${new Date(r.timestamp).toLocaleTimeString('es-CO', {timeZone:'America/Bogota', hour:'2-digit', minute:'2-digit'})}</span></div>
+                <div class="${bg} px-2 py-0.5 rounded text-[10px] uppercase font-bold tracking-wider">${typeLabel}</div>
+            </div>`;
+        });
+        html += `</div>`;
+        div.innerHTML = html;
+    } catch(e) { document.getElementById('todayList').innerHTML = '<p class="text-error">Error</p>'; }
 }
 
+// --- REGISTRATION API ---
+let photos = [];
+function capturePhoto() {
+    const v = document.getElementById('registerCam');
+    if(v.readyState < 2) return showMessage('Cámara no lista','error');
+    if(photos.length >= 3) return showMessage('Máximo 3 fotos','error');
+    const c = document.createElement('canvas'); c.width = v.videoWidth; c.height = v.videoHeight;
+    c.getContext('2d').drawImage(v,0,0);
+    c.toBlob(b => {
+        photos.push(b);
+        const url = URL.createObjectURL(b);
+        const el = document.createElement('div');
+        el.className = 'w-16 h-16 shrink-0 rounded border border-primary overflow-hidden relative';
+        el.innerHTML = `<img src="${url}" class="w-full h-full object-cover"><button onclick="removePhoto(${photos.length-1}, this.parentElement)" class="absolute top-0 right-0 bg-error text-white w-5 h-5 flex items-center justify-center rounded-bl">&times;</button>`;
+        document.getElementById('photoPreview').appendChild(el);
+    }, 'image/jpeg', 0.9);
+}
+function removePhoto(idx, el) { photos[idx]=null; el.remove(); }
+
+async function registerUser() {
+    const name = document.getElementById('regName').value.trim();
+    const email = document.getElementById('regEmail').value.trim();
+    const validPhotos = photos.filter(p => p !== null);
+    if (!name) return showMessage("Falta nombre", "error");
+    if (validPhotos.length === 0) return showMessage("Toma al menos 1 foto", "error");
+    if (!adminPin) return showPinModal();
+
+    const btn = document.getElementById('btnRegister');
+    btn.disabled = true; btn.textContent = 'Procesando...';
+    
+    const fd = new FormData();
+    fd.append('name', name);
+    if(email) fd.append('email', email);
+    fd.append('admin_pin', adminPin);
+    validPhotos.forEach((p, i) => fd.append('photos', p, `p${i}.jpg`));
+
+    try {
+        const res = await fetch('/api/users/register', { method: 'POST', body: fd });
+        const data = await res.json();
+        if (res.ok) {
+            showMessage(`Usuario ${data.name} registrado con éxito`, 'success');
+            document.getElementById('regName').value = '';
+            document.getElementById('regEmail').value = '';
+            photos = [];
+            document.getElementById('photoPreview').innerHTML = '';
+            loadUsers();
+        } else {
+            showMessage(data.detail || 'Error al registrar', 'error');
+        }
+    } catch(e) { showMessage('Error de conexión', 'error'); }
+    btn.disabled = false; btn.textContent = 'Registrar Usuario';
+}
+
+async function loadUsers() {
+    try {
+        const res = await fetch('/api/users/');
+        const users = await res.json();
+        const div = document.getElementById('usersList');
+        if (!users.length) { div.innerHTML = '<p class="p-lg text-on-surface-variant">Sin usuarios</p>'; return; }
+        
+        let html = `<table class="w-full text-left border-collapse">
+            <thead class="sticky top-0 bg-surface-container-high/80 backdrop-blur-md z-10">
+                <tr>
+                    <th class="py-sm px-lg font-label-md text-on-surface-variant border-b border-outline-variant/50">ID / NOMBRE</th>
+                    <th class="py-sm px-lg font-label-md text-on-surface-variant border-b border-outline-variant/50">ASISTENCIAS</th>
+                    <th class="py-sm px-lg font-label-md text-on-surface-variant border-b border-outline-variant/50">ACCIONES</th>
+                </tr>
+            </thead>
+            <tbody class="divide-y divide-outline-variant/30">`;
+            
+        users.forEach(u => {
+            html += `<tr class="hover:bg-surface-variant/30 transition-colors">
+                <td class="py-md px-lg">
+                    <div class="font-body-md text-on-surface font-medium">${u.name}</div>
+                    <div class="font-body-sm text-on-surface-variant text-xs">ID: ${u.id} ${!u.active ? '<span class="bg-error/20 text-error px-1 rounded ml-1">Inactivo</span>' : ''}</div>
+                </td>
+                <td class="py-md px-lg font-body-sm text-on-surface-variant">${u.total_attendances}</td>
+                <td class="py-md px-lg flex gap-2">
+                    <button onclick="showUserDetail(${u.id})" class="bg-primary/20 text-primary hover:bg-primary/40 px-3 py-1 rounded text-sm transition">Detalles</button>
+                    <button onclick="deleteUser(${u.id})" class="bg-error/20 text-error hover:bg-error/40 px-3 py-1 rounded text-sm transition">Eliminar</button>
+                </td>
+            </tr>`;
+        });
+        html += `</tbody></table>`;
+        div.innerHTML = html;
+    } catch(e) { document.getElementById('usersList').innerHTML = '<p class="text-error p-lg">Error</p>'; }
+}
+
+async function deleteUser(id) {
+    if (!adminPin) return showPinModal();
+    if (!confirm('¿Seguro que deseas eliminar este usuario y sus fotos?')) return;
+    try {
+        const res = await fetch(`/api/users/${id}?admin_pin=${adminPin}`, { method: 'DELETE' });
+        if (res.ok) {
+            showMessage('Usuario eliminado', 'success');
+            loadUsers();
+        } else {
+            const data = await res.json();
+            showMessage(data.detail, 'error');
+        }
+    } catch(e) { showMessage('Error', 'error'); }
+}
+
+// --- HISTORY API ---
 async function loadHistory() {
-  try {
-    const res = await fetch('/api/attendance/history?limit=200');
-    const records = await res.json();
-    const div = document.getElementById('historyList');
-    if (!records.length) { div.innerHTML = '<p style="color:#64748b">Sin registros</p>'; return; }
-    div.innerHTML = `<table><tr><th>Usuario</th><th>Fecha</th><th>Tipo</th><th>Confianza</th></tr>${records.map(r => {
-      const typeLabel = r.type === 'entry' ? '<span class="entry-chip chip-in">Entrada</span>' : r.type === 'exit' ? '<span class="entry-chip chip-out">Salida</span>' : '-';
-      return `<tr><td>${r.user_name}</td><td>${new Date(r.timestamp).toLocaleString()}</td><td>${typeLabel}</td><td>${r.confidence ? (r.confidence*100).toFixed(1)+'%' : 'N/A'}</td></tr>`;
-    }).join('')}</table>`;
-  } catch(e) { document.getElementById('historyList').innerHTML = '<p style="color:#ef4444">Error</p>'; }
+    try {
+        const res = await fetch('/api/attendance/history?limit=200');
+        const records = await res.json();
+        const div = document.getElementById('historyList');
+        if (!records.length) { div.innerHTML = '<p class="p-lg text-on-surface-variant">Sin registros</p>'; return; }
+        
+        let html = `<table class="w-full text-left border-collapse">
+            <thead class="sticky top-0 bg-surface-container-high/80 backdrop-blur-md z-10">
+                <tr>
+                    <th class="py-sm px-lg font-label-md text-on-surface-variant border-b border-outline-variant/50">USUARIO</th>
+                    <th class="py-sm px-lg font-label-md text-on-surface-variant border-b border-outline-variant/50">FECHA/HORA</th>
+                    <th class="py-sm px-lg font-label-md text-on-surface-variant border-b border-outline-variant/50">TIPO</th>
+                    <th class="py-sm px-lg font-label-md text-on-surface-variant border-b border-outline-variant/50">CONFIANZA</th>
+                </tr>
+            </thead>
+            <tbody class="divide-y divide-outline-variant/30">`;
+        records.forEach(r => {
+            const typeLabel = r.type === 'entry' 
+                ? '<span class="inline-flex items-center px-2 py-1 rounded-sm bg-secondary/10 text-secondary font-label-md text-[10px] border border-secondary/20 uppercase">Entrada</span>' 
+                : '<span class="inline-flex items-center px-2 py-1 rounded-sm bg-error/10 text-error font-label-md text-[10px] border border-error/20 uppercase">Salida</span>';
+            html += `<tr class="hover:bg-surface-variant/30 transition-colors">
+                <td class="py-md px-lg font-body-md text-on-surface font-medium">${r.user_name}</td>
+                <td class="py-md px-lg font-body-sm text-on-surface-variant">${new Date(r.timestamp).toLocaleString('es-CO', {dateStyle:'medium', timeStyle:'short', timeZone:'America/Bogota'})}</td>
+                <td class="py-md px-lg">${typeLabel}</td>
+                <td class="py-md px-lg font-body-sm text-on-surface-variant">${r.confidence ? (r.confidence*100).toFixed(1)+'%' : 'N/A'}</td>
+            </tr>`;
+        });
+        html += `</tbody></table>`;
+        div.innerHTML = html;
+    } catch(e) { document.getElementById('historyList').innerHTML = '<p class="text-error p-lg">Error</p>'; }
 }
 
+// --- USER DETAIL MODAL ---
 async function showUserDetail(userId) {
-  const modal = document.getElementById('userDetailModal');
-  modal.classList.add('active');
-  document.getElementById('detailPhotos').innerHTML = '<p style="color:#64748b;font-size:0.85rem;">Cargando...</p>';
-  document.getElementById('detailToday').innerHTML = '<p style="color:#64748b;font-size:0.85rem;">Cargando...</p>';
-  document.getElementById('detailHistory').innerHTML = '<p style="color:#64748b;font-size:0.85rem;">Cargando...</p>';
-  try {
-    const res = await fetch(`/api/users/${userId}`);
-    const u = await res.json();
-    document.getElementById('detailUserName').textContent = u.name;
-    document.getElementById('detailEmail').textContent = u.email || '-';
-    document.getElementById('detailCreated').textContent = new Date(u.created_at).toLocaleDateString('es-CO');
-    document.getElementById('detailTotal').textContent = u.total_attendances;
+    const modal = document.getElementById('userDetailModal');
+    modal.classList.remove('opacity-0', 'pointer-events-none');
+    document.getElementById('detailPhotos').innerHTML = '<p class="text-on-surface-variant col-span-2">Cargando...</p>';
+    document.getElementById('detailToday').innerHTML = '<p class="text-on-surface-variant">Cargando...</p>';
+    document.getElementById('detailHistory').innerHTML = '<p class="text-on-surface-variant">Cargando...</p>';
+    
+    try {
+        const res = await fetch(`/api/users/${userId}`);
+        const u = await res.json();
+        document.getElementById('detailUserName').textContent = u.name;
+        document.getElementById('detailEmail').textContent = u.email || 'Sin correo';
+        document.getElementById('detailCreated').textContent = new Date(u.created_at).toLocaleDateString('es-CO', {timeZone:'America/Bogota'});
+        document.getElementById('detailTotal').textContent = u.total_attendances;
 
-    if (u.today_attendances.length) {
-      document.getElementById('detailToday').innerHTML = `<table><tr><th>Hora</th><th>Tipo</th><th>Confianza</th><th></th></tr>${u.today_attendances.map(a => {
-        const typeLabel = a.type === 'entry' ? '<span class="entry-chip chip-in">Entrada</span>' : a.type === 'exit' ? '<span class="entry-chip chip-out">Salida</span>' : '-';
-        const photo = a.photo_url ? `<img src="${a.photo_url}" style="width:36px;height:36px;border-radius:6px;object-fit:cover;cursor:pointer" onclick="window.open('${a.photo_url}')">` : '';
-        return `<tr><td>${new Date(a.timestamp).toLocaleTimeString()}</td><td>${typeLabel}</td><td>${a.confidence ? (a.confidence*100).toFixed(1)+'%' : 'N/A'}</td><td>${photo}</td></tr>`;
-      }).join('')}</table>`;
-    } else {
-      document.getElementById('detailToday').innerHTML = '<p style="color:#64748b;font-size:0.85rem;">Sin asistencias hoy</p>';
-    }
+        if (u.today_attendances.length) {
+            let h = `<table class="w-full text-left text-sm text-on-surface-variant"><tr class="border-b border-outline-variant/50 text-on-surface"><th>Hora</th><th>Tipo</th><th>Conf.</th></tr>`;
+            u.today_attendances.forEach(a => {
+                const typeLabel = a.type === 'entry' ? '<span class="text-secondary">Entrada</span>' : '<span class="text-error">Salida</span>';
+                h += `<tr><td class="py-1">${new Date(a.timestamp).toLocaleTimeString('es-CO', {hour:'2-digit',minute:'2-digit',timeZone:'America/Bogota'})}</td><td>${typeLabel}</td><td>${a.confidence?(a.confidence*100).toFixed(0)+'%':''}</td></tr>`;
+            });
+            document.getElementById('detailToday').innerHTML = h + `</table>`;
+        } else {
+            document.getElementById('detailToday').innerHTML = '<p class="text-sm text-on-surface-variant">Sin asistencias hoy</p>';
+        }
 
-    const hist = u.recent_attendances;
-    if (hist.length) {
-      document.getElementById('detailHistory').innerHTML = `<table><tr><th>Fecha</th><th>Tipo</th><th>Confianza</th></tr>${hist.slice(0,10).map(a =>
-        `<tr><td>${new Date(a.timestamp).toLocaleString()}</td><td>${a.type === 'entry' ? 'Entrada' : a.type === 'exit' ? 'Salida' : '-'}</td><td>${a.confidence ? (a.confidence*100).toFixed(1)+'%' : 'N/A'}</td></tr>`
-      ).join('')}</table>`;
-    } else {
-      document.getElementById('detailHistory').innerHTML = '<p style="color:#64748b;font-size:0.85rem;">Sin registros</p>';
-    }
-  } catch(e) {
-    document.getElementById('detailToday').innerHTML = '<p style="color:#ef4444;">Error al cargar detalles</p>';
-  }
-  try {
-    const res = await fetch(`/api/users/${userId}/photos?days=7`);
-    const photos = await res.json();
-    const div = document.getElementById('detailPhotos');
-    if (!photos.length) {
-      div.innerHTML = '<p style="color:#64748b;font-size:0.85rem;">Sin fotos esta semana</p>';
-    } else {
-      div.innerHTML = `<div class="photo-grid">${photos.map(p => {
-        const entry = p.entry ? `<div class="photo-card"><img src="${p.entry}"><div class="label"><span class="type-tag type-entry">Entrada</span><span>${p.entry_confidence ? (p.entry_confidence*100).toFixed(0)+'%' : ''}</span></div></div>` : '';
-        const exit = p.exit ? `<div class="photo-card"><img src="${p.exit}"><div class="label"><span class="type-tag type-exit">Salida</span><span>${p.exit_confidence ? (p.exit_confidence*100).toFixed(0)+'%' : ''}</span></div></div>` : '';
-        return entry || exit ? `<div style="margin-bottom:8px;"><div style="font-size:0.75rem;color:#64748b;margin-bottom:4px;">${new Date(p.date+'T00:00:00').toLocaleDateString('es-CO',{weekday:'long',day:'numeric',month:'short'})}</div><div class="photo-grid">${entry}${exit}</div></div>` : '';
-      }).join('')}</div>`;
-    }
-  } catch(e) {
-    document.getElementById('detailPhotos').innerHTML = '<p style="color:#ef4444;">Error al cargar fotos</p>';
-  }
+        if (u.recent_attendances.length) {
+            let h = `<table class="w-full text-left text-sm text-on-surface-variant"><tr class="border-b border-outline-variant/50 text-on-surface"><th>Fecha</th><th>Tipo</th></tr>`;
+            u.recent_attendances.slice(0,10).forEach(a => {
+                h += `<tr><td class="py-1">${new Date(a.timestamp).toLocaleString('es-CO', {dateStyle:'short',timeStyle:'short',timeZone:'America/Bogota'})}</td><td>${a.type==='entry'?'Entrada':'Salida'}</td></tr>`;
+            });
+            document.getElementById('detailHistory').innerHTML = h + `</table>`;
+        } else {
+            document.getElementById('detailHistory').innerHTML = '<p class="text-sm text-on-surface-variant">Sin registros</p>';
+        }
+    } catch(e) { document.getElementById('detailToday').innerHTML = '<p class="text-error">Error al cargar</p>'; }
+    
+    try {
+        const res = await fetch(`/api/users/${userId}/photos?days=7`);
+        const photos = await res.json();
+        const div = document.getElementById('detailPhotos');
+        if (!photos.length) {
+            div.innerHTML = '<p class="text-sm text-on-surface-variant col-span-2">Sin fotos esta semana</p>';
+        } else {
+            let h = '';
+            photos.forEach(p => {
+                if(p.entry) h += `<div class="bg-surface-container-high rounded-lg overflow-hidden border border-secondary/30"><img src="${p.entry}" class="w-full h-24 object-cover"><div class="p-1 bg-secondary/10 text-secondary text-[10px] text-center font-bold">ENTRADA ${p.date.split('-')[2]}</div></div>`;
+                if(p.exit) h += `<div class="bg-surface-container-high rounded-lg overflow-hidden border border-error/30"><img src="${p.exit}" class="w-full h-24 object-cover"><div class="p-1 bg-error/10 text-error text-[10px] text-center font-bold">SALIDA ${p.date.split('-')[2]}</div></div>`;
+            });
+            div.innerHTML = h;
+        }
+    } catch(e) { document.getElementById('detailPhotos').innerHTML = '<p class="text-error col-span-2">Error fotos</p>'; }
+}
+function closeUserDetail() { document.getElementById('userDetailModal').classList.add('opacity-0', 'pointer-events-none'); }
+
+// --- CALENDAR API ---
+let calendarObj = null;
+async function loadCalendar() {
+    if (calendarObj) { calendarObj.render(); return; }
+    const calendarEl = document.getElementById('calendar');
+    calendarObj = new FullCalendar.Calendar(calendarEl, {
+        initialView: 'dayGridMonth',
+        headerToolbar: { left: 'prev,next today', center: 'title', right: 'dayGridMonth,timeGridWeek,timeGridDay' },
+        locale: 'es',
+        buttonText: { today: 'Hoy', month: 'Mes', week: 'Semana', day: 'Día', list: 'Agenda' },
+        slotLabelFormat: { hour: 'numeric', minute: '2-digit', omitZeroMinute: false, meridiem: 'short' },
+        eventTimeFormat: { hour: 'numeric', minute: '2-digit', meridiem: 'short' },
+        height: 'auto',
+        events: async function(info, successCallback, failureCallback) {
+            try {
+                const start = info.startStr;
+                const end = info.endStr;
+                let res;
+                try { res = await fetch(`/api/attendance/calendar?start=${start}&end=${end}`); } 
+                catch(err) { res = await fetch('/api/attendance/history?limit=1000'); }
+                if (!res.ok) {
+                    const r = await fetch('/api/attendance/history?limit=1000');
+                    const data = await r.json();
+                    const evs = data.map(a => ({
+                        title: `${a.user_name} (${a.type==='entry'?'In':'Out'})`,
+                        start: a.timestamp,
+                        color: a.type === 'entry' ? '#00a572' : '#ca8100',
+                    }));
+                    successCallback(evs);
+                    return;
+                }
+                const data = await res.json();
+                const evs = data.map(a => ({
+                    title: `${a.user_name} (${a.type==='entry'?'In':'Out'})`,
+                    start: a.timestamp,
+                    color: a.type === 'entry' ? '#00a572' : '#ca8100',
+                }));
+                successCallback(evs);
+            } catch(e) { failureCallback(e); }
+        }
+    });
+    calendarObj.render();
 }
 
-function closeUserDetail() {
-  document.getElementById('userDetailModal').classList.remove('active');
-}
-
+// --- INIT ---
 updateAuthUI();
-document.querySelectorAll('.tab')[0].classList.add('active');
-document.getElementById('tab-dashboard').classList.add('active');
 startCamera('attendanceCam');
 startCamera('registerCam');
 loadDashboard();

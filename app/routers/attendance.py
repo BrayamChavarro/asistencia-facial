@@ -113,3 +113,31 @@ def attendance_history(
         ]
     finally:
         db.close()
+
+@router.get("/calendar", response_model=list[AttendanceResponse])
+def attendance_calendar(
+    start: str = Query(...),
+    end: str = Query(...),
+):
+    db = get_session()
+    try:
+        from datetime import datetime
+        start_date = datetime.fromisoformat(start.replace('Z', '+00:00'))
+        end_date = datetime.fromisoformat(end.replace('Z', '+00:00'))
+        q = db.query(Attendance, User.name).join(User, Attendance.user_id == User.id)
+        q = q.filter(Attendance.timestamp >= start_date, Attendance.timestamp <= end_date)
+        q = q.order_by(Attendance.timestamp.asc())
+        return [
+            AttendanceResponse(
+                id=a.id,
+                user_id=a.user_id,
+                user_name=name,
+                timestamp=a.timestamp,
+                confidence=a.confidence,
+                type=a.type,
+                photo_url=f"/uploads/{a.image_path}" if a.image_path else None,
+            )
+            for a, name in q.all()
+        ]
+    finally:
+        db.close()

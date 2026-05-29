@@ -1,0 +1,660 @@
+🔒 https://192.168.101.162:8443  (cámara funciona en otros dispositivos)
+⚠️  Acepta la advertencia de certificado no seguro en el navegador
+INFO:     Started server process [7458]
+INFO:     Waiting for application startup.
+INFO:     Application startup complete.
+INFO:     Uvicorn running on https://0.0.0.0:8443 (Press CTRL+C to quit)
+INFO:     192.168.101.10:56900 - "GET / HTTP/1.1" 200 OK
+INFO:     192.168.101.10:56900 - "GET /favicon.ico HTTP/1.1" 404 Not Found
+Applied providers: ['CPUExecutionProvider'], with options: {'CPUExecutionProvider': {}}
+find model: /home/mojodi/.insightface/models/buffalo_l/1k3d68.onnx landmark_3d_68 ['None', 3, 192, 192] 0.0 1.0
+Applied providers: ['CPUExecutionProvider'], with options: {'CPUExecutionProvider': {}}
+find model: /home/mojodi/.insightface/models/buffalo_l/2d106det.onnx landmark_2d_106 ['None', 3, 192, 192] 0.0 1.0
+Applied providers: ['CPUExecutionProvider'], with options: {'CPUExecutionProvider': {}}
+find model: /home/mojodi/.insightface/models/buffalo_l/det_10g.onnx detection [1, 3, '?', '?'] 127.5 128.0
+Applied providers: ['CPUExecutionProvider'], with options: {'CPUExecutionProvider': {}}
+find model: /home/mojodi/.insightface/models/buffalo_l/genderage.onnx genderage ['None', 3, 96, 96] 0.0 1.0
+Applied providers: ['CPUExecutionProvider'], with options: {'CPUExecutionProvider': {}}
+find model: /home/mojodi/.insightface/models/buffalo_l/w600k_r50.onnx recognition ['None', 3, 112, 112] 127.5 127.5
+set det-size: (640, 640)
+INFO:     192.168.101.10:56906 - "POST /api/face/detect HTTP/1.1" 400 Bad Request
+/home/mojodi/asistencia-facial/venv/lib/python3.13/site-packages/insightface/utils/face_align.py:23: FutureWarning: `estimate` is deprecated since version 0.26 and will be removed in version 2.2. Please use `SimilarityTransform.from_estimate` class constructor instead.
+  tform.estimate(lmk, dst)
+INFO:     192.168.101.10:56906 - "POST /api/face/detect HTTP/1.1" 200 OK
+INFO:     192.168.101.10:56906 - "POST /api/face/detect HTTP/1.1" 200 OK
+INFO:     192.168.101.10:56916 - "POST /api/attendance/mark HTTP/1.1" 200 OK
+INFO:     192.168.101.10:56916 - "POST /api/face/detect HTTP/1.1" 200 OK
+INFO:     192.168.101.10:56916 - "POST /api/face/detect HTTP/1.1" 200 OK
+INFO:     192.168.101.10:56916 - "GET /admin HTTP/1.1" 200 OK
+INFO:     192.168.101.10:56916 - "GET /api/dashboard/summary HTTP/1.1" 200 OK
+INFO:     192.168.101.10:56916 - "POST /api/face/detect HTTP/1.1" 200 OK
+INFO:     192.168.101.10:56916 - "POST /api/face/detect HTTP/1.1" 200 OK
+INFO:     192.168.101.10:56916 - "POST /api/face/detect HTTP/1.1" 200 OK
+INFO:     192.168.101.10:56936 - "POST /api/face/detect HTTP/1.1" 200 OK
+INFO:     192.168.101.10:56936 - "POST /api/face/detect HTTP/1.1" 200 OK
+INFO:     192.168.101.10:56916 - "POST /api/face/detect HTTP/1.1" 200 OK
+INFO:     192.168.101.10:56916 - "GET /api/users/ HTTP/1.1" 200 OK
+INFO:     192.168.101.10:56916 - "POST /api/face/detect HTTP/1.1" 200 OK
+INFO:     192.168.101.10:56936 - "POST /api/face/detect HTTP/1.1" 200 OK
+INFO:     192.168.101.10:56936 - "POST /api/face/detect HTTP/1.1" 200 OK
+INFO:     192.168.101.10:56916 - "POST /api/face/detect HTTP/1.1" 200 OK
+INFO:     192.168.101.10:56916 - "POST /api/face/detect HTTP/1.1" 200 OK
+INFO:     192.168.101.10:56936 - "POST /api/face/detect HTTP/1.1" 200 OK
+INFO:     192.168.101.10:56936 - "POST /api/face/detect HTTP/1.1" 200 OK
+INFO:     192.168.101.10:56916 - "POST /api/face/detect HTTP/1.1" 200 OK
+INFO:     192.168.101.10:56916 - "POST /api/face/detect HTTP/1.1" 200 OK
+INFO:     192.168.101.10:56936 - "POST /api/face/detect HTTP/1.1" 200 OK
+INFO:     192.168.101.10:56916 - "POST /api/users/register HTTP/1.1" 200 OK
+INFO:     192.168.101.10:56916 - "GET /api/users/ HTTP/1.1" 200 OK
+INFO:     192.168.101.10:56916 - "POST /api/face/detect HTTP/1.1" 200 OK
+INFO:     192.168.101.10:56936 - "POST /api/face/detect HTTP/1.1" 200 OK
+INFO:     192.168.101.10:56916 - "POST /api/face/detect HTTP/1.1" 200 OK
+INFO:     192.168.101.10:56936 - "POST /api/face/detect HTTP/1.1" 200 OK
+INFO:     192.168.101.10:56936 - "POST /api/face/detect HTTP/1.1" 200 OK
+INFO:     192.168.101.10:56916 - "POST /api/face/detect HTTP/1.1" 200 OK
+INFO:     192.168.101.10:56916 - "POST /api/face/detect HTTP/1.1" 200 OK
+INFO:     192.168.101.10:56936 - "POST /api/face/detect HTTP/1.1" 200 OK
+INFO:     192.168.101.10:56936 - "GET / HTTP/1.1" 200 OK
+INFO:     192.168.101.10:56936 - "POST /api/face/detect HTTP/1.1" 200 OK
+INFO:     192.168.101.10:56916 - "POST /api/face/detect HTTP/1.1" 200 OK
+INFO:     192.168.101.10:56972 - "POST /api/face/detect HTTP/1.1" 200 OK
+INFO:     192.168.101.10:56972 - "POST /api/face/detect HTTP/1.1" 200 OK
+INFO:     192.168.101.10:56972 - "POST /api/face/detect HTTP/1.1" 200 OK
+INFO:     192.168.101.10:56972 - "POST /api/attendance/mark HTTP/1.1" 200 OK
+INFO:     192.168.101.10:56972 - "GET /api/attendance/history?user_id=1&limit=20 HTTP/1.1" 200 OK
+INFO:     192.168.101.10:56972 - "GET /uploads/1_a95ce66ce3af4003bc88245e982436ea.jpg HTTP/1.1" 200 OK
+INFO:     192.168.101.10:56972 - "POST /api/face/detect HTTP/1.1" 200 OK
+INFO:     192.168.101.10:56972 - "POST /api/face/detect HTTP/1.1" 200 OK
+INFO:     192.168.101.10:56972 - "POST /api/face/detect HTTP/1.1" 200 OK
+INFO:     192.168.101.10:56972 - "POST /api/face/detect HTTP/1.1" 200 OK
+INFO:     192.168.101.10:56972 - "POST /api/attendance/mark HTTP/1.1" 200 OK
+INFO:     192.168.101.10:56972 - "POST /api/face/detect HTTP/1.1" 200 OK
+INFO:     192.168.101.10:56972 - "GET /api/attendance/history?user_id=1&limit=20 HTTP/1.1" 200 OK
+INFO:     192.168.101.10:56972 - "GET /uploads/1_82d30a52669643969290fc663b3b72ac.jpg HTTP/1.1" 200 OK
+INFO:     192.168.101.10:56972 - "POST /api/face/detect HTTP/1.1" 200 OK
+INFO:     192.168.101.10:56972 - "POST /api/face/detect HTTP/1.1" 200 OK
+INFO:     192.168.101.10:56972 - "POST /api/face/detect HTTP/1.1" 200 OK
+INFO:     192.168.101.10:56972 - "POST /api/face/detect HTTP/1.1" 200 OK
+INFO:     192.168.101.10:56972 - "POST /api/face/detect HTTP/1.1" 200 OK
+INFO:     192.168.101.10:56972 - "POST /api/face/detect HTTP/1.1" 200 OK
+INFO:     192.168.101.10:56972 - "POST /api/face/detect HTTP/1.1" 200 OK
+INFO:     192.168.101.10:56972 - "POST /api/face/detect HTTP/1.1" 200 OK
+INFO:     192.168.101.10:56972 - "POST /api/face/detect HTTP/1.1" 200 OK
+INFO:     192.168.101.10:56972 - "POST /api/face/detect HTTP/1.1" 200 OK
+INFO:     192.168.101.10:56972 - "POST /api/face/detect HTTP/1.1" 200 OK
+INFO:     192.168.101.10:57040 - "POST /api/face/detect HTTP/1.1" 200 OK
+INFO:     192.168.101.10:57038 - "POST /api/face/detect HTTP/1.1" 200 OK
+INFO:     192.168.101.10:57042 - "POST /api/face/detect HTTP/1.1" 200 OK
+INFO:     192.168.101.10:57040 - "POST /api/face/detect HTTP/1.1" 200 OK
+INFO:     192.168.101.10:57040 - "POST /api/face/detect HTTP/1.1" 200 OK
+INFO:     192.168.101.10:57040 - "POST /api/face/detect HTTP/1.1" 200 OK
+INFO:     192.168.101.10:57040 - "POST /api/face/detect HTTP/1.1" 200 OK
+INFO:     192.168.101.10:57040 - "POST /api/face/detect HTTP/1.1" 200 OK
+INFO:     192.168.101.10:57040 - "POST /api/face/detect HTTP/1.1" 200 OK
+INFO:     192.168.101.10:57040 - "POST /api/face/detect HTTP/1.1" 200 OK
+INFO:     192.168.101.10:57040 - "POST /api/face/detect HTTP/1.1" 200 OK
+INFO:     192.168.101.10:57040 - "POST /api/face/detect HTTP/1.1" 200 OK
+INFO:     192.168.101.10:57040 - "POST /api/face/detect HTTP/1.1" 200 OK
+INFO:     192.168.101.10:57040 - "POST /api/face/detect HTTP/1.1" 200 OK
+INFO:     192.168.101.10:57040 - "POST /api/face/detect HTTP/1.1" 200 OK
+INFO:     192.168.101.10:57040 - "POST /api/face/detect HTTP/1.1" 200 OK
+INFO:     192.168.101.10:57040 - "POST /api/face/detect HTTP/1.1" 200 OK
+INFO:     192.168.101.10:57040 - "POST /api/face/detect HTTP/1.1" 200 OK
+INFO:     192.168.101.10:57040 - "POST /api/face/detect HTTP/1.1" 200 OK
+INFO:     192.168.101.10:57040 - "POST /api/face/detect HTTP/1.1" 200 OK
+INFO:     192.168.101.10:57040 - "POST /api/face/detect HTTP/1.1" 200 OK
+INFO:     192.168.101.10:57040 - "POST /api/face/detect HTTP/1.1" 200 OK
+INFO:     192.168.101.10:57040 - "POST /api/face/detect HTTP/1.1" 200 OK
+INFO:     192.168.101.10:57040 - "POST /api/face/detect HTTP/1.1" 200 OK
+INFO:     192.168.101.10:57040 - "POST /api/face/detect HTTP/1.1" 200 OK
+INFO:     192.168.101.10:57040 - "POST /api/face/detect HTTP/1.1" 200 OK
+INFO:     192.168.101.10:57040 - "POST /api/face/detect HTTP/1.1" 200 OK
+INFO:     192.168.101.10:57040 - "POST /api/face/detect HTTP/1.1" 200 OK
+INFO:     192.168.101.10:57040 - "POST /api/face/detect HTTP/1.1" 200 OK
+INFO:     192.168.101.10:57586 - "GET / HTTP/1.1" 200 OK
+INFO:     192.168.101.10:57586 - "GET /favicon.ico HTTP/1.1" 404 Not Found
+INFO:     192.168.101.10:57586 - "POST /api/face/detect HTTP/1.1" 200 OK
+INFO:     192.168.101.10:57586 - "POST /api/face/detect HTTP/1.1" 200 OK
+INFO:     192.168.101.10:57586 - "POST /api/face/detect HTTP/1.1" 200 OK
+INFO:     192.168.101.10:57586 - "POST /api/face/detect HTTP/1.1" 200 OK
+INFO:     192.168.101.10:57586 - "POST /api/face/detect HTTP/1.1" 200 OK
+INFO:     192.168.101.10:57586 - "POST /api/face/detect HTTP/1.1" 400 Bad Request
+INFO:     192.168.101.10:57586 - "POST /api/attendance/mark HTTP/1.1" 200 OK
+INFO:     192.168.101.10:57586 - "POST /api/face/detect HTTP/1.1" 200 OK
+INFO:     192.168.101.10:57614 - "GET /api/attendance/history?user_id=1&limit=20 HTTP/1.1" 200 OK
+INFO:     192.168.101.10:57614 - "GET /uploads/1_464cfd7d24d648c8a1384042606fff77.jpg HTTP/1.1" 200 OK
+INFO:     192.168.101.10:57614 - "POST /api/face/detect HTTP/1.1" 200 OK
+INFO:     192.168.101.10:57614 - "POST /api/face/detect HTTP/1.1" 200 OK
+INFO:     192.168.101.10:57614 - "POST /api/face/detect HTTP/1.1" 200 OK
+INFO:     192.168.101.10:57614 - "POST /api/face/detect HTTP/1.1" 200 OK
+INFO:     192.168.101.10:57614 - "GET /admin HTTP/1.1" 200 OK
+INFO:     192.168.101.10:57614 - "GET /api/dashboard/summary HTTP/1.1" 200 OK
+INFO:     192.168.101.10:57614 - "POST /api/face/detect HTTP/1.1" 400 Bad Request
+INFO:     192.168.101.10:57614 - "POST /api/face/detect HTTP/1.1" 400 Bad Request
+INFO:     192.168.101.10:57614 - "POST /api/face/detect HTTP/1.1" 400 Bad Request
+INFO:     192.168.101.10:57614 - "POST /api/face/detect HTTP/1.1" 400 Bad Request
+INFO:     192.168.101.10:57614 - "POST /api/face/detect HTTP/1.1" 400 Bad Request
+INFO:     192.168.101.10:57630 - "POST /api/face/detect HTTP/1.1" 400 Bad Request
+INFO:     192.168.101.10:57614 - "POST /api/face/detect HTTP/1.1" 400 Bad Request
+INFO:     192.168.101.10:57630 - "POST /api/face/detect HTTP/1.1" 400 Bad Request
+INFO:     192.168.101.10:57630 - "POST /api/face/detect HTTP/1.1" 400 Bad Request
+INFO:     192.168.101.10:57614 - "POST /api/face/detect HTTP/1.1" 400 Bad Request
+INFO:     192.168.101.10:57614 - "POST /api/face/detect HTTP/1.1" 400 Bad Request
+INFO:     192.168.101.10:57630 - "POST /api/face/detect HTTP/1.1" 400 Bad Request
+INFO:     192.168.101.10:57614 - "POST /api/face/detect HTTP/1.1" 400 Bad Request
+INFO:     192.168.101.10:57630 - "POST /api/face/detect HTTP/1.1" 400 Bad Request
+INFO:     192.168.101.10:57614 - "POST /api/face/detect HTTP/1.1" 200 OK
+INFO:     192.168.101.10:57630 - "POST /api/face/detect HTTP/1.1" 200 OK
+INFO:     192.168.101.10:57630 - "POST /api/face/detect HTTP/1.1" 400 Bad Request
+INFO:     192.168.101.10:57614 - "POST /api/face/detect HTTP/1.1" 400 Bad Request
+INFO:     192.168.101.10:57614 - "POST /api/face/detect HTTP/1.1" 400 Bad Request
+INFO:     192.168.101.10:57630 - "POST /api/face/detect HTTP/1.1" 400 Bad Request
+INFO:     192.168.101.10:57614 - "POST /api/face/detect HTTP/1.1" 400 Bad Request
+INFO:     192.168.101.10:57630 - "POST /api/face/detect HTTP/1.1" 400 Bad Request
+INFO:     192.168.101.10:57630 - "POST /api/face/detect HTTP/1.1" 400 Bad Request
+INFO:     192.168.101.10:57614 - "POST /api/face/detect HTTP/1.1" 400 Bad Request
+INFO:     192.168.101.10:57614 - "POST /api/face/detect HTTP/1.1" 400 Bad Request
+INFO:     192.168.101.10:57630 - "POST /api/face/detect HTTP/1.1" 400 Bad Request
+INFO:     192.168.101.10:57630 - "POST /api/face/detect HTTP/1.1" 400 Bad Request
+INFO:     192.168.101.10:57614 - "POST /api/face/detect HTTP/1.1" 400 Bad Request
+INFO:     192.168.101.10:57614 - "POST /api/face/detect HTTP/1.1" 400 Bad Request
+INFO:     192.168.101.10:57630 - "POST /api/face/detect HTTP/1.1" 400 Bad Request
+INFO:     192.168.101.10:57614 - "POST /api/face/detect HTTP/1.1" 400 Bad Request
+INFO:     192.168.101.10:57630 - "POST /api/face/detect HTTP/1.1" 400 Bad Request
+INFO:     192.168.101.10:57614 - "POST /api/face/detect HTTP/1.1" 400 Bad Request
+INFO:     192.168.101.10:57630 - "POST /api/face/detect HTTP/1.1" 400 Bad Request
+INFO:     192.168.101.10:57630 - "POST /api/face/detect HTTP/1.1" 400 Bad Request
+INFO:     192.168.101.10:57614 - "POST /api/face/detect HTTP/1.1" 400 Bad Request
+INFO:     192.168.101.10:57614 - "POST /api/face/detect HTTP/1.1" 400 Bad Request
+INFO:     192.168.101.10:57630 - "POST /api/face/detect HTTP/1.1" 400 Bad Request
+INFO:     192.168.101.10:57614 - "POST /api/face/detect HTTP/1.1" 200 OK
+INFO:     192.168.101.10:57630 - "POST /api/face/detect HTTP/1.1" 200 OK
+INFO:     192.168.101.10:57614 - "POST /api/face/detect HTTP/1.1" 200 OK
+INFO:     192.168.101.10:57630 - "POST /api/face/detect HTTP/1.1" 200 OK
+INFO:     192.168.101.10:57630 - "POST /api/face/detect HTTP/1.1" 400 Bad Request
+INFO:     192.168.101.10:57614 - "POST /api/face/detect HTTP/1.1" 400 Bad Request
+INFO:     192.168.101.10:57614 - "POST /api/face/detect HTTP/1.1" 400 Bad Request
+INFO:     192.168.101.10:57630 - "POST /api/face/detect HTTP/1.1" 400 Bad Request
+INFO:     192.168.101.10:57630 - "POST /api/face/detect HTTP/1.1" 400 Bad Request
+INFO:     192.168.101.10:57614 - "POST /api/face/detect HTTP/1.1" 400 Bad Request
+INFO:     192.168.101.10:57614 - "POST /api/face/detect HTTP/1.1" 400 Bad Request
+INFO:     192.168.101.10:57630 - "POST /api/face/detect HTTP/1.1" 400 Bad Request
+INFO:     192.168.101.10:57630 - "POST /api/face/detect HTTP/1.1" 400 Bad Request
+INFO:     192.168.101.10:57614 - "POST /api/face/detect HTTP/1.1" 400 Bad Request
+INFO:     192.168.101.10:57614 - "POST /api/face/detect HTTP/1.1" 400 Bad Request
+INFO:     192.168.101.10:57630 - "POST /api/face/detect HTTP/1.1" 400 Bad Request
+INFO:     192.168.101.10:57630 - "POST /api/face/detect HTTP/1.1" 400 Bad Request
+INFO:     192.168.101.10:57614 - "POST /api/face/detect HTTP/1.1" 400 Bad Request
+INFO:     192.168.101.10:57614 - "POST /api/face/detect HTTP/1.1" 400 Bad Request
+INFO:     192.168.101.10:57630 - "POST /api/face/detect HTTP/1.1" 400 Bad Request
+INFO:     192.168.101.10:57614 - "POST /api/face/detect HTTP/1.1" 200 OK
+INFO:     192.168.101.10:57630 - "POST /api/face/detect HTTP/1.1" 200 OK
+INFO:     192.168.101.10:57630 - "POST /api/face/detect HTTP/1.1" 400 Bad Request
+INFO:     192.168.101.10:57614 - "POST /api/face/detect HTTP/1.1" 200 OK
+INFO:     192.168.101.10:57614 - "POST /api/face/detect HTTP/1.1" 200 OK
+INFO:     192.168.101.10:57630 - "POST /api/face/detect HTTP/1.1" 200 OK
+INFO:     192.168.101.10:57614 - "POST /api/face/detect HTTP/1.1" 200 OK
+INFO:     192.168.101.10:57630 - "POST /api/face/detect HTTP/1.1" 200 OK
+INFO:     192.168.101.10:57614 - "POST /api/face/detect HTTP/1.1" 400 Bad Request
+INFO:     192.168.101.10:57614 - "POST /api/face/detect HTTP/1.1" 200 OK
+INFO:     192.168.101.10:57614 - "POST /api/face/detect HTTP/1.1" 200 OK
+INFO:     192.168.101.10:57630 - "POST /api/face/detect HTTP/1.1" 400 Bad Request
+INFO:     192.168.101.10:57630 - "POST /api/face/detect HTTP/1.1" 200 OK
+INFO:     192.168.101.10:57614 - "POST /api/face/detect HTTP/1.1" 200 OK
+INFO:     192.168.101.10:57614 - "POST /api/face/detect HTTP/1.1" 200 OK
+INFO:     192.168.101.10:57630 - "POST /api/face/detect HTTP/1.1" 200 OK
+INFO:     192.168.101.10:57614 - "GET /api/attendance/today HTTP/1.1" 200 OK
+INFO:     192.168.101.10:57614 - "GET /uploads/1_464cfd7d24d648c8a1384042606fff77.jpg HTTP/1.1" 200 OK
+INFO:     192.168.101.10:57630 - "GET /uploads/1_82d30a52669643969290fc663b3b72ac.jpg HTTP/1.1" 200 OK
+INFO:     192.168.101.10:57614 - "GET /uploads/1_a95ce66ce3af4003bc88245e982436ea.jpg HTTP/1.1" 200 OK
+INFO:     192.168.101.10:57614 - "POST /api/face/detect HTTP/1.1" 200 OK
+INFO:     192.168.101.10:57630 - "POST /api/face/detect HTTP/1.1" 200 OK
+INFO:     192.168.101.10:57614 - "POST /api/face/detect HTTP/1.1" 200 OK
+INFO:     192.168.101.10:57630 - "POST /api/face/detect HTTP/1.1" 200 OK
+INFO:     192.168.101.10:57630 - "POST /api/face/detect HTTP/1.1" 200 OK
+INFO:     192.168.101.10:57614 - "POST /api/face/detect HTTP/1.1" 200 OK
+INFO:     192.168.101.10:57630 - "GET /uploads/1_464cfd7d24d648c8a1384042606fff77.jpg HTTP/1.1" 200 OK
+INFO:     192.168.101.10:57614 - "POST /api/face/detect HTTP/1.1" 200 OK
+INFO:     192.168.101.10:57630 - "POST /api/face/detect HTTP/1.1" 200 OK
+INFO:     192.168.101.10:57614 - "POST /api/face/detect HTTP/1.1" 200 OK
+INFO:     192.168.101.10:57630 - "POST /api/face/detect HTTP/1.1" 200 OK
+INFO:     192.168.101.10:57630 - "POST /api/face/detect HTTP/1.1" 200 OK
+INFO:     192.168.101.10:57614 - "POST /api/face/detect HTTP/1.1" 200 OK
+INFO:     192.168.101.10:57614 - "POST /api/face/detect HTTP/1.1" 200 OK
+INFO:     192.168.101.10:57630 - "POST /api/face/detect HTTP/1.1" 200 OK
+INFO:     192.168.101.10:57614 - "POST /api/face/detect HTTP/1.1" 200 OK
+INFO:     192.168.101.10:57630 - "POST /api/face/detect HTTP/1.1" 200 OK
+INFO:     192.168.101.10:57614 - "GET /uploads/1_82d30a52669643969290fc663b3b72ac.jpg HTTP/1.1" 200 OK
+INFO:     192.168.101.10:57614 - "POST /api/face/detect HTTP/1.1" 200 OK
+INFO:     192.168.101.10:57630 - "POST /api/face/detect HTTP/1.1" 200 OK
+INFO:     192.168.101.10:57630 - "POST /api/face/detect HTTP/1.1" 200 OK
+INFO:     192.168.101.10:57614 - "POST /api/face/detect HTTP/1.1" 200 OK
+INFO:     192.168.101.10:57614 - "POST /api/face/detect HTTP/1.1" 200 OK
+INFO:     192.168.101.10:57630 - "POST /api/face/detect HTTP/1.1" 200 OK
+INFO:     192.168.101.10:57614 - "POST /api/face/detect HTTP/1.1" 200 OK
+INFO:     192.168.101.10:57630 - "POST /api/face/detect HTTP/1.1" 200 OK
+INFO:     192.168.101.10:57630 - "POST /api/face/detect HTTP/1.1" 200 OK
+INFO:     192.168.101.10:57614 - "POST /api/face/detect HTTP/1.1" 200 OK
+INFO:     192.168.101.10:57630 - "POST /api/face/detect HTTP/1.1" 200 OK
+INFO:     192.168.101.10:57614 - "POST /api/face/detect HTTP/1.1" 200 OK
+INFO:     192.168.101.10:57614 - "POST /api/face/detect HTTP/1.1" 200 OK
+INFO:     192.168.101.10:57630 - "POST /api/face/detect HTTP/1.1" 200 OK
+INFO:     192.168.101.10:57614 - "POST /api/face/detect HTTP/1.1" 200 OK
+INFO:     192.168.101.10:57630 - "POST /api/face/detect HTTP/1.1" 200 OK
+INFO:     192.168.101.10:57630 - "POST /api/face/detect HTTP/1.1" 200 OK
+INFO:     192.168.101.10:57614 - "POST /api/face/detect HTTP/1.1" 200 OK
+INFO:     192.168.101.10:57614 - "POST /api/face/detect HTTP/1.1" 200 OK
+INFO:     192.168.101.10:57630 - "POST /api/face/detect HTTP/1.1" 200 OK
+INFO:     192.168.101.10:57630 - "POST /api/face/detect HTTP/1.1" 200 OK
+INFO:     192.168.101.10:57614 - "POST /api/face/detect HTTP/1.1" 200 OK
+INFO:     192.168.101.10:57614 - "POST /api/face/detect HTTP/1.1" 200 OK
+INFO:     192.168.101.10:57630 - "POST /api/face/detect HTTP/1.1" 200 OK
+INFO:     192.168.101.10:57630 - "POST /api/face/detect HTTP/1.1" 200 OK
+INFO:     192.168.101.10:57614 - "POST /api/face/detect HTTP/1.1" 200 OK
+INFO:     192.168.101.10:57630 - "POST /api/face/detect HTTP/1.1" 200 OK
+INFO:     192.168.101.10:57614 - "POST /api/face/detect HTTP/1.1" 200 OK
+INFO:     192.168.101.10:57614 - "POST /api/face/detect HTTP/1.1" 200 OK
+INFO:     192.168.101.10:57630 - "POST /api/face/detect HTTP/1.1" 200 OK
+INFO:     192.168.101.10:57630 - "POST /api/face/detect HTTP/1.1" 200 OK
+INFO:     192.168.101.10:57614 - "POST /api/face/detect HTTP/1.1" 200 OK
+INFO:     192.168.101.10:57614 - "POST /api/face/detect HTTP/1.1" 200 OK
+INFO:     192.168.101.10:57630 - "POST /api/face/detect HTTP/1.1" 200 OK
+INFO:     192.168.101.10:57614 - "POST /api/face/detect HTTP/1.1" 200 OK
+INFO:     192.168.101.10:57630 - "POST /api/face/detect HTTP/1.1" 200 OK
+INFO:     192.168.101.10:57630 - "POST /api/face/detect HTTP/1.1" 200 OK
+INFO:     192.168.101.10:57614 - "POST /api/face/detect HTTP/1.1" 200 OK
+INFO:     192.168.101.10:57614 - "POST /api/face/detect HTTP/1.1" 200 OK
+INFO:     192.168.101.10:57630 - "POST /api/face/detect HTTP/1.1" 200 OK
+INFO:     192.168.101.162:33852 - "GET / HTTP/1.1" 200 OK
+INFO:     192.168.101.162:33852 - "GET /favicon.ico HTTP/1.1" 404 Not Found
+INFO:     192.168.101.10:57630 - "POST /api/face/detect HTTP/1.1" 200 OK
+INFO:     192.168.101.10:57614 - "POST /api/face/detect HTTP/1.1" 200 OK
+INFO:     192.168.101.10:57630 - "POST /api/face/detect HTTP/1.1" 200 OK
+INFO:     192.168.101.10:57614 - "POST /api/face/detect HTTP/1.1" 200 OK
+INFO:     192.168.101.162:33852 - "GET /admin HTTP/1.1" 200 OK
+INFO:     192.168.101.10:57614 - "POST /api/face/detect HTTP/1.1" 200 OK
+INFO:     192.168.101.10:57630 - "POST /api/face/detect HTTP/1.1" 200 OK
+INFO:     192.168.101.162:33852 - "GET /api/dashboard/summary HTTP/1.1" 200 OK
+INFO:     192.168.101.10:57630 - "POST /api/face/detect HTTP/1.1" 200 OK
+INFO:     192.168.101.10:57614 - "POST /api/face/detect HTTP/1.1" 200 OK
+INFO:     192.168.101.10:57630 - "POST /api/face/detect HTTP/1.1" 200 OK
+INFO:     192.168.101.10:57614 - "POST /api/face/detect HTTP/1.1" 200 OK
+INFO:     192.168.101.10:57614 - "POST /api/face/detect HTTP/1.1" 200 OK
+INFO:     192.168.101.10:57630 - "POST /api/face/detect HTTP/1.1" 200 OK
+INFO:     192.168.101.162:50362 - "GET /api/users/ HTTP/1.1" 200 OK
+INFO:     192.168.101.10:57630 - "POST /api/face/detect HTTP/1.1" 200 OK
+INFO:     192.168.101.10:57614 - "POST /api/face/detect HTTP/1.1" 200 OK
+INFO:     192.168.101.162:50362 - "GET /api/attendance/today HTTP/1.1" 200 OK
+INFO:     192.168.101.162:50362 - "GET /uploads/1_464cfd7d24d648c8a1384042606fff77.jpg HTTP/1.1" 200 OK
+INFO:     192.168.101.162:45194 - "GET /uploads/1_82d30a52669643969290fc663b3b72ac.jpg HTTP/1.1" 200 OK
+INFO:     192.168.101.162:45206 - "GET /uploads/1_a95ce66ce3af4003bc88245e982436ea.jpg HTTP/1.1" 200 OK
+INFO:     192.168.101.10:57614 - "POST /api/face/detect HTTP/1.1" 200 OK
+INFO:     192.168.101.10:57630 - "POST /api/face/detect HTTP/1.1" 200 OK
+INFO:     192.168.101.162:45206 - "GET /uploads/1_464cfd7d24d648c8a1384042606fff77.jpg HTTP/1.1" 200 OK
+INFO:     192.168.101.10:57630 - "POST /api/face/detect HTTP/1.1" 200 OK
+INFO:     192.168.101.10:57614 - "POST /api/face/detect HTTP/1.1" 200 OK
+INFO:     192.168.101.162:36028 - "GET /api/dashboard/summary HTTP/1.1" 200 OK
+INFO:     192.168.101.162:36028 - "GET /api/attendance/today HTTP/1.1" 200 OK
+INFO:     192.168.101.162:36028 - "GET /api/dashboard/summary HTTP/1.1" 200 OK
+INFO:     192.168.101.10:57696 - "POST /api/face/detect HTTP/1.1" 200 OK
+INFO:     192.168.101.10:57698 - "POST /api/face/detect HTTP/1.1" 200 OK
+INFO:     192.168.101.10:57698 - "POST /api/face/detect HTTP/1.1" 200 OK
+INFO:     192.168.101.10:57696 - "POST /api/face/detect HTTP/1.1" 200 OK
+INFO:     192.168.101.10:57696 - "POST /api/face/detect HTTP/1.1" 200 OK
+INFO:     192.168.101.10:57698 - "POST /api/face/detect HTTP/1.1" 200 OK
+INFO:     192.168.101.10:57698 - "POST /api/face/detect HTTP/1.1" 200 OK
+INFO:     192.168.101.10:57696 - "POST /api/face/detect HTTP/1.1" 200 OK
+INFO:     192.168.101.10:57698 - "POST /api/face/detect HTTP/1.1" 200 OK
+INFO:     192.168.101.10:57696 - "POST /api/face/detect HTTP/1.1" 200 OK
+INFO:     192.168.101.10:57698 - "POST /api/face/detect HTTP/1.1" 200 OK
+INFO:     192.168.101.10:57696 - "POST /api/face/detect HTTP/1.1" 200 OK
+INFO:     192.168.101.10:57696 - "POST /api/face/detect HTTP/1.1" 200 OK
+INFO:     192.168.101.10:57698 - "POST /api/face/detect HTTP/1.1" 200 OK
+INFO:     192.168.101.10:57698 - "POST /api/face/detect HTTP/1.1" 200 OK
+INFO:     192.168.101.10:57696 - "POST /api/face/detect HTTP/1.1" 200 OK
+INFO:     192.168.101.10:57696 - "POST /api/face/detect HTTP/1.1" 200 OK
+INFO:     192.168.101.10:57698 - "POST /api/face/detect HTTP/1.1" 200 OK
+INFO:     192.168.101.10:57698 - "POST /api/face/detect HTTP/1.1" 200 OK
+INFO:     192.168.101.10:57696 - "POST /api/face/detect HTTP/1.1" 200 OK
+INFO:     192.168.101.10:57696 - "POST /api/face/detect HTTP/1.1" 200 OK
+INFO:     192.168.101.10:57698 - "POST /api/face/detect HTTP/1.1" 200 OK
+INFO:     192.168.101.10:57698 - "POST /api/face/detect HTTP/1.1" 200 OK
+INFO:     192.168.101.10:57696 - "POST /api/face/detect HTTP/1.1" 200 OK
+INFO:     192.168.101.10:57698 - "POST /api/face/detect HTTP/1.1" 200 OK
+INFO:     192.168.101.10:57696 - "POST /api/face/detect HTTP/1.1" 200 OK
+INFO:     192.168.101.10:57698 - "POST /api/face/detect HTTP/1.1" 200 OK
+INFO:     192.168.101.10:57696 - "POST /api/face/detect HTTP/1.1" 200 OK
+INFO:     192.168.101.10:57698 - "POST /api/face/detect HTTP/1.1" 200 OK
+INFO:     192.168.101.10:57696 - "POST /api/face/detect HTTP/1.1" 200 OK
+INFO:     192.168.101.10:57698 - "POST /api/face/detect HTTP/1.1" 200 OK
+INFO:     192.168.101.10:57696 - "POST /api/face/detect HTTP/1.1" 200 OK
+INFO:     192.168.101.10:57698 - "POST /api/face/detect HTTP/1.1" 200 OK
+INFO:     192.168.101.10:57696 - "POST /api/face/detect HTTP/1.1" 200 OK
+INFO:     192.168.101.10:57698 - "POST /api/face/detect HTTP/1.1" 200 OK
+INFO:     192.168.101.10:57720 - "POST /api/face/detect HTTP/1.1" 200 OK
+INFO:     192.168.101.10:57722 - "POST /api/face/detect HTTP/1.1" 200 OK
+INFO:     192.168.101.10:57724 - "POST /api/face/detect HTTP/1.1" 200 OK
+INFO:     192.168.101.10:57696 - "POST /api/face/detect HTTP/1.1" 200 OK
+INFO:     192.168.101.10:57698 - "POST /api/face/detect HTTP/1.1" 200 OK
+INFO:     192.168.101.10:57724 - "POST /api/face/detect HTTP/1.1" 200 OK
+INFO:     192.168.101.10:57722 - "POST /api/face/detect HTTP/1.1" 200 OK
+INFO:     192.168.101.10:57722 - "POST /api/face/detect HTTP/1.1" 200 OK
+INFO:     192.168.101.10:57724 - "POST /api/face/detect HTTP/1.1" 200 OK
+INFO:     192.168.101.10:57724 - "POST /api/face/detect HTTP/1.1" 200 OK
+INFO:     192.168.101.10:57722 - "POST /api/face/detect HTTP/1.1" 200 OK
+INFO:     192.168.101.10:57722 - "POST /api/face/detect HTTP/1.1" 200 OK
+INFO:     192.168.101.10:57724 - "POST /api/face/detect HTTP/1.1" 200 OK
+INFO:     192.168.101.10:57724 - "POST /api/face/detect HTTP/1.1" 200 OK
+INFO:     192.168.101.10:57722 - "POST /api/face/detect HTTP/1.1" 200 OK
+INFO:     192.168.101.10:57724 - "POST /api/face/detect HTTP/1.1" 200 OK
+INFO:     192.168.101.10:57722 - "POST /api/face/detect HTTP/1.1" 200 OK
+INFO:     192.168.101.10:57722 - "POST /api/face/detect HTTP/1.1" 200 OK
+INFO:     192.168.101.10:57724 - "POST /api/face/detect HTTP/1.1" 200 OK
+INFO:     192.168.101.10:57724 - "POST /api/face/detect HTTP/1.1" 200 OK
+INFO:     192.168.101.10:57722 - "POST /api/face/detect HTTP/1.1" 200 OK
+INFO:     192.168.101.10:57722 - "POST /api/face/detect HTTP/1.1" 200 OK
+INFO:     192.168.101.10:57724 - "POST /api/face/detect HTTP/1.1" 200 OK
+INFO:     192.168.101.10:57724 - "POST /api/face/detect HTTP/1.1" 200 OK
+INFO:     192.168.101.10:57722 - "POST /api/face/detect HTTP/1.1" 200 OK
+INFO:     192.168.101.10:57722 - "POST /api/face/detect HTTP/1.1" 200 OK
+INFO:     192.168.101.10:57724 - "POST /api/face/detect HTTP/1.1" 200 OK
+INFO:     192.168.101.10:57722 - "POST /api/face/detect HTTP/1.1" 200 OK
+INFO:     192.168.101.10:57724 - "POST /api/face/detect HTTP/1.1" 200 OK
+INFO:     192.168.101.10:57724 - "POST /api/face/detect HTTP/1.1" 200 OK
+INFO:     192.168.101.10:57722 - "POST /api/face/detect HTTP/1.1" 200 OK
+INFO:     192.168.101.10:57722 - "POST /api/face/detect HTTP/1.1" 200 OK
+INFO:     192.168.101.10:57724 - "POST /api/face/detect HTTP/1.1" 200 OK
+INFO:     192.168.101.10:57724 - "POST /api/face/detect HTTP/1.1" 200 OK
+INFO:     192.168.101.10:57722 - "POST /api/face/detect HTTP/1.1" 200 OK
+INFO:     192.168.101.10:57722 - "POST /api/face/detect HTTP/1.1" 200 OK
+INFO:     192.168.101.10:57724 - "POST /api/face/detect HTTP/1.1" 200 OK
+INFO:     192.168.101.10:57722 - "GET /api/dashboard/summary HTTP/1.1" 200 OK
+INFO:     192.168.101.10:57722 - "GET /api/attendance/today HTTP/1.1" 200 OK
+INFO:     192.168.101.10:57722 - "POST /api/face/detect HTTP/1.1" 200 OK
+INFO:     192.168.101.10:57724 - "POST /api/face/detect HTTP/1.1" 200 OK
+INFO:     192.168.101.10:57722 - "POST /api/face/detect HTTP/1.1" 200 OK
+INFO:     192.168.101.10:57724 - "POST /api/face/detect HTTP/1.1" 200 OK
+INFO:     192.168.101.10:57724 - "POST /api/face/detect HTTP/1.1" 200 OK
+INFO:     192.168.101.10:57722 - "POST /api/face/detect HTTP/1.1" 200 OK
+INFO:     192.168.101.10:57722 - "POST /api/face/detect HTTP/1.1" 200 OK
+INFO:     192.168.101.10:57724 - "POST /api/face/detect HTTP/1.1" 200 OK
+INFO:     192.168.101.10:57724 - "POST /api/face/detect HTTP/1.1" 200 OK
+INFO:     192.168.101.10:57722 - "POST /api/face/detect HTTP/1.1" 200 OK
+INFO:     192.168.101.10:57722 - "POST /api/face/detect HTTP/1.1" 200 OK
+INFO:     192.168.101.10:57724 - "POST /api/face/detect HTTP/1.1" 200 OK
+INFO:     192.168.101.10:57724 - "POST /api/face/detect HTTP/1.1" 200 OK
+INFO:     192.168.101.10:57722 - "POST /api/face/detect HTTP/1.1" 200 OK
+INFO:     192.168.101.10:57722 - "POST /api/face/detect HTTP/1.1" 200 OK
+INFO:     192.168.101.10:57724 - "POST /api/face/detect HTTP/1.1" 200 OK
+INFO:     192.168.101.10:57722 - "POST /api/face/detect HTTP/1.1" 200 OK
+INFO:     192.168.101.10:57724 - "POST /api/face/detect HTTP/1.1" 200 OK
+INFO:     192.168.101.10:57724 - "POST /api/face/detect HTTP/1.1" 200 OK
+INFO:     192.168.101.10:57722 - "POST /api/face/detect HTTP/1.1" 200 OK
+INFO:     192.168.101.10:57722 - "POST /api/face/detect HTTP/1.1" 200 OK
+INFO:     192.168.101.10:57724 - "POST /api/face/detect HTTP/1.1" 200 OK
+INFO:     192.168.101.10:57724 - "POST /api/face/detect HTTP/1.1" 200 OK
+INFO:     192.168.101.10:57722 - "POST /api/face/detect HTTP/1.1" 200 OK
+INFO:     192.168.101.10:57724 - "POST /api/face/detect HTTP/1.1" 200 OK
+INFO:     192.168.101.10:57722 - "POST /api/face/detect HTTP/1.1" 200 OK
+INFO:     192.168.101.10:57722 - "POST /api/face/detect HTTP/1.1" 200 OK
+INFO:     192.168.101.10:57724 - "POST /api/face/detect HTTP/1.1" 200 OK
+INFO:     192.168.101.10:57724 - "POST /api/face/detect HTTP/1.1" 200 OK
+INFO:     192.168.101.10:57722 - "POST /api/face/detect HTTP/1.1" 200 OK
+INFO:     192.168.101.10:57724 - "POST /api/face/detect HTTP/1.1" 200 OK
+INFO:     192.168.101.10:57722 - "POST /api/face/detect HTTP/1.1" 200 OK
+INFO:     192.168.101.10:57722 - "POST /api/face/detect HTTP/1.1" 200 OK
+INFO:     192.168.101.10:57724 - "POST /api/face/detect HTTP/1.1" 200 OK
+INFO:     192.168.101.10:57772 - "POST /api/face/detect HTTP/1.1" 200 OK
+INFO:     192.168.101.10:57778 - "POST /api/face/detect HTTP/1.1" 200 OK
+INFO:     192.168.101.10:57774 - "POST /api/face/detect HTTP/1.1" 200 OK
+INFO:     192.168.101.10:57776 - "POST /api/face/detect HTTP/1.1" 200 OK
+INFO:     192.168.101.10:57780 - "POST /api/face/detect HTTP/1.1" 200 OK
+INFO:     192.168.101.10:57772 - "POST /api/face/detect HTTP/1.1" 200 OK
+INFO:     192.168.101.10:57782 - "POST /api/face/detect HTTP/1.1" 200 OK
+INFO:     192.168.101.10:57774 - "POST /api/face/detect HTTP/1.1" 200 OK
+INFO:     192.168.101.10:57776 - "POST /api/face/detect HTTP/1.1" 200 OK
+INFO:     192.168.101.10:57778 - "POST /api/face/detect HTTP/1.1" 200 OK
+INFO:     192.168.101.10:57782 - "POST /api/face/detect HTTP/1.1" 200 OK
+INFO:     192.168.101.10:57774 - "POST /api/face/detect HTTP/1.1" 200 OK
+INFO:     192.168.101.10:57780 - "POST /api/face/detect HTTP/1.1" 200 OK
+INFO:     192.168.101.10:57772 - "POST /api/face/detect HTTP/1.1" 200 OK
+INFO:     192.168.101.10:57776 - "POST /api/face/detect HTTP/1.1" 200 OK
+INFO:     192.168.101.10:57778 - "POST /api/face/detect HTTP/1.1" 200 OK
+INFO:     192.168.101.10:57772 - "POST /api/face/detect HTTP/1.1" 200 OK
+INFO:     192.168.101.10:57776 - "POST /api/face/detect HTTP/1.1" 200 OK
+INFO:     192.168.101.10:57776 - "POST /api/face/detect HTTP/1.1" 200 OK
+INFO:     192.168.101.10:57772 - "POST /api/face/detect HTTP/1.1" 200 OK
+INFO:     192.168.101.10:57772 - "POST /api/face/detect HTTP/1.1" 200 OK
+INFO:     192.168.101.10:57776 - "POST /api/face/detect HTTP/1.1" 200 OK
+INFO:     192.168.101.10:57776 - "POST /api/face/detect HTTP/1.1" 200 OK
+INFO:     192.168.101.10:57772 - "POST /api/face/detect HTTP/1.1" 200 OK
+INFO:     192.168.101.10:57772 - "POST /api/face/detect HTTP/1.1" 200 OK
+INFO:     192.168.101.10:57776 - "POST /api/face/detect HTTP/1.1" 200 OK
+INFO:     192.168.101.10:57772 - "POST /api/face/detect HTTP/1.1" 200 OK
+INFO:     192.168.101.10:57776 - "POST /api/face/detect HTTP/1.1" 200 OK
+INFO:     192.168.101.10:57772 - "POST /api/face/detect HTTP/1.1" 200 OK
+INFO:     192.168.101.10:57776 - "POST /api/face/detect HTTP/1.1" 200 OK
+INFO:     192.168.101.10:57776 - "POST /api/face/detect HTTP/1.1" 200 OK
+INFO:     192.168.101.10:57772 - "POST /api/face/detect HTTP/1.1" 200 OK
+INFO:     192.168.101.10:57772 - "POST /api/face/detect HTTP/1.1" 200 OK
+INFO:     192.168.101.10:57776 - "POST /api/face/detect HTTP/1.1" 200 OK
+INFO:     192.168.101.10:57776 - "POST /api/face/detect HTTP/1.1" 200 OK
+INFO:     192.168.101.10:57772 - "POST /api/face/detect HTTP/1.1" 200 OK
+INFO:     192.168.101.10:57772 - "POST /api/face/detect HTTP/1.1" 200 OK
+INFO:     192.168.101.10:57776 - "POST /api/face/detect HTTP/1.1" 200 OK
+INFO:     192.168.101.10:57802 - "POST /api/face/detect HTTP/1.1" 200 OK
+INFO:     192.168.101.10:57772 - "POST /api/face/detect HTTP/1.1" 200 OK
+INFO:     192.168.101.10:57776 - "POST /api/face/detect HTTP/1.1" 200 OK
+INFO:     192.168.101.10:57802 - "POST /api/face/detect HTTP/1.1" 200 OK
+INFO:     192.168.101.10:57772 - "POST /api/face/detect HTTP/1.1" 200 OK
+INFO:     192.168.101.10:57776 - "POST /api/face/detect HTTP/1.1" 200 OK
+INFO:     192.168.101.10:57776 - "POST /api/face/detect HTTP/1.1" 200 OK
+INFO:     192.168.101.10:57772 - "POST /api/face/detect HTTP/1.1" 200 OK
+INFO:     192.168.101.10:57776 - "POST /api/face/detect HTTP/1.1" 200 OK
+INFO:     192.168.101.10:57772 - "POST /api/face/detect HTTP/1.1" 200 OK
+INFO:     192.168.101.10:57772 - "POST /api/face/detect HTTP/1.1" 200 OK
+INFO:     192.168.101.10:57776 - "POST /api/face/detect HTTP/1.1" 200 OK
+INFO:     192.168.101.10:57776 - "POST /api/face/detect HTTP/1.1" 200 OK
+INFO:     192.168.101.10:57772 - "POST /api/face/detect HTTP/1.1" 200 OK
+INFO:     192.168.101.10:57772 - "POST /api/face/detect HTTP/1.1" 200 OK
+INFO:     192.168.101.10:57776 - "POST /api/face/detect HTTP/1.1" 200 OK
+INFO:     192.168.101.10:57772 - "POST /api/face/detect HTTP/1.1" 200 OK
+INFO:     192.168.101.10:57776 - "POST /api/face/detect HTTP/1.1" 200 OK
+INFO:     192.168.101.10:57776 - "POST /api/face/detect HTTP/1.1" 200 OK
+INFO:     192.168.101.10:57772 - "POST /api/face/detect HTTP/1.1" 200 OK
+INFO:     192.168.101.10:57776 - "POST /api/face/detect HTTP/1.1" 200 OK
+INFO:     192.168.101.10:57772 - "POST /api/face/detect HTTP/1.1" 200 OK
+INFO:     192.168.101.10:57772 - "POST /api/face/detect HTTP/1.1" 200 OK
+INFO:     192.168.101.10:57776 - "POST /api/face/detect HTTP/1.1" 200 OK
+INFO:     192.168.101.10:57776 - "POST /api/face/detect HTTP/1.1" 200 OK
+INFO:     192.168.101.10:57772 - "POST /api/face/detect HTTP/1.1" 200 OK
+INFO:     192.168.101.10:57776 - "POST /api/face/detect HTTP/1.1" 200 OK
+INFO:     192.168.101.10:57772 - "POST /api/face/detect HTTP/1.1" 200 OK
+INFO:     192.168.101.10:57772 - "POST /api/face/detect HTTP/1.1" 200 OK
+INFO:     192.168.101.10:57776 - "POST /api/face/detect HTTP/1.1" 200 OK
+INFO:     192.168.101.10:57776 - "POST /api/face/detect HTTP/1.1" 200 OK
+INFO:     192.168.101.10:57772 - "POST /api/face/detect HTTP/1.1" 200 OK
+INFO:     192.168.101.10:57772 - "POST /api/face/detect HTTP/1.1" 200 OK
+INFO:     192.168.101.10:57776 - "POST /api/face/detect HTTP/1.1" 200 OK
+INFO:     192.168.101.10:57776 - "POST /api/face/detect HTTP/1.1" 200 OK
+INFO:     192.168.101.10:57772 - "POST /api/face/detect HTTP/1.1" 200 OK
+INFO:     192.168.101.10:57772 - "POST /api/face/detect HTTP/1.1" 200 OK
+INFO:     192.168.101.10:57776 - "POST /api/face/detect HTTP/1.1" 200 OK
+INFO:     192.168.101.10:57776 - "POST /api/face/detect HTTP/1.1" 200 OK
+INFO:     192.168.101.10:57772 - "POST /api/face/detect HTTP/1.1" 200 OK
+INFO:     192.168.101.10:57772 - "POST /api/face/detect HTTP/1.1" 200 OK
+INFO:     192.168.101.10:57776 - "POST /api/face/detect HTTP/1.1" 200 OK
+INFO:     192.168.101.10:57776 - "POST /api/face/detect HTTP/1.1" 200 OK
+INFO:     192.168.101.10:57772 - "POST /api/face/detect HTTP/1.1" 200 OK
+INFO:     192.168.101.10:57772 - "POST /api/face/detect HTTP/1.1" 200 OK
+INFO:     192.168.101.10:57776 - "POST /api/face/detect HTTP/1.1" 200 OK
+INFO:     192.168.101.10:57776 - "POST /api/face/detect HTTP/1.1" 200 OK
+INFO:     192.168.101.10:57772 - "POST /api/face/detect HTTP/1.1" 200 OK
+INFO:     192.168.101.10:57776 - "POST /api/face/detect HTTP/1.1" 200 OK
+INFO:     192.168.101.10:57772 - "POST /api/face/detect HTTP/1.1" 200 OK
+INFO:     192.168.101.10:57776 - "POST /api/face/detect HTTP/1.1" 200 OK
+INFO:     192.168.101.10:57772 - "POST /api/face/detect HTTP/1.1" 200 OK
+INFO:     192.168.101.10:57772 - "POST /api/face/detect HTTP/1.1" 200 OK
+INFO:     192.168.101.10:57776 - "POST /api/face/detect HTTP/1.1" 200 OK
+INFO:     192.168.101.10:57776 - "POST /api/face/detect HTTP/1.1" 200 OK
+INFO:     192.168.101.10:57772 - "POST /api/face/detect HTTP/1.1" 200 OK
+INFO:     192.168.101.10:57772 - "POST /api/face/detect HTTP/1.1" 200 OK
+INFO:     192.168.101.10:57776 - "POST /api/face/detect HTTP/1.1" 200 OK
+INFO:     192.168.101.10:57776 - "POST /api/face/detect HTTP/1.1" 200 OK
+INFO:     192.168.101.10:57772 - "POST /api/face/detect HTTP/1.1" 200 OK
+INFO:     192.168.101.10:57776 - "POST /api/face/detect HTTP/1.1" 200 OK
+INFO:     192.168.101.10:57772 - "POST /api/face/detect HTTP/1.1" 200 OK
+INFO:     192.168.101.10:57776 - "POST /api/face/detect HTTP/1.1" 200 OK
+INFO:     192.168.101.10:57772 - "POST /api/face/detect HTTP/1.1" 200 OK
+INFO:     192.168.101.10:57772 - "POST /api/face/detect HTTP/1.1" 200 OK
+INFO:     192.168.101.10:57776 - "POST /api/face/detect HTTP/1.1" 200 OK
+INFO:     192.168.101.10:57776 - "POST /api/face/detect HTTP/1.1" 200 OK
+INFO:     192.168.101.10:57772 - "POST /api/face/detect HTTP/1.1" 200 OK
+INFO:     192.168.101.10:57772 - "POST /api/face/detect HTTP/1.1" 200 OK
+INFO:     192.168.101.10:57776 - "POST /api/face/detect HTTP/1.1" 200 OK
+INFO:     192.168.101.162:36306 - "GET /api/attendance/today HTTP/1.1" 200 OK
+INFO:     192.168.101.10:57776 - "POST /api/face/detect HTTP/1.1" 200 OK
+INFO:     192.168.101.10:57772 - "POST /api/face/detect HTTP/1.1" 200 OK
+INFO:     192.168.101.162:36306 - "GET /api/dashboard/summary HTTP/1.1" 200 OK
+INFO:     192.168.101.10:57772 - "POST /api/face/detect HTTP/1.1" 200 OK
+INFO:     192.168.101.10:57776 - "POST /api/face/detect HTTP/1.1" 200 OK
+INFO:     192.168.101.162:36306 - "GET /api/users/ HTTP/1.1" 200 OK
+INFO:     192.168.101.10:57776 - "POST /api/face/detect HTTP/1.1" 200 OK
+INFO:     192.168.101.10:57772 - "POST /api/face/detect HTTP/1.1" 200 OK
+INFO:     192.168.101.10:57776 - "POST /api/face/detect HTTP/1.1" 200 OK
+INFO:     192.168.101.10:57772 - "POST /api/face/detect HTTP/1.1" 200 OK
+INFO:     192.168.101.10:57776 - "POST /api/face/detect HTTP/1.1" 200 OK
+INFO:     192.168.101.10:57772 - "POST /api/face/detect HTTP/1.1" 200 OK
+INFO:     192.168.101.10:57772 - "POST /api/face/detect HTTP/1.1" 200 OK
+INFO:     192.168.101.10:57776 - "POST /api/face/detect HTTP/1.1" 200 OK
+INFO:     192.168.101.10:57776 - "POST /api/face/detect HTTP/1.1" 200 OK
+INFO:     192.168.101.10:57772 - "POST /api/face/detect HTTP/1.1" 200 OK
+INFO:     192.168.101.162:57568 - "GET /api/attendance/history?limit=200 HTTP/1.1" 200 OK
+INFO:     192.168.101.10:57772 - "POST /api/face/detect HTTP/1.1" 200 OK
+INFO:     192.168.101.10:57776 - "POST /api/face/detect HTTP/1.1" 200 OK
+INFO:     192.168.101.162:57568 - "GET /api/dashboard/summary HTTP/1.1" 200 OK
+INFO:     192.168.101.10:57776 - "POST /api/face/detect HTTP/1.1" 200 OK
+INFO:     192.168.101.10:57772 - "POST /api/face/detect HTTP/1.1" 200 OK
+INFO:     192.168.101.10:57772 - "POST /api/face/detect HTTP/1.1" 200 OK
+INFO:     192.168.101.10:57776 - "POST /api/face/detect HTTP/1.1" 200 OK
+INFO:     192.168.101.10:57776 - "POST /api/face/detect HTTP/1.1" 200 OK
+INFO:     192.168.101.10:57772 - "POST /api/face/detect HTTP/1.1" 200 OK
+INFO:     192.168.101.10:57772 - "POST /api/face/detect HTTP/1.1" 200 OK
+INFO:     192.168.101.10:57776 - "POST /api/face/detect HTTP/1.1" 200 OK
+INFO:     192.168.101.162:36416 - "GET /admin HTTP/1.1" 200 OK
+INFO:     192.168.101.162:36416 - "GET /api/dashboard/summary HTTP/1.1" 200 OK
+INFO:     192.168.101.162:36416 - "GET /favicon.ico HTTP/1.1" 404 Not Found
+INFO:     192.168.101.10:57776 - "POST /api/face/detect HTTP/1.1" 200 OK
+INFO:     192.168.101.10:57772 - "POST /api/face/detect HTTP/1.1" 200 OK
+INFO:     192.168.101.10:57772 - "POST /api/face/detect HTTP/1.1" 200 OK
+INFO:     192.168.101.10:57776 - "POST /api/face/detect HTTP/1.1" 200 OK
+INFO:     192.168.101.162:36416 - "GET /admin HTTP/1.1" 200 OK
+INFO:     192.168.101.162:36416 - "GET /api/dashboard/summary HTTP/1.1" 200 OK
+INFO:     192.168.101.162:36416 - "GET /favicon.ico HTTP/1.1" 404 Not Found
+INFO:     192.168.101.162:36416 - "GET /admin HTTP/1.1" 200 OK
+INFO:     192.168.101.162:36416 - "GET /api/dashboard/summary HTTP/1.1" 200 OK
+INFO:     192.168.101.162:36416 - "GET /favicon.ico HTTP/1.1" 404 Not Found
+INFO:     192.168.101.162:36416 - "GET /admin HTTP/1.1" 200 OK
+INFO:     192.168.101.162:36416 - "GET /api/dashboard/summary HTTP/1.1" 200 OK
+INFO:     192.168.101.162:36416 - "GET /favicon.ico HTTP/1.1" 404 Not Found
+INFO:     192.168.101.162:36416 - "GET /admin HTTP/1.1" 200 OK
+INFO:     192.168.101.162:36416 - "GET /api/dashboard/summary HTTP/1.1" 200 OK
+INFO:     192.168.101.162:36416 - "GET /favicon.ico HTTP/1.1" 404 Not Found
+INFO:     192.168.101.162:36416 - "GET /admin HTTP/1.1" 200 OK
+INFO:     192.168.101.162:36416 - "GET /api/dashboard/summary HTTP/1.1" 200 OK
+INFO:     192.168.101.162:36416 - "GET /favicon.ico HTTP/1.1" 404 Not Found
+INFO:     192.168.101.10:57772 - "POST /api/face/detect HTTP/1.1" 200 OK
+INFO:     192.168.101.10:57776 - "POST /api/face/detect HTTP/1.1" 200 OK
+INFO:     192.168.101.162:36416 - "GET /api/attendance/today HTTP/1.1" 200 OK
+INFO:     192.168.101.162:36416 - "GET /uploads/1_464cfd7d24d648c8a1384042606fff77.jpg HTTP/1.1" 304 Not Modified
+INFO:     192.168.101.162:36428 - "GET /uploads/1_82d30a52669643969290fc663b3b72ac.jpg HTTP/1.1" 304 Not Modified
+INFO:     192.168.101.162:36416 - "GET /uploads/1_a95ce66ce3af4003bc88245e982436ea.jpg HTTP/1.1" 304 Not Modified
+INFO:     192.168.101.10:57776 - "POST /api/face/detect HTTP/1.1" 200 OK
+INFO:     192.168.101.10:57772 - "POST /api/face/detect HTTP/1.1" 200 OK
+INFO:     192.168.101.10:57772 - "POST /api/face/detect HTTP/1.1" 200 OK
+INFO:     192.168.101.10:57776 - "POST /api/face/detect HTTP/1.1" 200 OK
+INFO:     192.168.101.10:57776 - "POST /api/face/detect HTTP/1.1" 200 OK
+INFO:     192.168.101.10:57772 - "POST /api/face/detect HTTP/1.1" 200 OK
+INFO:     192.168.101.10:57772 - "POST /api/face/detect HTTP/1.1" 200 OK
+INFO:     192.168.101.10:57776 - "POST /api/face/detect HTTP/1.1" 200 OK
+INFO:     192.168.101.10:57776 - "POST /api/face/detect HTTP/1.1" 200 OK
+INFO:     192.168.101.10:57772 - "POST /api/face/detect HTTP/1.1" 200 OK
+INFO:     192.168.101.162:40916 - "GET /api/users/ HTTP/1.1" 200 OK
+INFO:     192.168.101.10:57772 - "POST /api/face/detect HTTP/1.1" 200 OK
+INFO:     192.168.101.10:57776 - "POST /api/face/detect HTTP/1.1" 200 OK
+INFO:     192.168.101.162:40916 - "GET /api/users/1 HTTP/1.1" 200 OK
+INFO:     192.168.101.162:40916 - "GET /api/users/1/photos?days=7 HTTP/1.1" 200 OK
+INFO:     192.168.101.10:57772 - "POST /api/face/detect HTTP/1.1" 200 OK
+INFO:     192.168.101.10:57776 - "POST /api/face/detect HTTP/1.1" 200 OK
+INFO:     192.168.101.10:57776 - "POST /api/face/detect HTTP/1.1" 200 OK
+INFO:     192.168.101.10:57772 - "POST /api/face/detect HTTP/1.1" 200 OK
+INFO:     192.168.101.10:57772 - "POST /api/face/detect HTTP/1.1" 200 OK
+INFO:     192.168.101.10:57776 - "POST /api/face/detect HTTP/1.1" 200 OK
+INFO:     192.168.101.10:57776 - "POST /api/face/detect HTTP/1.1" 200 OK
+INFO:     192.168.101.10:57772 - "POST /api/face/detect HTTP/1.1" 200 OK
+INFO:     192.168.101.10:57772 - "POST /api/face/detect HTTP/1.1" 200 OK
+INFO:     192.168.101.10:57776 - "POST /api/face/detect HTTP/1.1" 200 OK
+INFO:     192.168.101.10:57772 - "POST /api/face/detect HTTP/1.1" 200 OK
+INFO:     192.168.101.10:57776 - "POST /api/face/detect HTTP/1.1" 200 OK
+INFO:     192.168.101.10:57776 - "POST /api/face/detect HTTP/1.1" 200 OK
+INFO:     192.168.101.10:57772 - "POST /api/face/detect HTTP/1.1" 200 OK
+INFO:     192.168.101.10:57772 - "POST /api/face/detect HTTP/1.1" 200 OK
+INFO:     192.168.101.10:57776 - "POST /api/face/detect HTTP/1.1" 200 OK
+INFO:     192.168.101.10:57776 - "POST /api/face/detect HTTP/1.1" 200 OK
+INFO:     192.168.101.10:57772 - "POST /api/face/detect HTTP/1.1" 200 OK
+INFO:     192.168.101.10:57772 - "POST /api/face/detect HTTP/1.1" 200 OK
+INFO:     192.168.101.10:57776 - "POST /api/face/detect HTTP/1.1" 200 OK
+INFO:     192.168.101.10:57776 - "POST /api/face/detect HTTP/1.1" 200 OK
+INFO:     192.168.101.10:57772 - "POST /api/face/detect HTTP/1.1" 200 OK
+INFO:     192.168.101.10:57772 - "POST /api/face/detect HTTP/1.1" 200 OK
+INFO:     192.168.101.10:57776 - "POST /api/face/detect HTTP/1.1" 200 OK
+INFO:     192.168.101.10:57772 - "POST /api/face/detect HTTP/1.1" 200 OK
+INFO:     192.168.101.10:57776 - "POST /api/face/detect HTTP/1.1" 200 OK
+INFO:     192.168.101.10:57776 - "POST /api/face/detect HTTP/1.1" 200 OK
+INFO:     192.168.101.10:57772 - "POST /api/face/detect HTTP/1.1" 200 OK
+INFO:     192.168.101.10:57772 - "POST /api/face/detect HTTP/1.1" 200 OK
+INFO:     192.168.101.10:57776 - "POST /api/face/detect HTTP/1.1" 200 OK
+INFO:     192.168.101.10:57776 - "POST /api/face/detect HTTP/1.1" 200 OK
+INFO:     192.168.101.10:57772 - "POST /api/face/detect HTTP/1.1" 200 OK
+INFO:     192.168.101.10:57776 - "POST /api/face/detect HTTP/1.1" 200 OK
+INFO:     192.168.101.10:57772 - "POST /api/face/detect HTTP/1.1" 200 OK
+INFO:     192.168.101.10:57772 - "POST /api/face/detect HTTP/1.1" 200 OK
+INFO:     192.168.101.10:57776 - "POST /api/face/detect HTTP/1.1" 200 OK
+INFO:     192.168.101.10:57776 - "POST /api/face/detect HTTP/1.1" 200 OK
+INFO:     192.168.101.10:57772 - "POST /api/face/detect HTTP/1.1" 200 OK
+INFO:     192.168.101.10:57772 - "POST /api/face/detect HTTP/1.1" 200 OK
+INFO:     192.168.101.10:57776 - "POST /api/face/detect HTTP/1.1" 200 OK
+INFO:     192.168.101.10:57776 - "POST /api/face/detect HTTP/1.1" 200 OK
+INFO:     192.168.101.10:57772 - "POST /api/face/detect HTTP/1.1" 200 OK
+INFO:     192.168.101.10:57772 - "POST /api/face/detect HTTP/1.1" 200 OK
+INFO:     192.168.101.10:57776 - "POST /api/face/detect HTTP/1.1" 200 OK
+INFO:     192.168.101.10:57776 - "POST /api/face/detect HTTP/1.1" 200 OK
+INFO:     192.168.101.10:57772 - "POST /api/face/detect HTTP/1.1" 200 OK
+INFO:     192.168.101.10:57772 - "POST /api/face/detect HTTP/1.1" 200 OK
+INFO:     192.168.101.10:57776 - "POST /api/face/detect HTTP/1.1" 200 OK
+INFO:     192.168.101.10:57772 - "POST /api/face/detect HTTP/1.1" 200 OK
+INFO:     192.168.101.10:57776 - "POST /api/face/detect HTTP/1.1" 200 OK
+INFO:     192.168.101.10:57776 - "POST /api/face/detect HTTP/1.1" 200 OK
+INFO:     192.168.101.10:57772 - "POST /api/face/detect HTTP/1.1" 200 OK
+INFO:     192.168.101.10:57772 - "POST /api/face/detect HTTP/1.1" 200 OK
+INFO:     192.168.101.10:57776 - "POST /api/face/detect HTTP/1.1" 200 OK
+INFO:     192.168.101.10:57776 - "POST /api/face/detect HTTP/1.1" 200 OK
+INFO:     192.168.101.10:57772 - "POST /api/face/detect HTTP/1.1" 200 OK
+INFO:     192.168.101.10:57772 - "POST /api/face/detect HTTP/1.1" 200 OK
+INFO:     192.168.101.10:57776 - "POST /api/face/detect HTTP/1.1" 200 OK
+INFO:     192.168.101.10:57776 - "POST /api/face/detect HTTP/1.1" 200 OK
+INFO:     192.168.101.10:57772 - "POST /api/face/detect HTTP/1.1" 200 OK
+INFO:     192.168.101.10:57772 - "POST /api/face/detect HTTP/1.1" 200 OK
+INFO:     192.168.101.10:57776 - "POST /api/face/detect HTTP/1.1" 200 OK
+INFO:     192.168.101.10:57772 - "POST /api/face/detect HTTP/1.1" 200 OK
+INFO:     192.168.101.10:57776 - "POST /api/face/detect HTTP/1.1" 200 OK
+INFO:     192.168.101.10:57776 - "POST /api/face/detect HTTP/1.1" 200 OK
+INFO:     192.168.101.10:57772 - "POST /api/face/detect HTTP/1.1" 200 OK
+INFO:     192.168.101.10:57776 - "POST /api/face/detect HTTP/1.1" 200 OK
+INFO:     192.168.101.10:57772 - "POST /api/face/detect HTTP/1.1" 200 OK
+INFO:     192.168.101.10:57772 - "POST /api/face/detect HTTP/1.1" 200 OK
+INFO:     192.168.101.10:57776 - "POST /api/face/detect HTTP/1.1" 200 OK
+INFO:     192.168.101.10:57776 - "POST /api/face/detect HTTP/1.1" 200 OK
+INFO:     192.168.101.10:57772 - "POST /api/face/detect HTTP/1.1" 200 OK
+INFO:     192.168.101.10:57772 - "POST /api/face/detect HTTP/1.1" 200 OK
+INFO:     192.168.101.10:57776 - "POST /api/face/detect HTTP/1.1" 200 OK

@@ -1,215 +1,487 @@
 <!DOCTYPE html>
-<html lang="es">
+<html class="dark" lang="es">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Asistencia Facial</title>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Marcar Asistencia - SecureGate AI</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+      tailwind.config = {
+        darkMode: "class",
+        theme: {
+          extend: {
+            "colors": {
+                    "tertiary-container": "#ca8100",
+                    "surface-container-high": "#272a31",
+                    "on-surface-variant": "#c2c6d6",
+                    "surface-container-low": "#191b23",
+                    "inverse-primary": "#005ac2",
+                    "on-primary-fixed-variant": "#004395",
+                    "error": "#ffb4ab",
+                    "on-error-container": "#ffdad6",
+                    "background": "#10131a",
+                    "tertiary-fixed-dim": "#ffb95f",
+                    "primary": "#adc6ff",
+                    "outline-variant": "#424754",
+                    "primary-fixed": "#d8e2ff",
+                    "on-secondary-fixed-variant": "#005236",
+                    "secondary": "#4edea3",
+                    "on-tertiary": "#472a00",
+                    "outline": "#8c909f",
+                    "on-tertiary-container": "#3e2400",
+                    "on-error": "#690005",
+                    "inverse-surface": "#e1e2ec",
+                    "on-tertiary-fixed": "#2a1700",
+                    "surface-container-lowest": "#0b0e15",
+                    "on-secondary-container": "#00311f",
+                    "surface-dim": "#10131a",
+                    "primary-fixed-dim": "#adc6ff",
+                    "on-secondary": "#003824",
+                    "on-primary": "#002e6a",
+                    "secondary-container": "#00a572",
+                    "inverse-on-surface": "#2e3038",
+                    "on-surface": "#e1e2ec",
+                    "surface-tint": "#adc6ff",
+                    "on-primary-container": "#00285d",
+                    "surface-container": "#1d2027",
+                    "tertiary": "#ffb95f",
+                    "on-tertiary-fixed-variant": "#653e00",
+                    "primary-container": "#4d8eff",
+                    "error-container": "#93000a",
+                    "surface-bright": "#363941",
+                    "on-background": "#e1e2ec",
+                    "surface-container-highest": "#32353c",
+                    "secondary-fixed-dim": "#4edea3",
+                    "on-primary-fixed": "#001a42",
+                    "tertiary-fixed": "#ffddb8",
+                    "on-secondary-fixed": "#002113",
+                    "surface-variant": "#32353c",
+                    "surface": "#10131a",
+                    "secondary-fixed": "#6ffbbe"
+            },
+            "borderRadius": {
+                    "DEFAULT": "0.25rem",
+                    "lg": "0.5rem",
+                    "xl": "0.75rem",
+                    "full": "9999px"
+            },
+            "spacing": {
+                    "sm": "12px",
+                    "xl": "32px",
+                    "xs": "4px",
+                    "margin-mobile": "16px",
+                    "base": "8px",
+                    "md": "16px",
+                    "margin-desktop": "40px",
+                    "lg": "24px",
+                    "gutter": "24px"
+            },
+            "fontFamily": {
+                    "display-lg": ["Inter"],
+                    "headline-lg-mobile": ["Inter"],
+                    "body-sm": ["Inter"],
+                    "body-lg": ["Inter"],
+                    "body-md": ["Inter"],
+                    "label-md": ["Inter"],
+                    "headline-sm": ["Inter"],
+                    "headline-md": ["Inter"],
+                    "headline-lg": ["Inter"]
+            },
+            "fontSize": {
+                    "display-lg": ["48px", {"lineHeight": "56px", "letterSpacing": "-0.02em", "fontWeight": "700"}],
+                    "headline-lg-mobile": ["28px", {"lineHeight": "36px", "fontWeight": "600"}],
+                    "body-sm": ["14px", {"lineHeight": "20px", "fontWeight": "400"}],
+                    "body-lg": ["18px", {"lineHeight": "28px", "fontWeight": "400"}],
+                    "body-md": ["16px", {"lineHeight": "24px", "fontWeight": "400"}],
+                    "label-md": ["12px", {"lineHeight": "16px", "letterSpacing": "0.05em", "fontWeight": "600"}],
+                    "headline-sm": ["20px", {"lineHeight": "28px", "fontWeight": "600"}],
+                    "headline-md": ["24px", {"lineHeight": "32px", "fontWeight": "600"}],
+                    "headline-lg": ["32px", {"lineHeight": "40px", "letterSpacing": "-0.01em", "fontWeight": "600"}]
+            }
+          }
+        }
+      }
+    </script>
 <style>
-  * { box-sizing: border-box; margin: 0; padding: 0; }
-  body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif; background: #0f172a; color: #e2e8f0; min-height: 100vh; display:flex;align-items:center;justify-content:center; }
-  .container { max-width: 520px; width: 100%; padding: 20px; }
-  .card { background: #1e293b; border-radius: 16px; padding: 24px; margin-bottom: 16px; box-shadow: 0 8px 24px rgba(0,0,0,0.4); }
-  .card-title { font-size: 0.85rem; color: #64748b; text-transform: uppercase; letter-spacing: 0.5px; margin-bottom: 16px; display:flex;align-items:center;gap:8px; }
-  .app-title { font-size: 1.5rem; text-align: center; margin-bottom: 20px; color: #f8fafc; display:flex;align-items:center;justify-content:center;gap:10px; }
-  .app-title svg { opacity: 0.7; }
-  .cam-wrap { position: relative; display: flex; justify-content: center; border-radius: 12px; overflow: hidden; background: #000; }
-  video { width: 100%; max-width: 400px; display: block; }
-  canvas.overlay { position: absolute; top: 0; left: 0; width: 100%; height: 100%; pointer-events: none; }
-  .btn { display: block; width: 100%; padding: 14px 24px; border: none; border-radius: 12px; cursor: pointer; font-size: 1.05rem; font-weight: 600; transition: all 0.2s; text-align: center; display:flex;align-items:center;justify-content:center;gap:8px; }
-  .btn-primary { background: #3b82f6; color: white; }
-  .btn-primary:hover { background: #2563eb; }
-  .btn-primary:disabled { opacity: 0.5; cursor: not-allowed; }
-  .btn-link { display: inline-flex;align-items:center;gap:4px; background:transparent; color:#475569; border:none; cursor:pointer; font-size:0.8rem; text-decoration:none; transition:color 0.2s; }
-  .btn-link:hover { color:#64748b; }
-  table { width: 100%; border-collapse: collapse; font-size: 0.85rem; }
-  th, td { padding: 8px 10px; text-align: left; border-bottom: 1px solid #334155; }
-  th { color: #64748b; font-weight: 500; font-size: 0.7rem; text-transform: uppercase; letter-spacing: 0.5px; }
-  .admin-link { text-align: center; margin-top: 16px; }
-
-  .flash { position: fixed; top: 0; left: 0; right: 0; bottom: 0; pointer-events: none; z-index: 999; transition: background 0.15s; }
-  .flash.success { background: rgba(34,197,94,0.25); }
-  .flash.error { background: rgba(239,68,68,0.25); }
-  .result-box { padding: 16px; border-radius: 12px; text-align: center; animation: fadeIn 0.3s; }
-  .result-box.success { background: #166534; }
-  .result-box.error { background: #7f1d1d; }
-  .result-box h3 { font-size: 1.2rem; margin-bottom: 4px; }
-  .result-box .sub { font-size: 0.85rem; color: #94a3b8; }
-  @keyframes fadeIn { from { opacity:0; transform:translateY(8px); } to { opacity:1; transform:translateY(0); } }
-  .face-guide { position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%); width: 140px; height: 180px; border: 2px dashed rgba(59,130,246,0.3); border-radius: 50%; pointer-events: none; }
-  .icon-sm { width: 16px; height: 16px; vertical-align: middle; }
-  .icon-md { width: 20px; height: 20px; vertical-align: middle; }
-  .icon-lg { width: 24px; height: 24px; }
-</style>
+        .scan-line {
+            position: absolute;
+            width: 100%;
+            height: 2px;
+            background: linear-gradient(to right, transparent, #adc6ff, transparent);
+            animation: scan 2s linear infinite;
+            box-shadow: 0 0 12px #adc6ff;
+        }
+        @keyframes scan {
+            0% { top: 10%; }
+            50% { top: 90%; }
+            100% { top: 10%; }
+        }
+        .glow-bloom {
+            box-shadow: 0 0 24px rgba(173, 198, 255, 0.1);
+        }
+        .success-bloom {
+            box-shadow: 0 0 24px rgba(78, 222, 163, 0.2);
+            border-color: #4edea3 !important;
+        }
+        .error-bloom {
+            box-shadow: 0 0 24px rgba(255, 180, 171, 0.2);
+            border-color: #ffb4ab !important;
+        }
+        video {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transform: scaleX(-1);
+        }
+        canvas.overlay {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            transform: scaleX(-1);
+        }
+    </style>
 </head>
-<body>
-<div class="flash" id="flash"></div>
-<div class="container">
-  <div class="app-title">
-    <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="#94a3b8" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M23 19a2 2 0 0 1-2 2H3a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h4l2-3h6l2 3h4a2 2 0 0 1 2 2z"/><circle cx="12" cy="13" r="4"/></svg>
-    Asistencia
-  </div>
-  <div class="card">
-    <div class="card-title">
-      <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#64748b" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M23 19a2 2 0 0 1-2 2H3a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h4l2-3h6l2 3h4a2 2 0 0 1 2 2z"/><circle cx="12" cy="13" r="4"/></svg>
-      Camara
-    </div>
-    <div class="cam-wrap">
-      <video id="cam" autoplay playsinline></video>
-      <canvas class="overlay" id="canvasOverlay"></canvas>
-      <div class="face-guide"></div>
-    </div>
-    <div style="margin-top:16px">
-      <button class="btn btn-primary" id="btnMark" onclick="markAttendance()">
-        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>
-        Marcar Asistencia
-      </button>
-    </div>
-    <div id="result" style="margin-top:12px;min-height:60px;"></div>
-  </div>
-  <div class="card" id="historyCard">
-    <div class="card-title">
-      <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#64748b" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
-      Mis asistencias hoy
-    </div>
-    <div id="myHistory"><p style="color:#64748b;font-size:0.85rem;">Marca tu asistencia para ver tu historial</p></div>
-  </div>
-  <div class="admin-link">
-    <button class="btn-link" onclick="location.href='/admin'">
-      <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="11" width="18" height="11" rx="2" ry="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg>
-      Panel de Administracion
-    </button>
-  </div>
+<body class="bg-background text-on-background min-h-screen w-screen overflow-x-hidden flex flex-col font-body-md">
+<!-- Header -->
+<header class="w-full flex justify-between items-center px-lg py-md border-b border-surface-container-high bg-surface-container-lowest z-10 shrink-0">
+<div class="flex items-center gap-sm cursor-pointer" onclick="location.href='/admin'" title="Panel de Administracion">
+<span class="material-symbols-outlined text-primary text-[32px]">security</span>
+<span class="font-headline-md text-headline-md font-bold text-primary tracking-tight">SecureGate AI</span>
+</div>
+<div class="flex items-center gap-sm bg-surface-container-high px-md py-sm rounded-full border border-outline-variant">
+<span class="material-symbols-outlined text-on-surface-variant">schedule</span>
+<span class="font-body-lg text-body-lg text-on-surface" id="current-time">00:00</span>
+</div>
+</header>
+<!-- Main Kiosk Area -->
+<main class="flex-1 flex w-full max-w-[1400px] mx-auto p-4 md:p-6 lg:p-lg gap-4 lg:gap-lg relative min-h-0">
+<!-- Left: Camera Viewfinder (Primary Action) -->
+<div class="flex-1 flex flex-col items-center justify-center gap-4 lg:gap-lg min-h-0 w-full">
+<div class="w-full max-w-[500px] flex-1 min-h-[300px] max-h-[500px] xl:max-h-[600px] bg-surface-container-low rounded-xl border border-outline-variant relative overflow-hidden flex flex-col items-center justify-center glow-bloom transition-all duration-300 shrink" id="camera-container">
+
+<video id="cam" autoplay playsinline></video>
+<canvas class="overlay" id="canvasOverlay"></canvas>
+
+<!-- Viewfinder Guides -->
+<div class="absolute inset-lg border-2 border-dashed border-outline rounded-lg pointer-events-none opacity-50 z-10"></div>
+<!-- Face Contour Target -->
+<div class="absolute inset-0 flex items-center justify-center z-20 pointer-events-none">
+<div class="w-[180px] h-[240px] md:w-[200px] md:h-[280px] border border-primary rounded-[100px] opacity-70 relative">
+<!-- Corner Markers -->
+<div class="absolute -top-2 -left-2 w-6 h-6 border-t-2 border-l-2 border-primary"></div>
+<div class="absolute -top-2 -right-2 w-6 h-6 border-t-2 border-r-2 border-primary"></div>
+<div class="absolute -bottom-2 -left-2 w-6 h-6 border-b-2 border-l-2 border-primary"></div>
+<div class="absolute -bottom-2 -right-2 w-6 h-6 border-b-2 border-r-2 border-primary"></div>
+</div>
+</div>
+<!-- Scanning Line -->
+<div class="scan-line z-30" id="scan-line"></div>
+
+<!-- Status Overlay (Default Hidden) -->
+<div class="absolute inset-0 bg-surface/80 backdrop-blur-sm z-40 flex flex-col items-center justify-center opacity-0 pointer-events-none transition-opacity duration-300" id="success-overlay">
+<span class="material-symbols-outlined text-[80px] text-secondary mb-sm" style="font-variation-settings: 'FILL' 1;">check_circle</span>
+<h2 class="font-headline-lg text-headline-lg text-secondary" id="overlay-title">Verificado</h2>
+<p class="font-body-lg text-body-lg text-on-surface-variant mt-xs" id="overlay-subtitle">Acceso Permitido</p>
+<img id="overlay-photo" src="" class="hidden w-24 h-24 rounded-full border-4 border-secondary mt-4 object-cover">
 </div>
 
+<div class="absolute bottom-md left-0 w-full text-center z-20" id="camera-hint">
+<p class="font-body-md text-body-md text-primary bg-background/80 inline-block px-sm py-xs rounded-full border border-primary/30" id="camera-hint-text">Alinee su rostro con el óvalo</p>
+</div>
+</div>
+
+<!-- Primary Action Button -->
+<button id="btnMark" class="w-full max-w-[500px] bg-primary text-on-primary font-headline-md text-headline-md py-3 md:py-md rounded-lg hover:opacity-90 transition-opacity flex items-center justify-center gap-sm shadow-lg active:scale-95 duration-150 disabled:opacity-50 disabled:cursor-not-allowed shrink-0" onclick="markAttendance()">
+<span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 1;">how_to_reg</span>
+                <span id="btnMarkText">Marcar Asistencia</span>
+            </button>
+<p class="font-body-sm text-body-sm text-on-surface-variant text-center max-w-[500px] shrink-0 mb-4 md:mb-0">
+                Al marcar asistencia, usted confirma su identidad según las políticas de seguridad de la empresa.
+            </p>
+</div>
+
+<!-- Right: Real-time Feedback Panel (Recent Check-ins) -->
+<aside class="w-[380px] hidden lg:flex flex-col bg-surface-container-low rounded-xl border border-surface-container-high p-lg gap-md shrink-0">
+<div class="flex items-center justify-between border-b border-surface-container-high pb-sm">
+<h3 class="font-headline-sm text-headline-sm text-on-surface flex items-center gap-xs">
+<span class="material-symbols-outlined text-primary">history</span>
+                    Actividad Reciente
+                </h3>
+<span class="bg-secondary/10 text-secondary font-label-md text-label-md px-2 py-1 rounded-full border border-secondary/20 flex items-center gap-1">
+<span class="w-2 h-2 rounded-full bg-secondary animate-pulse"></span>
+                    En vivo
+                </span>
+</div>
+<div class="flex-1 overflow-y-auto pr-2 space-y-sm" id="recent-list">
+<p class="text-on-surface-variant text-sm text-center mt-4">Esperando actividad...</p>
+</div>
+</aside>
+</main>
+
 <script>
-let stream = null;
-let lastUserId = null;
+        let stream = null;
+        let lastUserId = null;
 
-async function startCam() {
-  try {
-    stream = await navigator.mediaDevices.getUserMedia({ video: { width: 640, height: 480, facingMode: "user" } });
-    document.getElementById('cam').srcObject = stream;
-    startFaceDetect();
-  } catch(e) {
-    document.getElementById('result').innerHTML = `<div class="result-box error"><h3>Error de camara</h3><p>${e.message}</p></div>`;
-  }
-}
+        function updateTime() {
+            const now = new Date();
+            let hours = now.getHours();
+            let minutes = now.getMinutes();
+            const ampm = hours >= 12 ? 'PM' : 'AM';
+            hours = hours % 12;
+            hours = hours ? hours : 12; 
+            minutes = minutes < 10 ? '0' + minutes : minutes;
+            document.getElementById('current-time').innerText = hours + ':' + minutes + ' ' + ampm;
+        }
+        setInterval(updateTime, 1000);
+        updateTime();
 
-function captureBlob() {
-  return new Promise(r => {
-    const v = document.getElementById('cam');
-    const c = document.createElement('canvas');
-    c.width = v.videoWidth; c.height = v.videoHeight;
-    c.getContext('2d').drawImage(v, 0, 0);
-    c.toBlob(b => r(b), 'image/jpeg', 0.9);
-  });
-}
+        async function startCam() {
+            try {
+                stream = await navigator.mediaDevices.getUserMedia({ video: { width: 640, height: 480, facingMode: "user" } });
+                document.getElementById('cam').srcObject = stream;
+                startFaceDetect();
+            } catch(e) {
+                document.getElementById('camera-hint-text').innerText = 'Error de cámara: ' + e.message;
+                document.getElementById('camera-hint-text').classList.replace('text-primary', 'text-error');
+                document.getElementById('camera-hint-text').classList.replace('border-primary/30', 'border-error/30');
+            }
+        }
 
-function flashScreen(success) {
-  const el = document.getElementById('flash');
-  el.className = 'flash ' + (success ? 'success' : 'error');
-  setTimeout(() => el.className = 'flash', 400);
-}
+        function captureBlob() {
+            return new Promise(r => {
+                const v = document.getElementById('cam');
+                const c = document.createElement('canvas');
+                c.width = v.videoWidth; c.height = v.videoHeight;
+                c.getContext('2d').drawImage(v, 0, 0);
+                c.toBlob(b => r(b), 'image/jpeg', 0.9);
+            });
+        }
 
-function playBeep(success) {
-  try {
-    const ctx = new (window.AudioContext||window.webkitAudioContext)();
-    const o = ctx.createOscillator(), g = ctx.createGain();
-    o.connect(g); g.connect(ctx.destination); g.gain.value = 0.2;
-    if (success) { o.frequency.value = 880; o.start(); g.gain.exponentialRampToValueAtTime(0.001, ctx.currentTime+0.12); o.stop(ctx.currentTime+0.12); }
-    else { o.frequency.value = 440; o.start(); g.gain.exponentialRampToValueAtTime(0.001, ctx.currentTime+0.25); o.stop(ctx.currentTime+0.25); }
-    if (navigator.vibrate) navigator.vibrate(success ? 80 : 150);
-  } catch(e) {}
-}
+        function playBeep(success) {
+            try {
+                const ctx = new (window.AudioContext||window.webkitAudioContext)();
+                const o = ctx.createOscillator(), g = ctx.createGain();
+                o.connect(g); g.connect(ctx.destination); g.gain.value = 0.2;
+                if (success) { o.frequency.value = 880; o.start(); g.gain.exponentialRampToValueAtTime(0.001, ctx.currentTime+0.12); o.stop(ctx.currentTime+0.12); }
+                else { o.frequency.value = 440; o.start(); g.gain.exponentialRampToValueAtTime(0.001, ctx.currentTime+0.25); o.stop(ctx.currentTime+0.25); }
+                if (navigator.vibrate) navigator.vibrate(success ? 80 : 150);
+            } catch(e) {}
+        }
 
-async function markAttendance() {
-  const btn = document.getElementById('btnMark');
-  btn.disabled = true; btn.textContent = 'Procesando...';
-  const div = document.getElementById('result');
-  let blob;
-  try {
-    blob = await captureBlob();
-    if (!blob || blob.size < 1000) throw new Error('Camara sin imagen');
-  } catch(e) {
-    div.innerHTML = `<div class="result-box error"><h3>Error de camara</h3><p class="sub">${e.message}</p></div>`;
-    btn.disabled = false;
-    btn.innerHTML = `<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg> Marcar Asistencia`;
-    return;
-  }
-  const fd = new FormData(); fd.append('image', blob, 'c.jpg');
-  try {
-    const controller = new AbortController();
-    const timeout = setTimeout(() => controller.abort(), 15000);
-    const res = await fetch('/api/attendance/mark', { method: 'POST', body: fd, signal: controller.signal });
-    clearTimeout(timeout);
-    const data = await res.json();
-    if (data.success) {
-      lastUserId = data.user_id;
-      const typeLabel = data.type === 'entry' ? 'Entrada' : 'Salida';
-      const photoHtml = data.photo_url ? `<img src="${data.photo_url}" style="width:48px;height:48px;border-radius:8px;object-fit:cover;margin-top:8px;">` : '';
-      div.innerHTML = `<div class="result-box success"><h3>${data.user_name}</h3><p class="sub">${typeLabel} · ${(data.confidence*100).toFixed(1)}% de confianza · ${new Date().toLocaleTimeString()}</p>${photoHtml}</div>`;
-      playBeep(true); flashScreen(true);
-      loadMyHistory();
-    } else {
-      div.innerHTML = `<div class="result-box error"><h3>No reconocido</h3><p class="sub">${data.detail||data.message}</p></div>`;
-      playBeep(false); flashScreen(false);
-    }
-  } catch(e) { div.innerHTML = `<div class="result-box error"><h3>Error</h3><p class="sub">No se pudo conectar</p></div>`; }
-  btn.disabled = false;
-  btn.innerHTML = `<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg> Marcar Asistencia`;
-}
+        async function markAttendance() {
+            const btn = document.getElementById('btnMark');
+            const btnText = document.getElementById('btnMarkText');
+            btn.disabled = true; 
+            btnText.textContent = 'Procesando...';
+            
+            const container = document.getElementById('camera-container');
+            const scanLine = document.getElementById('scan-line');
+            const overlay = document.getElementById('success-overlay');
+            const overlayTitle = document.getElementById('overlay-title');
+            const overlaySub = document.getElementById('overlay-subtitle');
+            const overlayIcon = overlay.querySelector('span.material-symbols-outlined');
+            const overlayPhoto = document.getElementById('overlay-photo');
 
-async function loadMyHistory() {
-  if (!lastUserId) return;
-  try {
-    const res = await fetch(`/api/attendance/history?user_id=${lastUserId}&limit=20`);
-    const records = await res.json();
-    const div = document.getElementById('myHistory');
-    if (!records.length) { div.innerHTML = '<p style="color:#64748b;font-size:0.85rem;">Sin registros hoy</p>'; return; }
-    div.innerHTML = `<table><tr><th>Hora</th><th>Tipo</th><th>Confianza</th></tr>${records.map(r => {
-      const typeLabel = r.type === 'entry' ? 'Entrada' : r.type === 'exit' ? 'Salida' : '-';
-      return `<tr><td>${new Date(r.timestamp).toLocaleTimeString()}</td><td>${typeLabel}</td><td>${r.confidence ? (r.confidence*100).toFixed(1)+'%' : 'N/A'}</td></tr>`;
-    }).join('')}</table>`;
-  } catch(e) {}
-}
+            let blob;
+            try {
+                blob = await captureBlob();
+                if (!blob || blob.size < 1000) throw new Error('Cámara sin imagen');
+            } catch(e) {
+                overlayIcon.textContent = 'error';
+                overlayIcon.classList.replace('text-secondary', 'text-error');
+                overlayTitle.textContent = 'Error';
+                overlayTitle.classList.replace('text-secondary', 'text-error');
+                overlaySub.textContent = e.message;
+                overlayPhoto.classList.add('hidden');
+                
+                container.classList.add('error-bloom');
+                overlay.classList.remove('opacity-0');
+                
+                setTimeout(() => {
+                    overlay.classList.add('opacity-0');
+                    container.classList.remove('error-bloom');
+                    btn.disabled = false;
+                    btnText.textContent = 'Marcar Asistencia';
+                }, 3000);
+                return;
+            }
 
-async function detectFaceLoop() {
-  const canvas = document.getElementById('canvasOverlay');
-  const video = document.getElementById('cam');
-  if (!canvas || !video || video.readyState < 2) return;
-  try {
-    const blob = await captureBlob();
-    const fd = new FormData(); fd.append('image', blob, 'f.jpg');
-    const res = await fetch('/api/face/detect', { method: 'POST', body: fd });
-    if (!res.ok) { drawNoFace(canvas); return; }
-    const data = await res.json();
-    if (data.success && data.bbox) drawBox(canvas, video, data.bbox);
-    else drawNoFace(canvas);
-  } catch(e) { drawNoFace(canvas); }
-}
+            const fd = new FormData(); fd.append('image', blob, 'c.jpg');
+            try {
+                const controller = new AbortController();
+                const timeout = setTimeout(() => controller.abort(), 15000);
+                const res = await fetch('/api/attendance/mark', { method: 'POST', body: fd, signal: controller.signal });
+                clearTimeout(timeout);
+                const data = await res.json();
+                
+                scanLine.style.display = 'none';
+                
+                if (data.success) {
+                    lastUserId = data.user_id;
+                    const typeLabel = data.type === 'entry' ? 'Entrada' : 'Salida';
+                    
+                    overlayIcon.textContent = 'check_circle';
+                    overlayIcon.classList.remove('text-error');
+                    overlayIcon.classList.add('text-secondary');
+                    overlayTitle.textContent = data.user_name;
+                    overlayTitle.classList.remove('text-error');
+                    overlayTitle.classList.add('text-secondary');
+                    overlaySub.textContent = typeLabel + ' · ' + (data.confidence*100).toFixed(1) + '% conf.';
+                    
+                    if (data.photo_url) {
+                        overlayPhoto.src = data.photo_url;
+                        overlayPhoto.classList.remove('hidden');
+                        overlayPhoto.classList.replace('border-error', 'border-secondary');
+                    } else {
+                        overlayPhoto.classList.add('hidden');
+                    }
 
-function drawBox(canvas, video, bbox) {
-  const ctx = canvas.getContext('2d');
-  canvas.width = canvas.clientWidth; canvas.height = canvas.clientHeight;
-  ctx.clearRect(0, 0, canvas.width, canvas.height);
-  const [x1,y1,x2,y2] = bbox;
-  const sx = canvas.width / (video.videoWidth||640);
-  const sy = canvas.height / (video.videoHeight||480);
-  ctx.strokeStyle = '#22c55e'; ctx.lineWidth = 3;
-  ctx.strokeRect(x1*sx, y1*sy, (x2-x1)*sx, (y2-y1)*sy);
-  ctx.fillStyle = 'rgba(34,197,94,0.1)';
-  ctx.fillRect(x1*sx, y1*sy, (x2-x1)*sx, (y2-y1)*sy);
-}
+                    container.classList.add('success-bloom');
+                    overlay.classList.remove('opacity-0');
+                    playBeep(true);
+                    
+                    loadMyHistory();
+                    
+                    setTimeout(() => {
+                        overlay.classList.add('opacity-0');
+                        container.classList.remove('success-bloom');
+                        scanLine.style.display = 'block';
+                    }, 3500);
 
-function drawNoFace(canvas) {
-  const ctx = canvas.getContext('2d');
-  canvas.width = canvas.clientWidth; canvas.height = canvas.clientHeight;
-  ctx.clearRect(0, 0, canvas.width, canvas.height);
-}
+                } else {
+                    overlayIcon.textContent = 'cancel';
+                    overlayIcon.classList.remove('text-secondary');
+                    overlayIcon.classList.add('text-error');
+                    overlayTitle.textContent = 'No reconocido';
+                    overlayTitle.classList.remove('text-secondary');
+                    overlayTitle.classList.add('text-error');
+                    overlaySub.textContent = data.detail || data.message;
+                    overlayPhoto.classList.add('hidden');
 
-function startFaceDetect() { setInterval(detectFaceLoop, 2000); }
+                    container.classList.add('error-bloom');
+                    overlay.classList.remove('opacity-0');
+                    playBeep(false);
+                    
+                    setTimeout(() => {
+                        overlay.classList.add('opacity-0');
+                        container.classList.remove('error-bloom');
+                        scanLine.style.display = 'block';
+                    }, 3500);
+                }
+            } catch(e) { 
+                overlayIcon.textContent = 'wifi_off';
+                overlayIcon.classList.remove('text-secondary');
+                overlayIcon.classList.add('text-error');
+                overlayTitle.textContent = 'Error';
+                overlayTitle.classList.remove('text-secondary');
+                overlayTitle.classList.add('text-error');
+                overlaySub.textContent = 'No se pudo conectar al servidor';
+                overlayPhoto.classList.add('hidden');
 
-startCam();
-</script>
+                container.classList.add('error-bloom');
+                overlay.classList.remove('opacity-0');
+                
+                setTimeout(() => {
+                    overlay.classList.add('opacity-0');
+                    container.classList.remove('error-bloom');
+                    scanLine.style.display = 'block';
+                }, 3500);
+            }
+            
+            setTimeout(() => {
+                btn.disabled = false;
+                btnText.textContent = 'Marcar Asistencia';
+            }, 3500);
+        }
+
+        async function loadMyHistory() {
+            if (!lastUserId) return;
+            try {
+                const res = await fetch(`/api/attendance/history?user_id=${lastUserId}&limit=10`);
+                const records = await res.json();
+                const list = document.getElementById('recent-list');
+                
+                if (!records.length) { 
+                    list.innerHTML = '<p class="text-on-surface-variant text-sm text-center mt-4">Sin registros hoy</p>'; 
+                    return; 
+                }
+                
+                list.innerHTML = '';
+                records.forEach(r => {
+                    const typeLabel = r.type === 'entry' ? 'Entrada' : r.type === 'exit' ? 'Salida' : '-';
+                    const timeStr = new Date(r.timestamp).toLocaleTimeString('es-CO', { hour: '2-digit', minute: '2-digit', timeZone: 'America/Bogota' });
+                    const isEntry = r.type === 'entry';
+                    const colorClass = isEntry ? 'text-secondary' : 'text-error';
+                    const iconType = isEntry ? 'login' : 'logout';
+                    
+                    const initials = r.user_name.substring(0, 2).toUpperCase();
+                    
+                    const imgHtml = r.photo_url 
+                        ? `<img src="${r.photo_url}" class="w-full h-full object-cover">`
+                        : `<div class="w-full h-full bg-surface-container-highest flex items-center justify-center text-primary font-bold">${initials}</div>`;
+
+                    const el = document.createElement('div');
+                    el.className = 'bg-surface p-sm rounded-lg border border-surface-container-high flex items-center gap-md hover:bg-surface-bright transition-colors cursor-default';
+                    el.innerHTML = `
+                        <div class="w-12 h-12 rounded-full bg-surface-container-highest border border-outline-variant overflow-hidden shrink-0">
+                            ${imgHtml}
+                        </div>
+                        <div class="flex-1 min-w-0">
+                            <p class="font-body-md text-body-md font-bold text-on-surface truncate">${r.user_name}</p>
+                            <p class="font-body-sm text-body-sm text-on-surface-variant truncate">${typeLabel} · ${(r.confidence*100).toFixed(0)}% conf.</p>
+                        </div>
+                        <div class="text-right shrink-0">
+                            <p class="font-label-md text-label-md text-on-surface-variant">${timeStr}</p>
+                            <span class="${colorClass} material-symbols-outlined text-[16px] mt-1" style="font-variation-settings: 'FILL' 1;">${iconType}</span>
+                        </div>
+                    `;
+                    list.appendChild(el);
+                });
+            } catch(e) {}
+        }
+
+        async function detectFaceLoop() {
+            const canvas = document.getElementById('canvasOverlay');
+            const video = document.getElementById('cam');
+            if (!canvas || !video || video.readyState < 2) return;
+            try {
+                const blob = await captureBlob();
+                const fd = new FormData(); fd.append('image', blob, 'f.jpg');
+                const res = await fetch('/api/face/detect', { method: 'POST', body: fd });
+                if (!res.ok) { drawNoFace(canvas); return; }
+                const data = await res.json();
+                if (data.success && data.bbox) drawBox(canvas, video, data.bbox);
+                else drawNoFace(canvas);
+            } catch(e) { drawNoFace(canvas); }
+        }
+
+        function drawBox(canvas, video, bbox) {
+            const ctx = canvas.getContext('2d');
+            canvas.width = canvas.clientWidth; canvas.height = canvas.clientHeight;
+            ctx.clearRect(0, 0, canvas.width, canvas.height);
+            const [x1,y1,x2,y2] = bbox;
+            const sx = canvas.width / (video.videoWidth||640);
+            const sy = canvas.height / (video.videoHeight||480);
+            ctx.strokeStyle = '#adc6ff'; ctx.lineWidth = 3;
+            ctx.strokeRect(x1*sx, y1*sy, (x2-x1)*sx, (y2-y1)*sy);
+            ctx.fillStyle = 'rgba(173, 198, 255, 0.15)';
+            ctx.fillRect(x1*sx, y1*sy, (x2-x1)*sx, (y2-y1)*sy);
+        }
+
+        function drawNoFace(canvas) {
+            const ctx = canvas.getContext('2d');
+            canvas.width = canvas.clientWidth; canvas.height = canvas.clientHeight;
+            ctx.clearRect(0, 0, canvas.width, canvas.height);
+        }
+
+        function startFaceDetect() { setInterval(detectFaceLoop, 2000); }
+
+        startCam();
+    </script>
 </body>
 </html>
